@@ -1,1 +1,1 @@
-web: npm install -g typescript; tsc
+web: tsc; npm start
