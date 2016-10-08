@@ -1,1 +1,1 @@
-web: tsc; npm start
+web: npm install; tsc; npm start
