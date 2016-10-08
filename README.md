@@ -3,6 +3,7 @@ Final project in Modern Methods of Software Engineering course.
 
 ## Prerequisites
 ```
+npm install -g typescript
 npm install -g tsd
 ```
 
