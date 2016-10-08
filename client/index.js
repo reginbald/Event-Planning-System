@@ -5,6 +5,10 @@ import { Router, browserHistory } from 'react-router';
 import routes from './routes';
 //import './styles/styles.css'; // Webpack can import CSS files !
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
+import injectTapEventPlugin from 'react-tap-event-plugin';
+// Needed for onTouchTap
+// http://stackoverflow.com/a/34015469/988941
+injectTapEventPlugin();
 
 render(
 	<Router history={browserHistory} routes={routes} />,
