@@ -6,6 +6,7 @@ before_install:
   - npm install -g tsd
 install:
   - npm install
+  - tsd install
 before_script:
  - tsc
 script: npm test
