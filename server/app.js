@@ -13,8 +13,8 @@ app.use(require('webpack-hot-middleware')(compiler));
 app.get('/', function (req, res) {
     res.sendFile(path.join(__dirname, '../client/index.html'));
 });
-app.listen(3000, function () {
-    console.log("Server listening on port 3000");
+app.listen(8080, function () {
+    console.log("Server listening on port 8080");
 });
 exports.App = app;
 //# sourceMappingURL=app.js.map
