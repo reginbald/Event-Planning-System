@@ -21,5 +21,5 @@ tsc
 ## Run
 
 ```
-node app.js
+node server/app.js
 ```
