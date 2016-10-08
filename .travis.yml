@@ -1,13 +1,16 @@
 language: node_js
 node_js:
-  - "6"
+- '6'
 before_install:
-  - npm install -g typescript
-  - npm install -g tsd
+- npm install -g typescript
+- npm install -g tsd
 install:
-  - npm install
-  - tsd install
+- npm install
+- tsd install
 before_script:
- - tsc
+- tsc
 script: npm test
-after_success:
+after_success: 
+deploy:
+  api_key:
+    secure: jB+KBDpd0ORU1qlIttnTzffrD1BPJhuk4X9I56+P3n6e5bwrwmS1111THx+997eoIDE2lMj+wFJJ+wD/7fLqpbglaM0/sgk7fGqXoebPPZ5i8h0OtgrQxFn1f8GQf0OzWW/iOUUbCeKUmqzVKMpQtepWACe2r3mx2mO3fbBaFhhvT5buui/hrk1U5WBb7UGTD9SSn0E1kiX7rLiZQNj4gTz0/bQYEZdhNpSBYyO8pEPARRF30L97RjPvWMnXt0HhzOfb1kYO1i64uhnJQyWF89HEKAQYTb0Sc2CbaovtbDGHl3UiuIFSplp7EZzEsiqNbJZB9R//aG59vAZggLp8nFCPU6D26AeMERZ1dBlXTWVy3IiJwAzkqSphbi53szKpvcFxahpt0oTk7McG159n3al6jyuRTGSsOk8iamNguCSXQTEddwLsaQJgWQGYYB3FkVUyMWwDeTcHT3dif6WWqvxHD/dUsIPfhA4O2NtYap4vAN5/IyDkC8E4OZmD1DdFBhEEbPevjTdg4v/NXGpZKysUkWGeimiXQdEEoD7Z4gi9++8gz5mwPCUsOxBH8TEne6joH+TXGzmNaozRdgalxxx9QQui1ElGZQJ7+Tdi+hvXYCtMPT1SqHRKaBTbwQYza8Qno5D75tcc1AC35pJL+cr+JBCOlxRXfwO86SUMDf8=
