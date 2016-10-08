@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
-import Login from './Login';
-
+import User from './User';
+import Password from './Password';
 export default class HomePage extends Component {
   render() {
     return (
-      <Login />
+      <div>
+        <User />
+        <Password />
+      </div>
     );
   }
 }
