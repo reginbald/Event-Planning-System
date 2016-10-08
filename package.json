@@ -21,13 +21,16 @@
     "babel-polyfill": "^6.16.0",
     "bootstrap": "^3.3.7",
     "express": "^4.14.0",
+    "material-ui": "^0.16.0",
     "react": "^15.3.2",
     "react-dom": "^15.3.2",
     "react-redux": "^4.4.5",
     "react-router": "^2.8.1",
+    "react-tap-event-plugin": "^1.0.0",
     "redux": "^3.6.0",
     "redux-thunk": "^2.1.0",
-    "ts-loader": "^0.8.2"
+    "ts-loader": "^0.8.2",
+    "webpack": "^1.13.2"
   },
   "devDependencies": {
     "babel-cli": "^6.16.0",
@@ -51,7 +54,6 @@
     "open": "0.0.5",
     "style-loader": "^0.13.1",
     "url-loader": "^0.5.7",
-    "webpack": "^1.13.2",
     "webpack-dev-middleware": "^1.8.3",
     "webpack-hot-middleware": "^2.12.2"
   }
