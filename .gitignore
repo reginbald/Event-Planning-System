@@ -1,4 +1,9 @@
 node_modules
+<<<<<<< HEAD
+typings
+npm-debug.log
+=======
 
 server/*.js
 server/*.js.map
+>>>>>>> 30adc229e1d47c4fd89f29d2750eba34617bd113
