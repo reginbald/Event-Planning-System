@@ -4,7 +4,8 @@
   "description": "Final project for the course Modern Methods of Software Engineering",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"No test specified\" && exit 0"
+    "test": "echo \"No test specified\" && exit 0",
+    "start": "node server/app.js"
   },
   "repository": {
     "type": "git",
