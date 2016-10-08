@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/reginbald/Event-Planning-System/issues"
   },
-  "homepage": "https://github.com/reginbald/Event-Planning-System#readme"
+  "homepage": "https://github.com/reginbald/Event-Planning-System#readme",
+  "dependencies": {
+    "express": "^4.14.0"
+  }
 }
