@@ -1,0 +1,19 @@
+{
+  "name": "event_planning_system",
+  "version": "1.0.0",
+  "description": "Final project for the course Modern Methods of Software Engineering",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/reginbald/Event-Planning-System.git"
+  },
+  "author": "Einar Logi & Jon Reginbald",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/reginbald/Event-Planning-System/issues"
+  },
+  "homepage": "https://github.com/reginbald/Event-Planning-System#readme"
+}
