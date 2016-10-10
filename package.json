@@ -4,8 +4,10 @@
   "description": "Final project for the course Modern Methods of Software Engineering",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"No test specified\" && exit 0",
-    "start": "node server/app.js"
+    "start": "node server/app.js",
+    "build": "tsc",
+    "pretest": "npm run build",
+    "test": "mocha server/test"
   },
   "repository": {
     "type": "git",
@@ -53,6 +55,7 @@
     "colors": "^1.1.2",
     "compression": "^1.6.2",
     "cross-env": "^3.1.1",
+    "mocha": "^3.1.1",
     "nock": "^8.0.0",
     "npm-run-all": "^3.1.0",
     "open": "0.0.5"

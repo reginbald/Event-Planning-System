@@ -6,9 +6,8 @@ before_install:
 - npm install -g webpack
 install:
 - npm install
-before_script:
-- tsc
-script: npm test
+script:
+- npm test
 after_success:
 deploy:
   provider: heroku
