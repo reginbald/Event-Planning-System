@@ -22,6 +22,27 @@
     },
     "mocha/mocha.d.ts": {
       "commit": "a11d013885ea072e6dba017ec5181eaf1ee152db"
+    },
+    "validator/validator.d.ts": {
+      "commit": "f9351fd6d2154b3822444c54e687f1b102827eac"
+    },
+    "bluebird/bluebird-2.0.d.ts": {
+      "commit": "f9351fd6d2154b3822444c54e687f1b102827eac"
+    },
+    "sequelize/sequelize.d.ts": {
+      "commit": "f9351fd6d2154b3822444c54e687f1b102827eac"
+    },
+    "lodash/lodash.d.ts": {
+      "commit": "f9351fd6d2154b3822444c54e687f1b102827eac"
+    },
+    "source-map/source-map.d.ts": {
+      "commit": "f9351fd6d2154b3822444c54e687f1b102827eac"
+    },
+    "webpack/webpack.d.ts": {
+      "commit": "f9351fd6d2154b3822444c54e687f1b102827eac"
+    },
+    "uglify-js/uglify-js.d.ts": {
+      "commit": "f9351fd6d2154b3822444c54e687f1b102827eac"
     }
   }
 }

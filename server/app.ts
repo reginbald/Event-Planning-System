@@ -1,23 +1,66 @@
 import * as express from "express";
-const webpack = require('webpack');
+import {StorageManager, SequelizeStorageManager} from "./provider/storage";
+import * as webpack from 'webpack';
 const path = require('path');
+
+const config = require('../webpack.config.dev.js');
+const compiler = webpack(config);
 
 var port = process.env.PORT || 3000;
 
-var app = express();
-const config = require('../webpack.config.dev.js');
-const compiler = webpack(config);
-app.use(require('webpack-dev-middleware')(compiler, {
-  noInfo: true,
-  publicPath:config.output.publicPath
-}));
-app.use(require('webpack-hot-middleware')(compiler));
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, '../client/index.html'));
-});
+export function configureExpress():Promise<any> {
+  return Promise
+    .resolve(express())
+      .then((app) => {
+        app.use(require('webpack-dev-middleware')(compiler, {
+          noInfo: true,
+          publicPath:config.output.publicPath
+        }));
+        app.use(require('webpack-hot-middleware')(compiler));
+      //app.use(bodyParser.json());
+      //app.use(bodyParser.urlencoded({extended: false}));
+      return app;
+    });
+}
 
-app.listen(port, () => {
-    console.log("Server listening on port " + port);
-});
+export function congifureRoutes(app:express.Application, storageManager:StorageManager):Promise<any> {
+  return new Promise((resolve) => {
+    app.get('/', (req, res) => {
+      res.sendFile(path.join(__dirname, '../client/index.html'));
+    });
 
-export var App = app;
+    app.get('/api/employee', (req, res) => {
+      storageManager.getEmployeeById('1')
+        .then((employee:any) => {
+            console.log(employee);
+        })
+        .catch((err:any) => {
+            console.log(err);
+        });
+    });
+    resolve();
+  });
+}
+
+export function start():Promise<any> {
+    let storageManager = new SequelizeStorageManager();
+
+    return storageManager.init()
+        .then(() => {
+            return configureExpress()
+                .then((app:express.Application) => {
+                    return congifureRoutes(app, storageManager)
+                        .then(() => {
+                            return app;
+                        });
+                })
+                .then((app:express.Application) => {
+                    return new Promise((resolve) => {
+                        var server = app.listen(port, () => {
+                            console.log("Server listening on port " + port);
+                            resolve(server);
+                        });
+                    });
+                })
+        });
+}
