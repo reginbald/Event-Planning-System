@@ -3,10 +3,10 @@
         "module": "commonjs",
         "sourceMap": true
     },
+    "include": [
+        "./server/**/*"
+    ],
     "files": [
-        "./typings/tsd.d.ts",
-        "./server/app.ts",
-        "./server/provider/calc.ts",
-        "./server/test/calc.test.ts"
+        "./typings/tsd.d.ts"
     ]
 }
