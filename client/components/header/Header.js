@@ -13,7 +13,7 @@ export default class Header extends Component {
     return (
         <div>
           <AppBar
-              title="Title"/>
+              title="Title" />
       </div>
     );
   }
