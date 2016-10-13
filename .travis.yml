@@ -8,7 +8,6 @@ install:
 - npm install
 script:
 - npm test
-after_success:
 deploy:
   provider: heroku
   app: event-planning-sep
