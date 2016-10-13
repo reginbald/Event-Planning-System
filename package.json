@@ -2,7 +2,7 @@
   "name": "event_planning_system",
   "version": "1.0.0",
   "description": "Final project for the course Modern Methods of Software Engineering",
-  "main": "run.js",
+  "main": "./server/index.js",
   "scripts": {
     "start": "node ./server/run.js",
     "build": "tsc && webpack --config ./webpack.config.prod.js --progress --colors --display-error-details",
