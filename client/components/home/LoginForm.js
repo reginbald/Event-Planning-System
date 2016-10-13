@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import TextInput from '../common/TextInput';
 import Paper from 'material-ui/Paper';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
@@ -10,15 +11,28 @@ const style = {
   display: 'inline-block',
 };
 
-export default class LoginForm extends Component {
-  render() {
-    return (
-      <div>
-        <MuiThemeProvider>
-          <Paper style={style} zDepth={1} rounded={false} >
-          </Paper>
-        </MuiThemeProvider>
-      </div>
-    );
-  }
+const LoginForm = ({onChange, onLogin}) => {
+  return (
+    <div>
+      <MuiThemeProvider>
+        <Paper style={style} zDepth={1} rounded={false} >
+          <form>
+            <TextInput
+              name="username"
+              label="UserName"
+              value=""
+              onChange={onChange} />
+              <TextInput
+                name="password"
+                label="Password"
+                value=""
+                onChange={onChange} />
+          </form>
+        </Paper>
+      </MuiThemeProvider>
+    </div>
+  );
 }
+
+
+export default LoginForm;
