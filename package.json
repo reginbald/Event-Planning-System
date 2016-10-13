@@ -4,7 +4,7 @@
   "description": "Final project for the course Modern Methods of Software Engineering",
   "main": "app.js",
   "scripts": {
-    "start": "node server/run.js",
+    "start": "node ./server/run.js",
     "build": "tsc && webpack --config ./webpack.config.prod.js --progress --colors --display-error-details",
     "pretest": "npm run build",
     "test": "mocha server/test"
