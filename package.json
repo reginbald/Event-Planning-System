@@ -2,10 +2,10 @@
   "name": "event_planning_system",
   "version": "1.0.0",
   "description": "Final project for the course Modern Methods of Software Engineering",
-  "main": "app.js",
+  "main": "./server/run.js",
   "scripts": {
-    "start": "node server/run.js",
-    "build": "tsc",
+    "start": "node ./server/run.js",
+    "build": "tsc && webpack --config ./webpack.config.prod.js --progress --colors --display-error-details",
     "pretest": "npm run build",
     "test": "mocha server/test"
   },
@@ -37,6 +37,7 @@
     "extract-text-webpack-plugin": "^1.0.1",
     "file-loader": "^0.9.0",
     "flexboxgrid": "^6.3.1",
+    "html-webpack-plugin": "^2.22.0",
     "jsdom": "^9.6.0",
     "material-ui": "^0.16.0",
     "mysql": "^2.11.1",
