@@ -26,7 +26,7 @@ describe('EmployeeProvider', () => {
 			subject.getAllEmployees(request, response);
 			setTimeout(() => { 
 					expect(response.data).should.equal([]);
-			}, 50); 
+			}, 10); 
 		});
 	});
 });
