@@ -9,13 +9,13 @@ export class EmployeeProvider {
         this.storageManager = storageManager;
     }
 
-    getAllEmployees = (req:express.Request, res:express.Response) => {
+    getAllEmployees = (req:any, res:any) => {
       this.storageManager.getEmployees()
-        .then((employee:any) => {
-            console.log('Employee: ' + employee);
+        .then((employees:any) => {
+            res.send(employees);
         })
         .catch((err:any) => {
-            console.log(err);
+            return res.status(500).send(err.message);
         });
     };
 }

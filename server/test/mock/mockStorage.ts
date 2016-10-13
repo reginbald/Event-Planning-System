@@ -1,10 +1,10 @@
-import {StorageManager} from '../provider/storage';
+import {StorageManager} from '../../provider/storage';
 
 export class MockStorageManager implements StorageManager {
   public EmployeeList: any[];
 
   constructor() {
-    this.EmployeeList = [];
+    this.EmployeeList = ["1"];
   }
 
   init(force?:boolean):Promise<any> {return new Promise<any>((resolve, reject) => {

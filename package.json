@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node ./server/run.js",
     "build": "tsc && webpack --config ./webpack.config.prod.js --progress --colors --display-error-details",
-    "pretest": "npm run build",
+    "pretest": "tsc",
     "test": "mocha server/test"
   },
   "repository": {
