@@ -12,11 +12,13 @@ export function configureExpress():Promise<any> {
   return Promise
     .resolve(express())
       .then((app) => {
-        app.use(require('webpack-dev-middleware')(compiler, {
-          noInfo: true,
-          publicPath:config.output.publicPath
-        }));
-        app.use(require('webpack-hot-middleware')(compiler));
+        if(process.env.NODE_ENV !== 'production') {
+          app.use(require('webpack-dev-middleware')(compiler, {
+            noInfo: true,
+            publicPath:config.output.publicPath
+          }));
+          app.use(require('webpack-hot-middleware')(compiler));
+        }
       //app.use(bodyParser.json());
       //app.use(bodyParser.urlencoded({extended: false}));
       return app;
@@ -25,6 +27,7 @@ export function configureExpress():Promise<any> {
 
 export function congifureRoutes(app:express.Application, storageManager:StorageManager):Promise<any> {
   return new Promise((resolve) => {
+    console.log("env" + process.env.NODE_ENV);
     app.get('/', (req, res) => {
       res.sendFile(path.join(__dirname, '../client/index.html'));
     });
