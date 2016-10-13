@@ -4,7 +4,7 @@ import {EmployeeProvider} from "./provider/employeeProvider";
 import * as webpack from 'webpack';
 const path = require('path');
 
-const config = require('../webpack.config.dev.js');
+const config = require('../../webpack.config.dev.js');
 const compiler = webpack(config);
 
 var port = process.env.PORT || 3000;
@@ -31,7 +31,7 @@ export function congifureRoutes(app:express.Application, storageManager:StorageM
     let employeeProvider = new EmployeeProvider(storageManager);
     console.log("env" + process.env.NODE_ENV);
     app.get('/', (req, res) => {
-      res.sendFile(path.join(__dirname, '../client/index.html'));
+      res.sendFile(path.join(__dirname, '../index.html'));
     });
     app.get("/api/employee", employeeProvider.getAllEmployees);
 
