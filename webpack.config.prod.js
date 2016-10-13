@@ -5,7 +5,7 @@ module.exports = {
   devtool: 'source-map',
 
   entry: [
-    './client/index'
+    './client/index.js'
   ],
 
   output: {
@@ -16,7 +16,7 @@ module.exports = {
 
   plugins: [
     new HtmlWebpackPlugin({
-      template: './dist/index.html',
+      template: path.join(__dirname,'client','index.html'),
       inject: true
     }),
     new webpack.optimize.DedupePlugin(),
