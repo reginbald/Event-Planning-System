@@ -20,6 +20,8 @@ export function configureExpress():Promise<any> {
           }));
           app.use(require('webpack-hot-middleware')(compiler));
         }
+      app.use(express.static('dist'));
+
       //app.use(bodyParser.json());
       //app.use(bodyParser.urlencoded({extended: false}));
       return app;
@@ -30,9 +32,9 @@ export function congifureRoutes(app:express.Application, storageManager:StorageM
   return new Promise((resolve) => {
     let employeeProvider = new EmployeeProvider(storageManager);
     console.log("env" + process.env.NODE_ENV);
-    app.get('/', (req, res) => {
-      res.sendFile(path.join(__dirname, '../index.html'));
-    });
+    //app.get('/', (req, res) => {
+    //  res.sendFile(path.join(__dirname, '../index.html'));
+    //});
     app.get("/api/employee", employeeProvider.getAllEmployees);
 
     resolve();
