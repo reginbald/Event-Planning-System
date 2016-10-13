@@ -20,7 +20,7 @@ export function configureExpress():Promise<any> {
           }));
           app.use(require('webpack-hot-middleware')(compiler));
         }
-      app.use('/dist', express.static(__dirname + '../dist'));
+      app.use(express.static('dist'));
 
       //app.use(bodyParser.json());
       //app.use(bodyParser.urlencoded({extended: false}));
