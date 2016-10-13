@@ -4,8 +4,8 @@ import Paper from 'material-ui/Paper';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 const style = {
-  height: 150,
-  width: 299,
+  height: 200,
+  width: 400,
   margin: 20,
   //textAlign: 'center',
   display: 'inline-block',
