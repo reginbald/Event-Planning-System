@@ -5,9 +5,10 @@ export interface EmployeeAttribute {
     id?:string;
     username?:string;
     password?:string;
-    access?:number;
+    access?:string;
     name?:string;
     email?:string;
+    departmentid?:string;
 }
 
 export interface EmployeeInstance extends Sequelize.Instance<EmployeeAttribute>, EmployeeAttribute {
@@ -18,14 +19,14 @@ export interface EmployeeInstance extends Sequelize.Instance<EmployeeAttribute>,
 export interface EmployeeModel extends Sequelize.Model<EmployeeInstance, EmployeeAttribute> { }
 
 export class EmployeeTable implements Sequelize.DefineAttributes {
+  [name : string] : string;
   id:any;
   username:any;
   password:any;
   access:any;
   name:any;
   email:any;
-  [name : string] : string;
-  
+  departmentid:any;
 
   constructor() {
     this.id = {
@@ -56,6 +57,15 @@ export class EmployeeTable implements Sequelize.DefineAttributes {
       "validate": {
         "isEmail": true
       }
+    }
+    this.departmentid = {
+      "type": Sequelize.UUID,
+      "allowNull": false,
+			"foreignKey": true,
+			"references": {
+				"model": "department",
+				"key":   "id"
+			}
     }
   }
 }
