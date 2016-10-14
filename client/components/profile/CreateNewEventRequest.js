@@ -4,7 +4,7 @@ import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Paper from 'material-ui/Paper';
-
+import CreateButton from './CreateButton';
 /**
  * Dialog with action buttons. The actions are passed in as an array of React objects,
  * in this example [FlatButtons](/#/components/flat-button).
@@ -56,7 +56,10 @@ export default class CreateNewEventRequest extends Component {
       <div>
         <MuiThemeProvider>
           <Paper style={paperStyle} zDepth={1} rounded={false} >
-            <RaisedButton label="Dialog" onTouchTap={this.handleOpen} />
+            <CreateButton
+              label="Create Event Request"
+              onTouchTap={this.handleOpen}
+              secondary={true} />
             <Dialog
               title="Dialog With Actions"
               actions={actions}
