@@ -11,7 +11,7 @@ module.exports = {
   output: {
     path: path.join(__dirname, 'dist'),
     filename: 'bundle.js',
-    publicPath: '/dist/'
+    publicPath: '/'
   },
 
   plugins: [
@@ -35,7 +35,7 @@ module.exports = {
 
   module: {
     loaders: [
-        {test: /\.js$/, include: path.join(__dirname, 'client'), loaders: ['babel']},
+        {test: /\.js$/, include: path.join(__dirname, 'client'), exclude:'/node_modules/',loaders: ['babel']},
         { test: /\.ts$/, loader: 'ts-loader' },
         {test: /(\.css)$/, loaders: ['style', 'css?modules'], incldue:/flexboxgrid/ },
         {test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, loader: 'file'},

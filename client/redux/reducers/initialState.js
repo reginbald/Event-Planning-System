@@ -1,6 +1,8 @@
 export default {
   user : {
-    name:'',
-    authed:false
+    id: '',
+    username: '',
+    password: '',
+    authed: false
   }
 };

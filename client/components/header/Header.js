@@ -13,12 +13,12 @@ export default class Header extends Component {
     return (
         <div>
           <AppBar
-              title="Title" />
+              title="SEP" />
       </div>
     );
   }
 }
 
 Header.childContextTypes = {
-muiTheme: React.PropTypes.object.isRequired,
+  muiTheme: React.PropTypes.object.isRequired,
 };

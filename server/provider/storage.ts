@@ -1,23 +1,10 @@
 /// <reference path="../../typings/sequelize/sequelize.d.ts" />
 import * as Sequelize from "sequelize";
-
-export interface EmployeeAttribute {
-    id?:string;
-    name?:string;
-    email?:string;
-    password?:string;
-}
-
-export interface EmployeeInstance extends Sequelize.Instance<EmployeeAttribute>, EmployeeAttribute {
-  getEmployee: Sequelize.BelongsToGetAssociationMixin<EmployeeInstance>;
-  createEmployee: Sequelize.BelongsToCreateAssociationMixin<EmployeeInstance>;
-}
-
-export interface EmployeeModel extends Sequelize.Model<EmployeeInstance, EmployeeAttribute> { }
+import {EmployeeModel, EmployeeInstance, EmployeeAttribute} from "../models/employee"
 
 export interface StorageManager {
     init(force?:boolean):Promise<any>;
-    getEmployeeById(id:string):Promise<any>;
+    getEmployees():Promise<any>;
 }
 
 export class SequelizeStorageManager implements StorageManager {
@@ -59,7 +46,7 @@ export class SequelizeStorageManager implements StorageManager {
         return this.sequelize.sync({force: force, logging: false});
     }
 
-    getEmployeeById(id:string):Promise<any> {
-        return this.Employee.find({where: {id: id}});
+    getEmployees():Promise<any> {
+        return this.Employee.findAll();
     }
 }

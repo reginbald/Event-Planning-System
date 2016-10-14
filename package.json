@@ -4,10 +4,10 @@
   "description": "Final project for the course Modern Methods of Software Engineering",
   "main": "./server/run.js",
   "scripts": {
-    "start": "node ./server/run.js",
+    "start": "node ./dist/server/run.js",
     "build": "tsc && webpack --config ./webpack.config.prod.js --progress --colors --display-error-details",
-    "pretest": "npm run build",
-    "test": "mocha server/test"
+    "pretest": "tsc",
+    "test": "mocha dist/server/test"
   },
   "repository": {
     "type": "git",

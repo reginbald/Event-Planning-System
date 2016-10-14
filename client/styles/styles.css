@@ -46,3 +46,13 @@ table {
 	border-collapse: collapse;
 	border-spacing: 0;
 }
+.formcontainer{
+	 -webkit-box-shadow: 0 0 0 1000px white inset;
+	 -webkit-text-fill-color: yellow !important;
+  }
+	input:-webkit-autofill,
+	input:-webkit-autofill:hover,
+	input:-webkit-autofill:focus,
+	input:-webkit-autofill:active {
+	    transition: background-color 5000s ease-in-out 0s;
+	}

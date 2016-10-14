@@ -1,9 +1,10 @@
 import * as express from "express";
 import {StorageManager, SequelizeStorageManager} from "./provider/storage";
+import {EmployeeProvider} from "./provider/employeeProvider";
 import * as webpack from 'webpack';
 const path = require('path');
 
-const config = require('../webpack.config.dev.js');
+const config = require('../../webpack.config.dev.js');
 const compiler = webpack(config);
 
 var port = process.env.PORT || 3000;
@@ -19,6 +20,8 @@ export function configureExpress():Promise<any> {
           }));
           app.use(require('webpack-hot-middleware')(compiler));
         }
+      app.use(express.static('dist'));
+
       //app.use(bodyParser.json());
       //app.use(bodyParser.urlencoded({extended: false}));
       return app;
@@ -27,20 +30,13 @@ export function configureExpress():Promise<any> {
 
 export function congifureRoutes(app:express.Application, storageManager:StorageManager):Promise<any> {
   return new Promise((resolve) => {
+    let employeeProvider = new EmployeeProvider(storageManager);
     console.log("env" + process.env.NODE_ENV);
-    app.get('/', (req, res) => {
-      res.sendFile(path.join(__dirname, '../client/index.html'));
-    });
+    //app.get('/', (req, res) => {
+    //  res.sendFile(path.join(__dirname, '../index.html'));
+    //});
+    app.get("/api/employee", employeeProvider.getAllEmployees);
 
-    app.get('/api/employee', (req, res) => {
-      storageManager.getEmployeeById('1')
-        .then((employee:any) => {
-            console.log(employee);
-        })
-        .catch((err:any) => {
-            console.log(err);
-        });
-    });
     resolve();
   });
 }
