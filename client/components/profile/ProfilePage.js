@@ -1,6 +1,9 @@
 import React, { Component, PropTypes } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import * as userAction from '../../redux/actions/userActions';
 
-export default class ProfilePage extends Component {
+class ProfilePage extends Component {
   constructor(props) {
     super(props);
   }
@@ -11,3 +14,15 @@ export default class ProfilePage extends Component {
     );
   }
 }
+function mapStateToProps(state, ownProps) {
+  return {
+    user: state.user
+  };
+}
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: bindActionCreators(userAction, dispatch)
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProfilePage);

@@ -2,17 +2,23 @@ import * as types from '../actions/actionTypes';
 import initialState from './initialState';
 
 export default function userReducer(state = initialState.user, action) {
-  console.log("Reducer printing the receiving action");
-  console.log(action);
+  // Mockapi returns array while server returns object
+  // break user variable correctly up first before
+  // using it to return a new state.
+  let user = action.user;
+  if(Array.isArray(action.user)){
+    user = user[0];
+  }
+
   switch(action.type) {
     case types.USER_LOGIN_SUCCESS:
-      console.log('reducer received login success');
-      console.log(action);
-      console.log(action.user);
-      return Object.Assign({}, state,{
-        authed: true
-      });
-
+      return Object.assign({}, state,{
+        authed: true,
+        id: user.id,
+        username: user.username
+      })
+    case types.USER_LOGIN_ERROR:
+      console.log('error was dispatched');
     default:
       console.log("reducer returning default state");
       return state;
