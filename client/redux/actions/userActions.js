@@ -1,24 +1,31 @@
-//TODO create a mock login api
-//uncomment the line below when mockapi is ready
+
 import mockLoginApi from '../../api/mockLoginApi';
 import * as types from './actionTypes';
+import { browserHistory } from  'react-router';
 
 /**
-* Param data: object
+* Param creds: object
 */
 export function userLoginSuccess(creds) {
   return { type: types.USER_LOGIN_SUCCESS, creds };
 }
 export function userLoginError(creds) {
+  console.log('dispo error');
   return { type: types.USER_LOGIN_ERROR, creds}
 }
 
 export function loginuser(creds) {
-  return function(dispatch) {
+  return (dispatch) => {
     return mockLoginApi.loginUser(creds).then(response => {
-      console.log('loginuser received response');
-      console.log(response);
-      response ? dispatch(userLoginError(creds)):dispatch(userLoginSuccess(creds));
+      if(response){
+        dispatch(userLoginSuccess);
+        return browserHistory.push("/profile");
+      }
+      else{
+      /*
+      * Do something here if we have time
+      */
+      }
     }).catch(error => {
       throw(error);
     });

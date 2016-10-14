@@ -9,9 +9,12 @@ export default function userReducer(state = initialState.user, action) {
       console.log('reducer received login success');
       console.log(action);
       console.log(action.user);
-      return action.user;
+      return Object.Assign({}, state,{
+        authed: true
+      });
 
     default:
+      console.log("reducer returning default state");
       return state;
   }
 }
