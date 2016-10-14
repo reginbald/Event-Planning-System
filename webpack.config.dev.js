@@ -11,7 +11,7 @@ module.exports = {
   target: 'web',
   output: {
     path: path.join(__dirname, 'dist'), // Note: Physical files are only output by the production build task `npm run build`.
-    publicPath: '/dist/',
+    publicPath: '/',
     filename: 'bundle.js'
   },
   devServer: {
@@ -25,7 +25,7 @@ module.exports = {
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin(),
     new HtmlWebpackPlugin({
-      template: './dist/index.html',
+      template: path.join(__dirname,'client','index.html'),
       inject: true
     })
   ],

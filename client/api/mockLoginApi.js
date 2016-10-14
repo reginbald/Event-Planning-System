@@ -33,7 +33,7 @@ export default class mockLoginApi {
       setTimeout(() => {
         const userMatch = users.filter(x => x.username === user.username);
         if(userMatch[0] === undefined){
-          reject('user error');
+          reject(userMatch[0]);
         }
         else if(userMatch[0].password !== user.password || user.password.length < 3) {
           reject('invald password or password too short');

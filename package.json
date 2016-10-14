@@ -7,7 +7,8 @@
     "start": "node ./dist/server/run.js",
     "build": "tsc && webpack --config ./webpack.config.prod.js --progress --colors --display-error-details",
     "pretest": "tsc",
-    "test": "mocha dist/server/test"
+    "test": "mocha dist/server/test",
+    "dev": "webpack --config ./webpack.config.dev.js --progress && node server/run.js"
   },
   "repository": {
     "type": "git",
