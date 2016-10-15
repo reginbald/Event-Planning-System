@@ -3,10 +3,13 @@ export default {
     id: '',
     username: '',
     password: '',
-    authed: false
+    authed: false,
+    access:'',
+    name: '',
+    email: '',
+    departmentid: '',
+    job_title:''
   },
-  newEventRequest: {
-    clientname: '',
-    
-  }
+  eventrequests: [],
+  clients:[]
 };

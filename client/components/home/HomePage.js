@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import * as userAction from '../../redux/actions/userActions';
+import * as userActions from '../../redux/actions/userActions';
 import {Grid, Row, Col } from 'react-flexbox-grid';
 import LoginForm from './LoginForm';
 
@@ -50,12 +50,13 @@ class HomePage extends Component {
 function mapStateToProps(state, ownProps) {
   let user = {id:'', username:'', password: '', authed:false}
   return {
-    user: state.user
+    user: state.user,
+    eventrequests: state.eventrequests
   };
 }
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators(userAction, dispatch)
+    actions: bindActionCreators(userActions, dispatch)
   };
 }
 export default connect(mapStateToProps, mapDispatchToProps)(HomePage);

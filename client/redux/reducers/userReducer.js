@@ -15,7 +15,13 @@ export default function userReducer(state = initialState.user, action) {
       return Object.assign({}, state,{
         authed: true,
         id: user.id,
-        username: user.username
+        username: user.username,
+        password: '',
+        access: user.access,
+        name: user.name,
+        email: user.email,
+        departmentid: user.departmentid,
+        job_title: user.job_title
       })
     case types.USER_LOGIN_ERROR:
       console.log('error was dispatched');
