@@ -27,6 +27,7 @@ export interface StorageManager {
     getFinancialRequests():any;
     createFinancialRequest(details:any):any;
     getRecruitmentRequests():any;
+    createRecruitmentRequest(details:any):any;
 }
 
 export class SequelizeStorageManager implements StorageManager {
@@ -165,5 +166,8 @@ export class SequelizeStorageManager implements StorageManager {
     //------------------------------RECRUITMENT REQUEST------------------------------
     getRecruitmentRequests():any {
         return this.RecruitmentRequest.findAll();
+    }
+    createRecruitmentRequest(details:any):any {
+        return this.RecruitmentRequest.create(details);
     }
 }

@@ -14,4 +14,12 @@ export class RecruitmentRequestProvider {
 			res.send(results);
 		})
 	};
+	createRecruitmentRequest = (req:any, res:any) => {
+		this.storageManager.createRecruitmentRequest(req.body)
+		.then((results) => {
+			res.send(results);
+		}).catch((err) => {
+			res.status(500).send(err.message);
+		});
+	};
 }

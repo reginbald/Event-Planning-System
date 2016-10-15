@@ -127,4 +127,13 @@ export class MockStorageManager implements StorageManager {
 	getRecruitmentRequests():any {
 		return new MockPromise(this.RecruitmentRequestList);
 	};
+	createRecruitmentRequest(details:any):any {
+		if (details.error) {
+			let promise = new MockPromise(details)
+			promise.throw = true;
+			return promise;
+		}
+		this.RecruitmentRequestList.push(details);
+		return new MockPromise(details);
+	}
 }
