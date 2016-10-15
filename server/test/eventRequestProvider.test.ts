@@ -47,5 +47,10 @@ describe('eventRequestProvider', () => {
 			subject.createEventRequests(req, mocResponse);
 			expect(mocResponse.data).to.deep.equal(newEventRequest);
 		});
+		it('should return error on missing properties', () => {
+			let req = new MockRequest({budget:"900", clientid:"Vlad", error: true});
+			subject.createEventRequests(req, mocResponse);
+			expect(mocResponse.data).to.deep.equal("error");
+		});
 	});
 });
