@@ -3,10 +3,12 @@ import {MockPromise} from "./mockPromise";
 
 export class MockStorageManager implements StorageManager {
 	public EmployeeList: any[];
+	public ClientList: any[];
 	public EventRequestList: any[];
 
 	constructor() {
 		this.EmployeeList = [];
+		this.ClientList = [];
 		this.EventRequestList = [];
 	}
 
@@ -14,6 +16,7 @@ export class MockStorageManager implements StorageManager {
 			return true;
 	};
 
+	//------------------------EMPLOYEE------------------------
 	getEmployees():any{
 		return new MockPromise(this.EmployeeList);
 	};
@@ -27,12 +30,16 @@ export class MockStorageManager implements StorageManager {
 			return new MockPromise(null);
 	};
 
+	//------------------------CLIENT------------------------
+	getClients():any{
+		return new MockPromise(this.ClientList);
+	};
+
+	//------------------------EVENT REQUEST------------------------
 	getEventRequests():any{
-		if (this.EventRequestList === []){
-			return new MockPromise(this.EventRequestList);
-		}
 		return new MockPromise(this.EventRequestList);
 	};
+
 	createEventRequests(details:any):any{
 		if (details.error) {
 			let promise = new MockPromise(details)

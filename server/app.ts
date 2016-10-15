@@ -6,6 +6,7 @@ import * as bodyParser from "body-parser";
 import {StorageManager, SequelizeStorageManager} from "./provider/storage";
 import {LoginProvider} from "./provider/loginProvider";
 import {EmployeeProvider} from "./provider/employeeProvider";
+import {ClientProvider} from "./provider/clientProvider";
 import {EventRequestProvider} from "./provider/eventRequestProvider";
 import * as webpack from 'webpack';
 const path = require('path');
@@ -38,11 +39,14 @@ export function congifureRoutes(app:express.Application, storageManager:StorageM
   return new Promise((resolve) => {
     let loginProvider = new LoginProvider(storageManager);
     let employeeProvider = new EmployeeProvider(storageManager);
+    let clientProvider = new ClientProvider(storageManager);
     let eventRequestProvider = new EventRequestProvider(storageManager);
 
     app.post("/api/login", loginProvider.login);
 
     app.get("/api/employee", employeeProvider.getAllEmployees);
+
+    app.get("/api/client", clientProvider.getAllClients);
 
     app.get("/api/eventrequest", eventRequestProvider.getAllEventRequests);
     app.post("/api/eventrequest", eventRequestProvider.createEventRequests);

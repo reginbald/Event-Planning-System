@@ -15,6 +15,7 @@ export interface StorageManager {
     init(force?:boolean):any;
     getEmployees():any;
     getEmployeeByUsernameAndPassword(username:string, password:string):any;
+    getClients():any;
     getEventRequests():any;
     createEventRequests(details:any):any;
 }
