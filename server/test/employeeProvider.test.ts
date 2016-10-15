@@ -2,31 +2,33 @@
 /// <reference path="../../typings/chai/chai.d.ts" />
 import { expect } from 'chai';
 
-import * as express from "express";
 import {EmployeeProvider} from "../provider/employeeProvider";
 import {MockStorageManager} from "./mock/mockStorage";
-import {MockRequest} from "./mock/mockRequest"; 
 import {MockResponse} from "./mock/mockResponse";
 
-describe('EmployeeProvider', () => {
+describe('employeeProvider', () => {
 	var mockStorage: MockStorageManager;
+	var mocResponse: MockResponse;
 	var subject: EmployeeProvider;
-	var response: MockResponse;
-	var request: MockRequest;
+	var result: any;
 
 	beforeEach(function() {
-		request = new MockRequest();
-		response = new MockResponse();
 		mockStorage = new MockStorageManager();
+		mocResponse = new MockResponse();
 		subject = new EmployeeProvider(mockStorage);
 	});
 
-	describe('get all employees from empty table', () => {
-		it('should return an empty list ', () => {
-			subject.getAllEmployees(request, response);
-			setTimeout(() => { 
-					expect(response.data).should.equal([]);
-			}, 10); 
+	describe('get all employees', () => {
+		it('should return empty list', () => {
+			let req = {};
+			subject.getAllEmployees(req, mocResponse);
+			expect(mocResponse.data).to.deep.equal([]);
+		});
+		it('should return all employees', () => {
+			let req = {"params": { "user": "user", "pass": ""}};
+			mockStorage.EmployeeList = [{name: "employee1"}, {name: "employee2"}]
+			subject.getAllEmployees(req, mocResponse);
+			expect(mocResponse.data).to.deep.equal([{name: "employee1"}, {name: "employee2"}]);
 		});
 	});
 });

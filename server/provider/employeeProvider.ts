@@ -1,4 +1,3 @@
-import * as express from "express";
 import {StorageManager} from "./storage";
 
 export class EmployeeProvider {
@@ -12,10 +11,10 @@ export class EmployeeProvider {
     getAllEmployees = (req:any, res:any) => {
       this.storageManager.getEmployees()
         .then((employees:any) => {
-            res.send(employees);
+            res.send(employees.dataValues);
         })
         .catch((err:any) => {
-            return res.status(500).send(err.message);
+            res.status(500).send(err.message);
         });
     };
 }

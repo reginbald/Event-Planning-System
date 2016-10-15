@@ -12,8 +12,9 @@ import {TaskModel, TaskInstance, TaskAttribute, TaskTable} from "../models/task"
 
 
 export interface StorageManager {
-    init(force?:boolean):Promise<any>;
-    getEmployees():Promise<any>;
+    init(force?:boolean):any;
+    getEmployees():any;
+    getEmployeeByUsernameAndPassword(username:string, password:string):any;
 }
 
 export class SequelizeStorageManager implements StorageManager {
@@ -101,12 +102,18 @@ export class SequelizeStorageManager implements StorageManager {
         force = force || false;
         return this.sequelize.sync({force: force, logging: false});
     }
-
-    getEmployees():Promise<any> {
+    
+    //------------------------------EMPLOYEE------------------------------
+    getEmployees():any{
         return this.Employee.findAll();
     }
 
-    getClients():Promise<any> {
+    getEmployeeByUsernameAndPassword(username:string, password:string):any {
+        return this.Employee.find({where: {username: username, password: password}});
+    }
+
+    //------------------------------CLIENT------------------------------
+    getClients():any{
         return this.Client.findAll();
     }
 }
