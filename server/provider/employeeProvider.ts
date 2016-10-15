@@ -17,4 +17,12 @@ export class EmployeeProvider {
             res.status(500).send(err.message);
         });
     };
+    createEmployee = (req:any, res:any) => {
+		this.storageManager.createEmployee(req.body)
+		.then((results) => {
+			res.send(results);
+		}).catch((err) => {
+			res.status(500).send(err.message);
+		});
+	};
 }

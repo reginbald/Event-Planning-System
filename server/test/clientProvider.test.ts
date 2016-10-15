@@ -12,13 +12,13 @@ describe('ClientProvider', () => {
 	var mocResponse: MockResponse;
 	var subject: ClientProvider;
 	var result: any;
-	var newEventRequest: any;
+	var newClient: any;
 
 	beforeEach(function() {
 		mockStorage = new MockStorageManager();
 		mocResponse = new MockResponse();
 		mockStorage.ClientList = [{name: "name1"}, {name: "name2"}]
-		newEventRequest = {};
+		newClient = {name: "name", email: "email@email.com"};
 		subject = new ClientProvider(mockStorage);
 	});
 
@@ -31,9 +31,9 @@ describe('ClientProvider', () => {
 	});
 	describe('create new client', () => {
 		it('should return new client details', () => {
-			let req = new MockRequest(newEventRequest);
+			let req = new MockRequest(newClient);
 			subject.createClient(req, mocResponse);
-			expect(mocResponse.data).to.deep.equal(newEventRequest);
+			expect(mocResponse.data).to.deep.equal(newClient);
 		});
 		it('should return error on missing properties', () => {
 			let req = new MockRequest({name: "name", error: true});

@@ -14,6 +14,7 @@ import {TaskModel, TaskInstance, TaskAttribute, TaskTable} from "../models/task"
 export interface StorageManager {
     init(force?:boolean):any;
     getEmployees():any;
+    createEmployee(details:any):any;
     getEmployeeByUsernameAndPassword(username:string, password:string):any;
     getClients():any;
     createClient(details:any):any;
@@ -110,6 +111,10 @@ export class SequelizeStorageManager implements StorageManager {
     //------------------------------EMPLOYEE------------------------------
     getEmployees():any{
         return this.Employee.findAll();
+    }
+
+    createEmployee(details:any):any{
+        return this.Employee.create(details);
     }
 
     getEmployeeByUsernameAndPassword(username:string, password:string):any {

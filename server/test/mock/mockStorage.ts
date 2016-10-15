@@ -21,6 +21,16 @@ export class MockStorageManager implements StorageManager {
 		return new MockPromise(this.EmployeeList);
 	};
 
+	createEmployee(details:any):any{
+		if (details.error) {
+			let promise = new MockPromise(details)
+			promise.throw = true;
+			return promise;
+		}
+		this.EmployeeList.push(details);
+		return new MockPromise(details);
+    }
+
 	getEmployeeByUsernameAndPassword(username:any, password:any):any{
 			for (let e of this.EmployeeList) {
 				if (e.username === username && e.password === password) {
