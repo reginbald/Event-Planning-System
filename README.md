@@ -17,11 +17,16 @@ tsd install
 
 ## Compile
 ```
-tsc
+npm run build
+```
+
+## Test
+```
+npm test
 ```
 
 ## Run
 
 ```
-node server/app.js
+npm start
 ```
