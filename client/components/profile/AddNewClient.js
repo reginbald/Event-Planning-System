@@ -42,18 +42,12 @@ class AddNewClient extends Component {
 
   handleClose() {
     this.setState({open: false});
-    console.log('props', this.props);
   };
 
   handleSubmit() {
     const finalizedClient = this.state.newClient;
     this.props.actions.addNewClient(finalizedClient);
     this.setState({open: false});
-    console.log('props', this.props);
-    /*const finalizedRequest = this.state.newEventRequest;
-    this.setState({open: false});
-
-    this.props.actions.createNewEventRequest(finalizedRequest);*/
   }
 
   updateEventState(event) {

@@ -25,8 +25,8 @@ export default function userReducer(state = initialState.user, action) {
       })
     case types.USER_LOGIN_ERROR:
       console.log('error was dispatched');
+      return;
     default:
-      console.log("reducer returning default state");
       return state;
   }
 }

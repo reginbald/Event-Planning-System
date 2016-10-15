@@ -12,7 +12,6 @@ export default function clientReducer(state = initialState.clients, action) {
         Object.assign({}, action.client)
       ];
     default:
-      console.log("reducer returning default state");
       return state;
   }
 }
