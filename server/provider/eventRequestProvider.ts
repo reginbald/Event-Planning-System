@@ -2,16 +2,24 @@ import {StorageManager} from "./storage";
 
 export class EventRequestProvider {
 
-    private storageManager:StorageManager;
+	private storageManager:StorageManager;
 
-    constructor(storageManager:StorageManager) {
-        this.storageManager = storageManager;
-    }
+	constructor(storageManager:StorageManager) {
+			this.storageManager = storageManager;
+	}
 
-    getAllEventRequests = (req:any, res:any) => {
-			this.storageManager.getEventRequests()
-			.then((results) => {
-				res.send(results);
-			})
-    };
+	getAllEventRequests = (req:any, res:any) => {
+		this.storageManager.getEventRequests()
+		.then((results) => {
+			res.send(results);
+		})
+	};
+	createEventRequests = (req:any, res:any) => {
+		this.storageManager.createEventRequests(req.body)
+		.then((results) => {
+			res.send(results);
+		}).catch((err) => {
+			res.status(500).send(err.message);
+		});
+	};
 }

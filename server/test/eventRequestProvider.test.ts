@@ -12,11 +12,25 @@ describe('eventRequestProvider', () => {
 	var mocResponse: MockResponse;
 	var subject: EventRequestProvider;
 	var result: any;
+	var newEventRequest: any;
 
 	beforeEach(function() {
 		mockStorage = new MockStorageManager();
 		mocResponse = new MockResponse();
 		mockStorage.EventRequestList = [{name: "name1"}, {name: "name2"}]
+		newEventRequest = {
+			budget:"900",
+			clientid:"Vlad",
+			decorations:true,
+			drinks:false,
+			enddate:"Sat Oct 29 2016 00:00:00 GMT+0200 (CEST)",
+			eventtype:"Birthday",
+			food:false,
+			numberofattendees:"22",
+			parties:false,
+			photosfilming:true,
+			startdate:"Sat Oct 22 2016 00:00:00 GMT+0200 (CEST)"
+		};
 		subject = new EventRequestProvider(mockStorage);
 	});
 
@@ -25,6 +39,13 @@ describe('eventRequestProvider', () => {
 			let req = new MockRequest({});
 			subject.getAllEventRequests(req, mocResponse);
 			expect(mocResponse.data).to.deep.equal([{name: "name1"}, {name: "name2"}]);
+		});
+	});
+	describe('create event reqeust', () => {
+		it('should return the created event request', () => {
+			let req = new MockRequest(newEventRequest);
+			subject.createEventRequests(req, mocResponse);
+			expect(mocResponse.data).to.deep.equal(newEventRequest);
 		});
 	});
 });
