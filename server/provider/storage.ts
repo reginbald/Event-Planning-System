@@ -15,6 +15,7 @@ export interface StorageManager {
     init(force?:boolean):any;
     getEmployees():any;
     getEmployeeByUsernameAndPassword(username:string, password:string):any;
+    getEventRequests():any;
 }
 
 export class SequelizeStorageManager implements StorageManager {
@@ -54,7 +55,7 @@ export class SequelizeStorageManager implements StorageManager {
                 "createdAt": "created_at",
                 "updatedAt": "updated_at",
             });
-        this.EventRequest = this.sequelize.define<EventRequestInstance, EventRequestAttribute>("EventRequest", new EventTable(),
+        this.EventRequest = this.sequelize.define<EventRequestInstance, EventRequestAttribute>("EventRequest", new EventRequestTable(),
             {
                 "tableName": "eventrequest",
                 "timestamps": true,
@@ -115,5 +116,10 @@ export class SequelizeStorageManager implements StorageManager {
     //------------------------------CLIENT------------------------------
     getClients():any{
         return this.Client.findAll();
+    }
+
+    //------------------------------EVENT REQUEST------------------------------
+    getEventRequests():any{
+        return this.EventRequest.findAll();
     }
 }

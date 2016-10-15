@@ -3,9 +3,11 @@ import {MockPromise} from "./mockPromise";
 
 export class MockStorageManager implements StorageManager {
   public EmployeeList: any[];
+  public EventRequestList: any[];
 
   constructor() {
     this.EmployeeList = [];
+    this.EventRequestList = [];
   }
 
   init(force?:boolean):any{
@@ -13,15 +15,22 @@ export class MockStorageManager implements StorageManager {
   };
 
   getEmployees():any{
-    return new MockPromise({"dataValues": this.EmployeeList});
+    return new MockPromise(this.EmployeeList);
   };
   
   getEmployeeByUsernameAndPassword(username:any, password:any):any{
       for (let e of this.EmployeeList) {
         if (e.username === username && e.password === password) {
-          return new MockPromise({"dataValues": e});
+          return new MockPromise(e);
         }
       }
       return new MockPromise(null);
+  };
+
+  getEventRequests():any{
+    if (this.EventRequestList === []){
+      return new MockPromise(this.EventRequestList);
+    }
+    return new MockPromise(this.EventRequestList);
   };
 }
