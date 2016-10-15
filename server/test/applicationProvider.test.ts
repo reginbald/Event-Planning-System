@@ -2,7 +2,7 @@
 /// <reference path="../../typings/chai/chai.d.ts" />
 import { expect } from 'chai';
 
-import {ApplicationProvider} from "../provider/ApplicationProvider";
+import {ApplicationProvider} from "../provider/applicationProvider";
 import {MockStorageManager} from "./mock/mockStorage";
 import {MockResponse} from "./mock/mockResponse";
 import {MockRequest} from "./mock/mockRequest";
