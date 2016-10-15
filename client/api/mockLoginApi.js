@@ -5,17 +5,17 @@
 // fake user db
 const users = [
   {
-    id: '1',
+    id: '0',
     username: 'vlad',
     password: 'vlad'
   },
   {
-    id: '2',
+    id: '1',
     username: 'misha',
     password: 'misha'
   },
   {
-    id: '3',
+    id: '2',
     username: 'montelius',
     password: 'montelius'
   }

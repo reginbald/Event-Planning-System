@@ -6,25 +6,25 @@ import { browserHistory } from  'react-router';
 /**
 * Param creds: object
 */
-export function userLoginSuccess(creds) {
-  return { type: types.USER_LOGIN_SUCCESS, creds };
+export function userLoginSuccess(user) {
+  return {type: types.USER_LOGIN_SUCCESS, user};
 }
-export function userLoginError(creds) {
-  console.log('dispo error');
-  return { type: types.USER_LOGIN_ERROR, creds}
+export function userLoginError(user) {
+  return { type: types.USER_LOGIN_ERROR, user}
 }
 
 export function loginuser(creds) {
-  return (dispatch) => {
-    return mockLoginApi.loginUser(creds).then(response => {
-      if(response){
-        dispatch(userLoginSuccess);
+  return dispatch => {
+    return mockLoginApi.loginUser(creds).then(user => {
+      if(user) {
+        dispatch(userLoginSuccess(user));
         return browserHistory.push("/profile");
       }
       else{
       /*
       * Do something here if we have time
       */
+         dispatch(userLoginError(user));
       }
     }).catch(error => {
       throw(error);
