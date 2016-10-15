@@ -14,7 +14,6 @@ export interface EmployeeAttribute {
 export interface EmployeeInstance extends Sequelize.Instance<EmployeeAttribute>, EmployeeAttribute {
   getEmployee: Sequelize.BelongsToGetAssociationMixin<EmployeeInstance>;
   createEmployee: Sequelize.BelongsToCreateAssociationMixin<EmployeeInstance>;
-  dataValues:any;
 }
 
 export interface EmployeeModel extends Sequelize.Model<EmployeeInstance, EmployeeAttribute> { }

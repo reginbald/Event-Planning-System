@@ -9,12 +9,18 @@ export class LoginProvider {
     }
 
     login = (req:any, res:any) => {
-        let results:any = this.storageManager.getEmployeeByUsernameAndPassword(req.params.user, req.params.pass);
+        if(!req.body.hasOwnProperty('username')) {
+            return res.status(412).send('ERROR_412_USERNAME');
+        }
+        if(!req.body.hasOwnProperty('password')) {
+            return res.status(412).send('ERROR_412_PASSWORD');
+        }
+        let results:any = this.storageManager.getEmployeeByUsernameAndPassword(req.body.username, req.body.password);
         results.then((results) => {
             if (results === null) {
-                res.send("LOGIN_ERROR");
+                res.status(401).send("ERROR_LOGIN");
             } else {
-                res.status(401).send(results.dataValues);
+                res.send(results);
             }
         })
     };

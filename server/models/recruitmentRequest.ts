@@ -13,7 +13,6 @@ export interface RecruitmentRequestAttribute {
 export interface RecruitmentRequestInstance extends Sequelize.Instance<RecruitmentRequestAttribute>, RecruitmentRequestAttribute {
   getRecruitmentRequest: Sequelize.BelongsToGetAssociationMixin<RecruitmentRequestInstance>;
   createRecruitmentRequest: Sequelize.BelongsToCreateAssociationMixin<RecruitmentRequestInstance>;
-  dataValues:any;
 }
 
 export interface RecruitmentRequestModel extends Sequelize.Model<RecruitmentRequestInstance, RecruitmentRequestAttribute> { }

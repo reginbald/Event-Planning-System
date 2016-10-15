@@ -9,7 +9,6 @@ export interface DepartmentAttribute {
 export interface DepartmentInstance extends Sequelize.Instance<DepartmentAttribute>, DepartmentAttribute {
   getDepartment: Sequelize.BelongsToGetAssociationMixin<DepartmentInstance>;
   createDepartment: Sequelize.BelongsToCreateAssociationMixin<DepartmentInstance>;
-  dataValues:any;
 }
 
 export interface DepartmentModel extends Sequelize.Model<DepartmentInstance, DepartmentAttribute> { }

@@ -2,6 +2,7 @@ import React, {Component, PropTypes} from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as userActions from '../../redux/actions/userActions';
+import * as eventRequestActions from '../../redux/actions/eventRequestActions';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -11,6 +12,7 @@ import CreateButton from './CreateButton';
 import TextInput from '../common/TextInput';
 import DatePicker from 'material-ui/DatePicker';
 import RadioButton from 'material-ui/RadioButton';
+import SelectInput from '../common/SelectInput';
 
 
 const paperStyle = {
@@ -25,18 +27,23 @@ class CreateNewEventRequest extends Component {
     super(props);
     this.state = {
       open:false,
+      optionValue:'',
       newEventRequest: {
-        clientname: '',
+        name:'',
+        budget: '',
+        clientid:'0',
         eventtype: '',
         numberofattendees: '',
-        budget: '',
-        startdate: '',
-        enddate:'',
         decorations:false,
-        parties: false,
+        soft_hot_drinks: false,
+        breakfast_lunch_dinner: false,
         photosfilming: false,
-        food: false,
-        drinks:false,
+        parties: false,
+        from: '',
+        to:'',
+        status: '',
+        financial_feedback: '',
+        discount:''
       }
     }
     this.handleOpen = this.handleOpen.bind(this);
@@ -50,6 +57,7 @@ class CreateNewEventRequest extends Component {
     this.updateEventState = this.updateEventState.bind(this);
     this.updateStartDate = this.updateStartDate.bind(this);
     this.updateEndDate = this.updateEndDate.bind(this);
+    this.updateClient = this.updateClient.bind(this);
   }
 
   handleOpen() {
@@ -63,7 +71,10 @@ class CreateNewEventRequest extends Component {
   handleSubmit() {
     console.log("submitting event request object");
     console.log(this.state.newEventRequest);
+    const finalizedRequest = this.state.newEventRequest;
     this.setState({open: false});
+    console.log(this.props.actions);
+    this.props.actions.createNewEventRequest(finalizedRequest);
   }
 
   updateEventState(event) {
@@ -124,6 +135,14 @@ class CreateNewEventRequest extends Component {
       })
     });
   }
+  updateClient(event, index, value) {
+    this.setState({
+      optionValue: value,
+      newEventRequest: Object.assign({}, this.state.newEventRequest, {
+        clientid: index
+      })
+    })
+  }
   render() {
     const actions = [
       <FlatButton
@@ -138,7 +157,6 @@ class CreateNewEventRequest extends Component {
         onTouchTap={this.handleSubmit}
       />,
     ];
-
     return (
       <div>
         <MuiThemeProvider>
@@ -155,10 +173,11 @@ class CreateNewEventRequest extends Component {
               onRequestClose={this.handleClose}
               autoDetectWindowHeight={true}
               autoScrollBodyContent={true}>
-              <TextInput
-                name="clientname"
-                label="Client Name"
-                onChange={this.updateEventState}/>
+              <SelectInput
+                value={this.state.optionValue}
+                options={this.props.clients}
+                onChange={this.updateClient}
+                hintText="Select Client" />
               <TextInput
                 name="eventtype"
                 label="Event type"
@@ -209,12 +228,13 @@ class CreateNewEventRequest extends Component {
 
 function mapStateToProps(state, ownProps) {
   return {
-    user: state.user
+    user: state.user,
+    clients: state.clients
   };
 }
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators(userActions, dispatch)
+    actions: bindActionCreators(Object.assign({}, userActions, eventRequestActions), dispatch)
   };
 }
 

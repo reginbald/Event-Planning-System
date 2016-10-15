@@ -8,11 +8,14 @@ import configureStore from './redux/store/configureStore';
 import './styles/styles.css';//styles
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import injectTapEventPlugin from 'react-tap-event-plugin';
+import { getAllClients } from './redux/actions/clientActions';
 // Needed for onTouchTap
 // http://stackoverflow.com/a/34015469/988941
 injectTapEventPlugin();
-
 const store = configureStore();
+
+store.dispatch(getAllClients());
+
 render(
 	<Provider store={store}>
 		<Router history={browserHistory} routes={routes} />

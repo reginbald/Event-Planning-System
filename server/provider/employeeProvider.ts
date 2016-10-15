@@ -11,7 +11,7 @@ export class EmployeeProvider {
     getAllEmployees = (req:any, res:any) => {
       this.storageManager.getEmployees()
         .then((employees:any) => {
-            res.send(employees.dataValues);
+            res.send(employees);
         })
         .catch((err:any) => {
             res.status(500).send(err.message);

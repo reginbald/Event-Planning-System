@@ -10,7 +10,6 @@ export interface ClientAttribute {
 export interface ClientInstance extends Sequelize.Instance<ClientAttribute>, ClientAttribute {
   getClient: Sequelize.BelongsToGetAssociationMixin<ClientInstance>;
   createClient: Sequelize.BelongsToCreateAssociationMixin<ClientInstance>;
-  dataValues:any;
 }
 
 export interface ClientModel extends Sequelize.Model<ClientInstance, ClientAttribute> { }
