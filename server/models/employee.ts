@@ -30,9 +30,10 @@ export class EmployeeTable implements Sequelize.DefineAttributes {
 
   constructor() {
     this.id = {
-      "type": Sequelize.UUID,
+      "type": Sequelize.INTEGER,
       "allowNull": false,
-      "primaryKey": true
+      "primaryKey": true,
+      "autoIncrement": true 
     }
     this.username = {
       "type": Sequelize.STRING(128),
@@ -59,7 +60,7 @@ export class EmployeeTable implements Sequelize.DefineAttributes {
       }
     }
     this.departmentid = {
-      "type": Sequelize.UUID,
+      "type": Sequelize.INTEGER,
       "allowNull": false,
 			"foreignKey": true,
 			"references": {

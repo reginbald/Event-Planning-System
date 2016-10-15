@@ -56,16 +56,17 @@ export class EventTable implements Sequelize.DefineAttributes {
 
   constructor() {
     this.id = {
-      "type": Sequelize.UUID,
+      "type": Sequelize.INTEGER,
       "allowNull": false,
-      "primaryKey": true
+      "primaryKey": true,
+      "autoIncrement": true 
     }
     this.name = {
       "type": Sequelize.STRING(128),
       "allowNull": false
     }
 		this.clientid = {
-      "type": Sequelize.UUID,
+      "type": Sequelize.INTEGER,
       "allowNull": false,
 			"foreignKey": true,
 			"references": {
@@ -74,7 +75,7 @@ export class EventTable implements Sequelize.DefineAttributes {
 			}
     }
 		this.eventrequestid = {
-			"type": Sequelize.UUID,
+			"type": Sequelize.INTEGER,
       "allowNull": true,
 			"foreignKey": true,
 			"references": {

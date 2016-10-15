@@ -23,9 +23,10 @@ export class ClientTable implements Sequelize.DefineAttributes {
 
   constructor() {
     this.id = {
-      "type": Sequelize.UUID,
+      "type": Sequelize.INTEGER,
       "allowNull": false,
-      "primaryKey": true
+      "primaryKey": true,
+      "autoIncrement": true 
     }
     this.name = {
       "type": Sequelize.STRING(128),

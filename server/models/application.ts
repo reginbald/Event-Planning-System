@@ -22,12 +22,13 @@ export class ApplicationTable implements Sequelize.DefineAttributes {
 
   constructor() {
     this.id = {
-      "type": Sequelize.UUID,
+      "type": Sequelize.INTEGER,
       "allowNull": false,
-      "primaryKey": true
+      "primaryKey": true,
+      "autoIncrement": true 
     }
 		this.departmentid = {
-      "type": Sequelize.UUID,
+      "type": Sequelize.INTEGER,
       "allowNull": false,
 			"foreignKey": true,
 			"references": {
@@ -36,7 +37,7 @@ export class ApplicationTable implements Sequelize.DefineAttributes {
 			}
     }
 		this.eventid = {
-      "type": Sequelize.UUID,
+      "type": Sequelize.INTEGER,
       "allowNull": false,
 			"foreignKey": true,
 			"references": {

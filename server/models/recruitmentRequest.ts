@@ -28,12 +28,13 @@ export class RecruitmentRequestTable implements Sequelize.DefineAttributes {
 
   constructor() {
     this.id = {
-      "type": Sequelize.UUID,
+      "type": Sequelize.INTEGER,
       "allowNull": false,
-      "primaryKey": true
+      "primaryKey": true,
+      "autoIncrement": true 
     }
 		this.departmentid = {
-      "type": Sequelize.UUID,
+      "type": Sequelize.INTEGER,
       "allowNull": false,
 			"foreignKey": true,
 			"references": {
