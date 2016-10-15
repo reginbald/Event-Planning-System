@@ -5,6 +5,8 @@ import RaisedButton from 'material-ui/RaisedButton';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Paper from 'material-ui/Paper';
 import CreateButton from './CreateButton';
+import TextInput from '../common/TextInput';
+import DatePicker from 'material-ui/DatePicker';
 /**
  * Dialog with action buttons. The actions are passed in as an array of React objects,
  * in this example [FlatButtons](/#/components/flat-button).
@@ -27,6 +29,7 @@ export default class CreateNewEventRequest extends Component {
     }
     this.handleOpen = this.handleOpen.bind(this);
     this.handleClose = this.handleClose.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleOpen() {
@@ -36,6 +39,11 @@ export default class CreateNewEventRequest extends Component {
   handleClose() {
     this.setState({open: false});
   };
+
+  handleSubmit() {
+    console.log("submitting event request");
+    this.setState({open: false});
+  }
 
   render() {
     const actions = [
@@ -48,7 +56,7 @@ export default class CreateNewEventRequest extends Component {
         label="Submit"
         primary={true}
         keyboardFocused={true}
-        onTouchTap={this.handleClose}
+        onTouchTap={this.handleSubmit}
       />,
     ];
 
@@ -61,13 +69,24 @@ export default class CreateNewEventRequest extends Component {
               onTouchTap={this.handleOpen}
               secondary={true} />
             <Dialog
-              title="Dialog With Actions"
+              title="New event request"
               actions={actions}
               modal={false}
               open={this.state.open}
               onRequestClose={this.handleClose}
-            >
-              The actions in this window were passed in as an array of React objects.
+              autoDetectWindowHeight={true} >
+              <TextInput
+                label="Client Name" />
+              <TextInput
+                label="Event type"
+                placeholder="Birthday, graduations..."/>
+              <TextInput
+                label="Number of attendees" />
+              <TextInput
+                label="Budget"
+                placeholder="Expected budget in $" />
+              <DatePicker hintText="Start Date" />
+              <DatePicker hintText="End Date" />
             </Dialog>
           </Paper>
         </MuiThemeProvider>

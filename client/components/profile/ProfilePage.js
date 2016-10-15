@@ -8,6 +8,7 @@ import CreateNewEventRequest from './CreateNewEventRequest';
 class ProfilePage extends Component {
   constructor(props) {
     super(props);
+
   }
   /**
   * Render different Profileviews for different actors.
