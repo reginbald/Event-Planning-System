@@ -14,4 +14,12 @@ export class ApplicationProvider {
 			res.send(results);
 		})
 	};
+	createApplication = (req:any, res:any) => {
+		this.storageManager.createApplication(req.body)
+		.then((results) => {
+			res.send(results);
+		}).catch((err) => {
+			res.status(500).send(err.message);
+		});
+	};
 }

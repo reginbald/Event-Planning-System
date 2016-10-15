@@ -25,6 +25,7 @@ export interface StorageManager {
     getEvents():any;
     createEvent(details:any):any;
     getApplications():any;
+    createApplication(details:any):any;
 
     getFinancialRequests():any;
     createFinancialRequest(details:any):any;
@@ -175,5 +176,8 @@ export class SequelizeStorageManager implements StorageManager {
     //------------------------------APPLICATION------------------------------
     getApplications():any {
         return this.Application.findAll();
+    }
+    createApplication(details:any):any {
+        return this.Application.create(details);
     }
 }

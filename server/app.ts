@@ -65,6 +65,7 @@ export function congifureRoutes(app:express.Application, storageManager:StorageM
     app.post("/api/event", eventProvider.createEvent);
 
     app.get("/api/application", applicationProvider.getAllApplications);
+    app.post("/api/application", applicationProvider.createApplication);
 
     app.get("/api/request/financial", financialRequestProvider.getAllFinancialRequests);
     app.post("/api/request/financial", financialRequestProvider.createFinancialRequest);
