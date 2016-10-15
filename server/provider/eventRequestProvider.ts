@@ -25,7 +25,6 @@ export class EventRequestProvider {
 	updateEventRequest = (req:any, res:any) => {
 		this.storageManager.updateEventRequest(req.params.id, req.body)
 		.then((results) => {
-			console.log("RESULTS ", results);
 			if(results[0] === 1){
 				return this.storageManager.getEventRequestById(req.params.id).then((result) => {
 					res.send(result);
