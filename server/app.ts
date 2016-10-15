@@ -57,6 +57,7 @@ export function congifureRoutes(app:express.Application, storageManager:StorageM
     app.put("/api/eventrequest/:id", eventRequestProvider.updateEventRequest);
 
     app.get("/api/event", eventProvider.getAllEvents);
+    app.post("/api/event", eventProvider.createEvent);
 
     resolve();
   });

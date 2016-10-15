@@ -109,31 +109,31 @@ export class EventTable implements Sequelize.DefineAttributes {
     }
 		this.decorations = {
       "type": Sequelize.STRING(128),
-      "allowNull": false
+      "allowNull": true
     }
 		this.food_drinks = {
       "type": Sequelize.STRING(128),
-      "allowNull": false
+      "allowNull": true
     }
 		this.filming_photos = {
       "type": Sequelize.STRING(128),
-      "allowNull": false
+      "allowNull": true
     }
 		this.music = {
       "type": Sequelize.STRING(128),
-      "allowNull": false
+      "allowNull": true
     }
 		this.posters_art = {
       "type": Sequelize.STRING(128),
-      "allowNull": false
+      "allowNull": true
     }
 		this.computer_issues = {
       "type": Sequelize.STRING(128),
-      "allowNull": false
+      "allowNull": true
     }
 		this.other_needs = {
       "type": Sequelize.STRING(128),
-      "allowNull": false
+      "allowNull": true
     }
   }
 }

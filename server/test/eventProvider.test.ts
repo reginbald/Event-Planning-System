@@ -12,11 +12,15 @@ describe('EventProvider', () => {
 	var mocResponse: MockResponse;
 	var subject: EventProvider;
 	var result: any;
+	var newEvent:any;
 
 	beforeEach(function() {
 		mockStorage = new MockStorageManager();
 		mocResponse = new MockResponse();
 		subject = new EventProvider(mockStorage);
+		newEvent = {
+			name: "event"
+		}
 	});
 
 	describe('get all events', () => {
@@ -30,6 +34,13 @@ describe('EventProvider', () => {
 			mockStorage.EventList = [{id: "0", name: "name1"}, {id: "1", name: "name2"}]
 			subject.getAllEvents(req, mocResponse);
 			expect(mocResponse.data).to.deep.equal([{id: "0", name: "name1"}, {id:"1", name: "name2"}]);
+		});
+	});
+	describe('create event', () => {
+		it('should return the newly created event', () => {
+			let req = new MockRequest(newEvent, {});
+			subject.createEvent(req, mocResponse);
+			expect(mocResponse.data).to.deep.equal(newEvent);
 		});
 	});
 });

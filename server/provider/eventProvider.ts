@@ -14,4 +14,12 @@ export class EventProvider {
 			res.send(results);
 		})
 	};
+	createEvent = (req:any, res:any) => {
+		this.storageManager.createEvent(req.body)
+		.then((results) => {
+			res.send(results);
+		}).catch((err) => {
+			res.status(500).send(err.message);
+		});
+	};
 }
