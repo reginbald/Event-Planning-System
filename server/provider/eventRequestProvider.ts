@@ -14,8 +14,8 @@ export class EventRequestProvider {
 			res.send(results);
 		})
 	};
-	createEventRequests = (req:any, res:any) => {
-		this.storageManager.createEventRequests(req.body)
+	createEventRequest = (req:any, res:any) => {
+		this.storageManager.createEventRequest(req.body)
 		.then((results) => {
 			res.send(results);
 		}).catch((err) => {

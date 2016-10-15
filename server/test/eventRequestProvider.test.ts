@@ -44,12 +44,12 @@ describe('eventRequestProvider', () => {
 	describe('create event reqeust', () => {
 		it('should return the created event request', () => {
 			let req = new MockRequest(newEventRequest);
-			subject.createEventRequests(req, mocResponse);
+			subject.createEventRequest(req, mocResponse);
 			expect(mocResponse.data).to.deep.equal(newEventRequest);
 		});
 		it('should return error on missing properties', () => {
 			let req = new MockRequest({budget:"900", clientid:"Vlad", error: true});
-			subject.createEventRequests(req, mocResponse);
+			subject.createEventRequest(req, mocResponse);
 			expect(mocResponse.data).to.deep.equal("error");
 		});
 	});
