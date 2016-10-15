@@ -13,19 +13,26 @@ import {TaskModel, TaskInstance, TaskAttribute, TaskTable} from "../models/task"
 
 export interface StorageManager {
     init(force?:boolean):any;
+
     getEmployees():any;
     createEmployee(details:any):any;
     getEmployeeByUsernameAndPassword(username:string, password:string):any;
+
     getClients():any;
     createClient(details:any):any;
+
     getEventRequests():any;
     getEventRequestById(id:any):any;
     createEventRequest(details:any):any;
     updateEventRequest(id:any, details:any):any;
+
     getEvents():any;
     createEvent(details:any):any;
+
     getApplications():any;
     createApplication(details:any):any;
+
+    getTasks():any;
 
     getFinancialRequests():any;
     createFinancialRequest(details:any):any;
@@ -179,5 +186,8 @@ export class SequelizeStorageManager implements StorageManager {
     }
     createApplication(details:any):any {
         return this.Application.create(details);
+    }
+    getTasks():any {
+        return this.Task.findAll();
     }
 }

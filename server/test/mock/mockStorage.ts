@@ -7,6 +7,7 @@ export class MockStorageManager implements StorageManager {
 	public EventRequestList: any[];
 	public EventList: any[];
 	public ApplicationList: any[];
+	public TaskList: any[];
 	public FinancialRequestList: any[];
 	public RecruitmentRequestList: any[];
 
@@ -16,6 +17,7 @@ export class MockStorageManager implements StorageManager {
 		this.EventRequestList = [];
 		this.EventList = [];
 		this.ApplicationList = [];
+		this.TaskList = [];
 		this.FinancialRequestList = [];
 		this.RecruitmentRequestList = [];
 	}
@@ -150,5 +152,9 @@ export class MockStorageManager implements StorageManager {
 		}
 		this.ApplicationList.push(details);
 		return new MockPromise(details);
+	}
+	//------------------------Task------------------------
+	getTasks():any {
+		return new MockPromise(this.TaskList);
 	}
 }
