@@ -7,6 +7,7 @@ import Paper from 'material-ui/Paper';
 import CreateButton from './CreateButton';
 import TextInput from '../common/TextInput';
 import DatePicker from 'material-ui/DatePicker';
+import RadioButton from 'material-ui/RadioButton';
 /**
  * Dialog with action buttons. The actions are passed in as an array of React objects,
  * in this example [FlatButtons](/#/components/flat-button).
@@ -25,11 +26,24 @@ export default class CreateNewEventRequest extends Component {
   constructor(props){
     super(props);
     this.state = {
-      open:false
+      open:false,
+      newEventRequest: {
+        clientname: '',
+        eventtype: '',
+        numberofattendees: '',
+        budget: '',
+        startdate: '',
+        enddate:'',
+        decorations:false,
+        parties: false,
+        photosfilming: false,
+        softhotdrinks:false,
+      }
     }
     this.handleOpen = this.handleOpen.bind(this);
     this.handleClose = this.handleClose.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.setDecorations = this.setDecorations.bind(this);
   }
 
   handleOpen() {
@@ -45,6 +59,17 @@ export default class CreateNewEventRequest extends Component {
     this.setState({open: false});
   }
 
+  setDecorations() {
+    console.log("setDecorations called")
+    console.log(this);
+    this.setState({
+      newEventRequest: Object.assign({}, this.state.newEventRequest, {
+        decorations: !this.state.newEventRequest.decorations
+      })
+    });
+    //console.log("current state", this.state.newEventRequest.decorations);
+    //this.state.newEventRequest.decorations = !this.state.newEventRequest.decorations;
+  }
   render() {
     const actions = [
       <FlatButton
@@ -87,6 +112,10 @@ export default class CreateNewEventRequest extends Component {
                 placeholder="Expected budget in $" />
               <DatePicker hintText="Start Date" />
               <DatePicker hintText="End Date" />
+                <RadioButton
+                onClick={this.setDecorations}
+                label="Decorations"
+                checked={this.state.newEventRequest.decorations === true} />
             </Dialog>
           </Paper>
         </MuiThemeProvider>
