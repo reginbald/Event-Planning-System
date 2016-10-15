@@ -14,6 +14,7 @@ export interface TaskAttribute {
 export interface TaskInstance extends Sequelize.Instance<TaskAttribute>, TaskAttribute {
   getTask: Sequelize.BelongsToGetAssociationMixin<TaskInstance>;
   createTask: Sequelize.BelongsToCreateAssociationMixin<TaskInstance>;
+  dataValues:any;
 }
 
 export interface TaskModel extends Sequelize.Model<TaskInstance, TaskAttribute> { }
