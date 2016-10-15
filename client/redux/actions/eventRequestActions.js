@@ -14,7 +14,7 @@ export function newEventRequestError(data) {
 
 export function createNewEventRequest(data) {
   return dispatch => {
-    return request.post('api/eventrequest')
+    return request.post('api/request/event')
     .send(data)
     .set('Accept', 'application/json')
     .then(response => {
@@ -35,13 +35,12 @@ export function loadEventRequestSuccess(eventrequests) {
 
 export function getAllEventRequests() {
   return dispatch => {
-    return request.get('api/eventrequest')
+    return request.get('api/request/event')
     .set('Accept', 'application/json')
     .then(response => {
       if(response) {
         console.log('received response: ', response);
         dispatch(loadEventRequestSuccess(response.body));
-        //return browserHistory.push("/profile");
       }
       else{
         // Do something here if we have time

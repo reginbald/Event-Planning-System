@@ -9,7 +9,6 @@ export function getAllClients() {
   return dispatch => {
     return mockClientApi.getAllClients().then(clients => {
       if(clients) {
-        console.log("clients ", clients);
         dispatch(getAllClientsSuccess(clients));
       }
       else{

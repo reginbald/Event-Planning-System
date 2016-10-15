@@ -6,11 +6,12 @@ import * as eventRequestActions from '../../redux/actions/eventRequestActions';
 import {Grid, Row, Col } from 'react-flexbox-grid';
 import CreateNewEventRequest from './CreateNewEventRequest';
 import AddNewClient from './AddNewClient';
+import EventRequestList from './EventRequestList';
 
 class ProfilePage extends Component {
   constructor(props) {
     super(props);
-    console.log(props);
+    console.log('profile props:', props);
   }
   /**
   * Render different Profileviews for different actors.
@@ -32,7 +33,9 @@ class ProfilePage extends Component {
     return(
         <Grid>
           <Row>
-            <Col xs />
+            <Col xs >
+              <EventRequestList />
+            </Col>
             <Col xs >
               <AddNewClient />
             </Col>
@@ -41,7 +44,6 @@ class ProfilePage extends Component {
       </Grid>
     );
   }
-
   customerServiceProfile() {
 
       return(
