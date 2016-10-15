@@ -41,7 +41,6 @@ export function loginuser(creds) {
     .send(creds)
     .set('Accept', 'application/json')
     .then(user => {
-      console.log(user);
       if(user) {
         dispatch(userLoginSuccess(user.body));
         return browserHistory.push("/profile");

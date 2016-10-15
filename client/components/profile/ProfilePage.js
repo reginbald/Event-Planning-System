@@ -9,16 +9,14 @@ import CreateNewEventRequest from './CreateNewEventRequest';
 class ProfilePage extends Component {
   constructor(props) {
     super(props);
-    console.log("check if clients are in props below");
     console.log(props);
   }
   /**
   * Render different Profileviews for different actors.
   */
   renderContent() {
-    console.log('render content called');
     const { user } = this.props;
-    console.log('this is the user sarah  ', user);
+
     switch (user.access) {
       case 0:
         return this.customerServiceProfile();
@@ -30,12 +28,12 @@ class ProfilePage extends Component {
   }
 
   seniorCustomerServiceProfile() {
-    console.log('senior customer service profile called');
+
     <Grid>
       <Row>
         <Col xs />
         <Col xs >
-          <CreateNewEventRequest />
+          <h1>Senior Customer Service</h1>
         </Col>
         <Col xs />
       </Row>
@@ -43,7 +41,7 @@ class ProfilePage extends Component {
   }
 
   customerServiceProfile() {
-      console.log('cust profile callled');
+
       return(
         <Grid>
           <Row>
