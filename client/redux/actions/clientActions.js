@@ -8,7 +8,7 @@ export function getAllClientsSuccess(clients) {
 
 export function getAllClients() {
   return dispatch => {
-    return MockClientApi.getAllClients().then(clients => {
+    return mockClientApi.getAllClients().then(clients => {
       if(clients) {
         console.log("clients ", clients);
         dispatch(getAllClientsSuccess(clients));
