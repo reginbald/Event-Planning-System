@@ -1,4 +1,4 @@
-import mockClientApi from '../../api/MockClientApi';
+import mockClientApi from '../../api/mockClientApi';
 import * as types from './actionTypes';
 
 export function getAllClientsSuccess(clients) {
