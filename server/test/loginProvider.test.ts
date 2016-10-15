@@ -22,12 +22,12 @@ describe('loginProvider', () => {
 
 	describe('login', () => {
 		it('should give error if username is missing', () => {
-			let req = new MockRequest({});
+			let req = new MockRequest({}, {});
 			subject.login(req, mocResponse);
 			expect(mocResponse.data).to.deep.equal("ERROR_412_USERNAME");
 		});
 		it('should give error if password is missing', () => {
-			let req = new MockRequest({"username": "user"});
+			let req = new MockRequest({"username": "user"}, {});
 			subject.login(req, mocResponse);
 			expect(mocResponse.data).to.deep.equal("ERROR_412_PASSWORD");
 		});
@@ -35,7 +35,7 @@ describe('loginProvider', () => {
 
 	describe('Successful login', () => {
 		it('should return employee details', () => {
-			let req = new MockRequest({ "username": "user", "password": "pass"});
+			let req = new MockRequest({ "username": "user", "password": "pass"}, {});
 			subject.login(req, mocResponse);
 			expect(mocResponse.data).to.deep.equal({username: "user", password: "pass"});
 		});
@@ -43,7 +43,7 @@ describe('loginProvider', () => {
 
 	describe('Unsuccessful login', () => {
 		it('should return LOGIN_ERROR', () => {
-			let req = new MockRequest({ "username": "user", "password": ""});
+			let req = new MockRequest({ "username": "user", "password": ""}, {});
 			subject.login(req, mocResponse);
 			expect(mocResponse.data).to.deep.equal("ERROR_LOGIN");
 		});

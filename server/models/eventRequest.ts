@@ -9,7 +9,7 @@ export interface EventRequestAttribute {
 		from?:string;
 		to?:string;
 		attendees?:string;
-		decoratons?:string;
+		decorations?:string;
 		parties?:string;
 		photos_filming?:string;
 		breakfast_lunch_dinner?:string;
@@ -38,7 +38,7 @@ export class EventRequestTable implements Sequelize.DefineAttributes {
 	from:any;
 	to:any;
 	attendees:any;
-	decoratons:any;
+	decorations:any;
 	parties:any;
 	photos_filming:any;
 	breakfast_lunch_dinner:any;
@@ -51,16 +51,17 @@ export class EventRequestTable implements Sequelize.DefineAttributes {
 
   constructor() {
     this.id = {
-      "type": Sequelize.UUID,
+      "type": Sequelize.INTEGER,
       "allowNull": false,
-      "primaryKey": true
+      "primaryKey": true,
+      "autoIncrement": true 
     }
 		this.name = {
       "type": Sequelize.STRING(128),
       "allowNull": false
     }
 		this.clientid = {
-      "type": Sequelize.UUID,
+      "type": Sequelize.INTEGER,
       "allowNull": true,
 			"foreignKey": true,
 			"references": {
@@ -84,7 +85,7 @@ export class EventRequestTable implements Sequelize.DefineAttributes {
       "type": Sequelize.INTEGER,
       "allowNull": true
     }
-		this.decoratons = {
+		this.decorations = {
       "type": Sequelize.BOOLEAN,
       "allowNull": true
     }
@@ -110,15 +111,15 @@ export class EventRequestTable implements Sequelize.DefineAttributes {
     }
 		this.discount = {
 			"type": Sequelize.INTEGER,
-      "allowNull": false
+      "allowNull": true
 		}
 		this.financial_feedback = {
 			"type": Sequelize.STRING(128),
-      "allowNull": false
+      "allowNull": true
 		}
 		this.status = {
 			"type": Sequelize.STRING(128),
-      "allowNull": false
+      "allowNull": true
 		}
   }
 }

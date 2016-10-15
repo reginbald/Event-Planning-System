@@ -30,12 +30,13 @@ export class TaskTable implements Sequelize.DefineAttributes {
 
   constructor() {
     this.id = {
-      "type": Sequelize.UUID,
+      "type": Sequelize.INTEGER,
       "allowNull": false,
-      "primaryKey": true
+      "primaryKey": true,
+      "autoIncrement": true 
     }
 		this.applicationid = {
-      "type": Sequelize.UUID,
+      "type": Sequelize.INTEGER,
       "allowNull": false,
 			"foreignKey": true,
 			"references": {
@@ -44,7 +45,7 @@ export class TaskTable implements Sequelize.DefineAttributes {
 			}
     }
 		this.employeeid = {
-      "type": Sequelize.UUID,
+      "type": Sequelize.INTEGER,
       "allowNull": false,
 			"foreignKey": true,
 			"references": {
@@ -53,7 +54,7 @@ export class TaskTable implements Sequelize.DefineAttributes {
 			}
     }
 		this.senderid = {
-      "type": Sequelize.UUID,
+      "type": Sequelize.INTEGER,
       "allowNull": false,
 			"foreignKey": true,
 			"references": {

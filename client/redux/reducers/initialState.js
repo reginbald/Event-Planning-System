@@ -7,7 +7,8 @@ export default {
     access:'',
     name: '',
     email: '',
-    departmentid: ''
+    departmentid: '',
+    job_title:''
   },
   eventrequests: [],
   clients:[]

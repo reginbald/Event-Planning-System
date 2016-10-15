@@ -14,7 +14,15 @@ import {TaskModel, TaskInstance, TaskAttribute, TaskTable} from "../models/task"
 export interface StorageManager {
     init(force?:boolean):any;
     getEmployees():any;
+    createEmployee(details:any):any;
     getEmployeeByUsernameAndPassword(username:string, password:string):any;
+    getClients():any;
+    createClient(details:any):any;
+    getEventRequests():any;
+    getEventRequestById(id:any):any;
+    createEventRequest(details:any):any;
+    updateEventRequest(id:any, details:any):any;
+    getEvents():any;
 }
 
 export class SequelizeStorageManager implements StorageManager {
@@ -54,7 +62,7 @@ export class SequelizeStorageManager implements StorageManager {
                 "createdAt": "created_at",
                 "updatedAt": "updated_at",
             });
-        this.EventRequest = this.sequelize.define<EventRequestInstance, EventRequestAttribute>("EventRequest", new EventTable(),
+        this.EventRequest = this.sequelize.define<EventRequestInstance, EventRequestAttribute>("EventRequest", new EventRequestTable(),
             {
                 "tableName": "eventrequest",
                 "timestamps": true,
@@ -108,6 +116,10 @@ export class SequelizeStorageManager implements StorageManager {
         return this.Employee.findAll();
     }
 
+    createEmployee(details:any):any{
+        return this.Employee.create(details);
+    }
+
     getEmployeeByUsernameAndPassword(username:string, password:string):any {
         return this.Employee.find({where: {username: username, password: password}});
     }
@@ -115,5 +127,26 @@ export class SequelizeStorageManager implements StorageManager {
     //------------------------------CLIENT------------------------------
     getClients():any{
         return this.Client.findAll();
+    }
+    createClient(details:any):any{
+        return this.Client.create(details);
+    }
+
+    //------------------------------EVENT REQUEST------------------------------
+    getEventRequests():any{
+        return this.EventRequest.findAll();
+    }
+    getEventRequestById(id:any):any{
+        return this.EventRequest.find({ where: { "id": id } });
+    }
+    createEventRequest(details:any):any{
+        return this.EventRequest.create(details);
+    }
+    updateEventRequest(id:any, details:any):any{
+        return this.EventRequest.update(details, { where: { "id": id } });
+    }
+    //------------------------------EVENT------------------------------
+    getEvents():any{
+        return this.Event.findAll();
     }
 }

@@ -20,7 +20,8 @@ export default function userReducer(state = initialState.user, action) {
         access: user.access,
         name: user.name,
         email: user.email,
-        departmentid: user.departmentid
+        departmentid: user.departmentid,
+        job_title: user.job_title
       })
     case types.USER_LOGIN_ERROR:
       console.log('error was dispatched');
