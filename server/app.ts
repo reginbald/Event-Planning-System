@@ -9,6 +9,7 @@ import {EmployeeProvider} from "./provider/employeeProvider";
 import {ClientProvider} from "./provider/clientProvider";
 import {EventRequestProvider} from "./provider/eventRequestProvider";
 import {EventProvider} from "./provider/eventProvider";
+import {ApplicationProvider} from "./provider/applicationProvider"
 import {FinancialRequestProvider} from "./provider/financialRequestProvider"
 import {RecruitmentRequestProvider} from "./provider/recruitmentRequestProvider"
 import * as webpack from 'webpack';
@@ -44,6 +45,7 @@ export function congifureRoutes(app:express.Application, storageManager:StorageM
     let clientProvider = new ClientProvider(storageManager);
     let eventRequestProvider = new EventRequestProvider(storageManager);
     let eventProvider = new EventProvider(storageManager);
+    let applicationProvider = new ApplicationProvider(storageManager);
     let financialRequestProvider = new FinancialRequestProvider(storageManager);
     let recruitmentRequestProvider = new RecruitmentRequestProvider(storageManager);
 
@@ -61,6 +63,8 @@ export function congifureRoutes(app:express.Application, storageManager:StorageM
 
     app.get("/api/event", eventProvider.getAllEvents);
     app.post("/api/event", eventProvider.createEvent);
+
+    app.get("/api/application", applicationProvider.getAllApplications);
 
     app.get("/api/request/financial", financialRequestProvider.getAllFinancialRequests);
     app.post("/api/request/financial", financialRequestProvider.createFinancialRequest);
