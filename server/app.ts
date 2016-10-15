@@ -1,5 +1,6 @@
 import * as express from "express";
 import {StorageManager, SequelizeStorageManager} from "./provider/storage";
+import {LoginProvider} from "./provider/loginProvider";
 import {EmployeeProvider} from "./provider/employeeProvider";
 import * as webpack from 'webpack';
 const path = require('path');
@@ -30,12 +31,14 @@ export function configureExpress():Promise<any> {
 
 export function congifureRoutes(app:express.Application, storageManager:StorageManager):Promise<any> {
   return new Promise((resolve) => {
+    let loginProvider = new LoginProvider(storageManager);
     let employeeProvider = new EmployeeProvider(storageManager);
-    console.log("env" + process.env.NODE_ENV);
-    //app.get('/', (req, res) => {
-    //  res.sendFile(path.join(__dirname, '../index.html'));
-    //});
+
+    app.get("/api/login/:user/:pass", loginProvider.login);
+
     app.get("/api/employee", employeeProvider.getAllEmployees);
+
+    
 
     resolve();
   });
