@@ -9,6 +9,7 @@ export interface EmployeeAttribute {
     name?:string;
     email?:string;
     departmentid?:string;
+    job_title?:string;
 }
 
 export interface EmployeeInstance extends Sequelize.Instance<EmployeeAttribute>, EmployeeAttribute {
@@ -27,6 +28,7 @@ export class EmployeeTable implements Sequelize.DefineAttributes {
   name:any;
   email:any;
   departmentid:any;
+  job_title:any;
 
   constructor() {
     this.id = {
@@ -67,6 +69,10 @@ export class EmployeeTable implements Sequelize.DefineAttributes {
 				"model": "department",
 				"key":   "id"
 			}
+    }
+    this.job_title = {
+      "type": Sequelize.STRING(128),
+      "allowNull": true
     }
   }
 }
