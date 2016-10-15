@@ -24,6 +24,7 @@ export interface StorageManager {
     updateEventRequest(id:any, details:any):any;
     getEvents():any;
     createEvent(details:any):any;
+    getFinancialRequests():any;
 }
 
 export class SequelizeStorageManager implements StorageManager {
@@ -132,7 +133,6 @@ export class SequelizeStorageManager implements StorageManager {
     createClient(details:any):any{
         return this.Client.create(details);
     }
-
     //------------------------------EVENT REQUEST------------------------------
     getEventRequests():any{
         return this.EventRequest.findAll();
@@ -152,5 +152,9 @@ export class SequelizeStorageManager implements StorageManager {
     }
     createEvent(details:any):any{
         return this.Event.create(details);
+    }
+    //------------------------------FINANCIAL REQUEST------------------------------
+    getFinancialRequests():any{
+        return this.FinancialRequest.findAll();
     }
 }

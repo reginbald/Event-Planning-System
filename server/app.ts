@@ -9,6 +9,7 @@ import {EmployeeProvider} from "./provider/employeeProvider";
 import {ClientProvider} from "./provider/clientProvider";
 import {EventRequestProvider} from "./provider/eventRequestProvider";
 import {EventProvider} from "./provider/eventProvider";
+import {FinancialRequestProvider} from "./provider/financialRequestProvider"
 import * as webpack from 'webpack';
 const path = require('path');
 
@@ -31,7 +32,6 @@ export function configureExpress():Promise<any> {
       app.use(express.static('dist'));
 
       app.use(bodyParser.json());
-      //app.use(bodyParser.urlencoded({extended: false}));
       return app;
     });
 }
@@ -43,6 +43,7 @@ export function congifureRoutes(app:express.Application, storageManager:StorageM
     let clientProvider = new ClientProvider(storageManager);
     let eventRequestProvider = new EventRequestProvider(storageManager);
     let eventProvider = new EventProvider(storageManager);
+    let financialRequestProvider = new FinancialRequestProvider(storageManager);
 
     app.post("/api/login", loginProvider.login);
 
@@ -58,6 +59,8 @@ export function congifureRoutes(app:express.Application, storageManager:StorageM
 
     app.get("/api/event", eventProvider.getAllEvents);
     app.post("/api/event", eventProvider.createEvent);
+
+    app.get("/api/financialrequest", financialRequestProvider.getAllFinancialRequests);
 
     resolve();
   });

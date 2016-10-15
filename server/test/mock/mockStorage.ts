@@ -6,12 +6,14 @@ export class MockStorageManager implements StorageManager {
 	public ClientList: any[];
 	public EventRequestList: any[];
 	public EventList: any[];
+	public FinancialRequestList: any[];
 
 	constructor() {
 		this.EmployeeList = [];
 		this.ClientList = [];
 		this.EventRequestList = [];
 		this.EventList = [];
+		this.FinancialRequestList = [];
 	}
 
 	init(force?:boolean):any{
@@ -110,4 +112,9 @@ export class MockStorageManager implements StorageManager {
 		this.EventList.push(details);
 		return new MockPromise(details);
 	}
+
+	//------------------------FINANCIAL REQUEST------------------------
+	getFinancialRequests():any{
+		return new MockPromise(this.FinancialRequestList);
+	};
 }
