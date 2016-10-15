@@ -10,7 +10,6 @@ export interface ApplicationAttribute {
 export interface ApplicationInstance extends Sequelize.Instance<ApplicationAttribute>, ApplicationAttribute {
   getApplication: Sequelize.BelongsToGetAssociationMixin<ApplicationInstance>;
   createApplication: Sequelize.BelongsToCreateAssociationMixin<ApplicationInstance>;
-  dataValues:any;
 }
 
 export interface ApplicationModel extends Sequelize.Model<ApplicationInstance, ApplicationAttribute> { }

@@ -12,7 +12,6 @@ export interface FinancialRequestAttribute {
 export interface FinancialRequestInstance extends Sequelize.Instance<FinancialRequestAttribute>, FinancialRequestAttribute {
   getFinancialRequest: Sequelize.BelongsToGetAssociationMixin<FinancialRequestInstance>;
   createFinancialRequest: Sequelize.BelongsToCreateAssociationMixin<FinancialRequestInstance>;
-  dataValues:any;
 }
 
 export interface FinancialRequestModel extends Sequelize.Model<FinancialRequestInstance, FinancialRequestAttribute> { }
