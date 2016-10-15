@@ -1,6 +1,6 @@
 import {StorageManager} from "./storage";
 
-export class EventProvider {
+export class FinancialRequestProvider {
 
 	private storageManager:StorageManager;
 
@@ -8,14 +8,15 @@ export class EventProvider {
 			this.storageManager = storageManager;
 	}
 
-	getAllEvents = (req:any, res:any) => {
-		this.storageManager.getEvents()
+	getAllFinancialRequests = (req:any, res:any) => {
+		this.storageManager.getFinancialRequests()
 		.then((results) => {
 			res.send(results);
 		})
 	};
-	createEvent = (req:any, res:any) => {
-		this.storageManager.createEvent(req.body)
+
+	createFinancialRequest = (req:any, res:any) => {
+		this.storageManager.createFinancialRequest(req.body)
 		.then((results) => {
 			res.send(results);
 		}).catch((err) => {

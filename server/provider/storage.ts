@@ -23,6 +23,10 @@ export interface StorageManager {
     createEventRequest(details:any):any;
     updateEventRequest(id:any, details:any):any;
     getEvents():any;
+    createEvent(details:any):any;
+    getFinancialRequests():any;
+    createFinancialRequest(details:any):any;
+    getRecruitmentRequests():any;
 }
 
 export class SequelizeStorageManager implements StorageManager {
@@ -125,28 +129,41 @@ export class SequelizeStorageManager implements StorageManager {
     }
 
     //------------------------------CLIENT------------------------------
-    getClients():any{
+    getClients():any {
         return this.Client.findAll();
     }
-    createClient(details:any):any{
+    createClient(details:any):any {
         return this.Client.create(details);
     }
-
     //------------------------------EVENT REQUEST------------------------------
-    getEventRequests():any{
+    getEventRequests():any {
         return this.EventRequest.findAll();
     }
-    getEventRequestById(id:any):any{
+    getEventRequestById(id:any):any {
         return this.EventRequest.find({ where: { "id": id } });
     }
-    createEventRequest(details:any):any{
+    createEventRequest(details:any):any {
         return this.EventRequest.create(details);
     }
-    updateEventRequest(id:any, details:any):any{
+    updateEventRequest(id:any, details:any):any {
         return this.EventRequest.update(details, { where: { "id": id } });
     }
     //------------------------------EVENT------------------------------
-    getEvents():any{
+    getEvents():any {
         return this.Event.findAll();
+    }
+    createEvent(details:any):any {
+        return this.Event.create(details);
+    }
+    //------------------------------FINANCIAL REQUEST------------------------------
+    getFinancialRequests():any {
+        return this.FinancialRequest.findAll();
+    }
+    createFinancialRequest(details:any):any {
+        return this.FinancialRequest.create(details);
+    }
+    //------------------------------RECRUITMENT REQUEST------------------------------
+    getRecruitmentRequests():any {
+        return this.RecruitmentRequest.findAll();
     }
 }

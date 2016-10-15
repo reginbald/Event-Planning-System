@@ -9,6 +9,8 @@ import {EmployeeProvider} from "./provider/employeeProvider";
 import {ClientProvider} from "./provider/clientProvider";
 import {EventRequestProvider} from "./provider/eventRequestProvider";
 import {EventProvider} from "./provider/eventProvider";
+import {FinancialRequestProvider} from "./provider/financialRequestProvider"
+import {RecruitmentRequestProvider} from "./provider/recruitmentRequestProvider"
 import * as webpack from 'webpack';
 const path = require('path');
 
@@ -31,7 +33,6 @@ export function configureExpress():Promise<any> {
       app.use(express.static('dist'));
 
       app.use(bodyParser.json());
-      //app.use(bodyParser.urlencoded({extended: false}));
       return app;
     });
 }
@@ -43,6 +44,8 @@ export function congifureRoutes(app:express.Application, storageManager:StorageM
     let clientProvider = new ClientProvider(storageManager);
     let eventRequestProvider = new EventRequestProvider(storageManager);
     let eventProvider = new EventProvider(storageManager);
+    let financialRequestProvider = new FinancialRequestProvider(storageManager);
+    let recruitmentRequestProvider = new RecruitmentRequestProvider(storageManager);
 
     app.post("/api/login", loginProvider.login);
 
@@ -52,11 +55,17 @@ export function congifureRoutes(app:express.Application, storageManager:StorageM
     app.get("/api/client", clientProvider.getAllClients);
     app.post("/api/client", clientProvider.createClient);
 
-    app.get("/api/eventrequest", eventRequestProvider.getAllEventRequests);
-    app.post("/api/eventrequest", eventRequestProvider.createEventRequest);
-    app.put("/api/eventrequest/:id", eventRequestProvider.updateEventRequest);
+    app.get("/api/request/event", eventRequestProvider.getAllEventRequests);
+    app.post("/api/request/event", eventRequestProvider.createEventRequest);
+    app.put("/api/request/event/:id", eventRequestProvider.updateEventRequest);
 
     app.get("/api/event", eventProvider.getAllEvents);
+    app.post("/api/event", eventProvider.createEvent);
+
+    app.get("/api/request/financial", financialRequestProvider.getAllFinancialRequests);
+    app.post("/api/request/financial", financialRequestProvider.createFinancialRequest);
+
+    app.get("/api/request/recruitment", recruitmentRequestProvider.getAllRecruitmentRequests);
 
     resolve();
   });

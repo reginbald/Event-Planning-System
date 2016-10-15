@@ -6,24 +6,27 @@ export class MockStorageManager implements StorageManager {
 	public ClientList: any[];
 	public EventRequestList: any[];
 	public EventList: any[];
+	public FinancialRequestList: any[];
+	public RecruitmentRequestList: any[];
 
 	constructor() {
 		this.EmployeeList = [];
 		this.ClientList = [];
 		this.EventRequestList = [];
 		this.EventList = [];
+		this.FinancialRequestList = [];
+		this.RecruitmentRequestList = [];
 	}
 
 	init(force?:boolean):any{
 			return true;
 	};
-
 	//------------------------EMPLOYEE------------------------
-	getEmployees():any{
+	getEmployees():any {
 		return new MockPromise(this.EmployeeList);
 	};
 
-	createEmployee(details:any):any{
+	createEmployee(details:any):any {
 		if (details.error) {
 			let promise = new MockPromise(details)
 			promise.throw = true;
@@ -33,7 +36,7 @@ export class MockStorageManager implements StorageManager {
 		return new MockPromise(details);
     }
 
-	getEmployeeByUsernameAndPassword(username:any, password:any):any{
+	getEmployeeByUsernameAndPassword(username:any, password:any):any {
 			for (let e of this.EmployeeList) {
 				if (e.username === username && e.password === password) {
 					return new MockPromise(e);
@@ -41,12 +44,11 @@ export class MockStorageManager implements StorageManager {
 			}
 			return new MockPromise(null);
 	};
-
 	//------------------------CLIENT------------------------
-	getClients():any{
+	getClients():any {
 		return new MockPromise(this.ClientList);
 	};
-	createClient(details:any):any{
+	createClient(details:any):any {
 		if (details.error) {
 			let promise = new MockPromise(details)
 			promise.throw = true;
@@ -55,9 +57,8 @@ export class MockStorageManager implements StorageManager {
 		this.ClientList.push(details);
 		return new MockPromise(details);
 	}
-
 	//------------------------EVENT REQUEST------------------------
-	getEventRequests():any{
+	getEventRequests():any {
 		return new MockPromise(this.EventRequestList);
 	};
 	getEventRequestById(id:any):any{
@@ -69,7 +70,7 @@ export class MockStorageManager implements StorageManager {
 		return new MockPromise({});
 	};
 
-	createEventRequest(details:any):any{
+	createEventRequest(details:any):any {
 		if (details.error) {
 			let promise = new MockPromise(details)
 			promise.throw = true;
@@ -78,7 +79,7 @@ export class MockStorageManager implements StorageManager {
 		this.EventRequestList.push(details);
 		return new MockPromise(details);
 	}
-	updateEventRequest(id:any, details:any):any{
+	updateEventRequest(id:any, details:any):any {
 		if (details.error) {
 			let promise = new MockPromise(details)
 			promise.throw = true;
@@ -96,9 +97,34 @@ export class MockStorageManager implements StorageManager {
 		}
 		return new MockPromise([0]);
 	}
-
 	//------------------------EVENT------------------------
-	getEvents(){
+	getEvents() {
 		return new MockPromise(this.EventList);
 	}
+	createEvent(details:any) {
+		if (details.error) {
+			let promise = new MockPromise(details)
+			promise.throw = true;
+			return promise;
+		}
+		this.EventList.push(details);
+		return new MockPromise(details);
+	}
+	//------------------------FINANCIAL REQUEST------------------------
+	getFinancialRequests():any {
+		return new MockPromise(this.FinancialRequestList);
+	};
+	createFinancialRequest(details:any):any {
+		if (details.error) {
+			let promise = new MockPromise(details)
+			promise.throw = true;
+			return promise;
+		}
+		this.FinancialRequestList.push(details);
+		return new MockPromise(details);
+	}
+	//------------------------RECRUITMENT REQUEST------------------------
+	getRecruitmentRequests():any {
+		return new MockPromise(this.RecruitmentRequestList);
+	};
 }
