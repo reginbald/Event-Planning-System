@@ -16,8 +16,9 @@ export interface StorageManager {
     getEmployees():any;
     getEmployeeByUsernameAndPassword(username:string, password:string):any;
     getClients():any;
+    createClient(details:any):any;
     getEventRequests():any;
-    createEventRequests(details:any):any;
+    createEventRequest(details:any):any;
 }
 
 export class SequelizeStorageManager implements StorageManager {
@@ -119,12 +120,15 @@ export class SequelizeStorageManager implements StorageManager {
     getClients():any{
         return this.Client.findAll();
     }
+    createClient(details:any):any{
+        return this.Client.create(details);
+    }
 
     //------------------------------EVENT REQUEST------------------------------
     getEventRequests():any{
         return this.EventRequest.findAll();
     }
-    createEventRequests(details:any):any{
+    createEventRequest(details:any):any{
         return this.EventRequest.create(details);
     }
 }

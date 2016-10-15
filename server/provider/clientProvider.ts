@@ -14,4 +14,12 @@ export class ClientProvider {
 			res.send(results);
 		})
 	};
+	createClient = (req:any, res:any) => {
+		this.storageManager.createClient(req.body)
+		.then((results) => {
+			res.send(results);
+		}).catch((err) => {
+			res.status(500).send(err.message);
+		});
+	};
 }

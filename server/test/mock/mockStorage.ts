@@ -34,19 +34,28 @@ export class MockStorageManager implements StorageManager {
 	getClients():any{
 		return new MockPromise(this.ClientList);
 	};
+	createClient(details:any):any{
+		if (details.error) {
+			let promise = new MockPromise(details)
+			promise.throw = true;
+			return promise;
+		}
+		this.ClientList.push(details);
+		return new MockPromise(details);
+	}
 
 	//------------------------EVENT REQUEST------------------------
 	getEventRequests():any{
 		return new MockPromise(this.EventRequestList);
 	};
 
-	createEventRequests(details:any):any{
+	createEventRequest(details:any):any{
 		if (details.error) {
 			let promise = new MockPromise(details)
 			promise.throw = true;
 			return promise;
 		}
-		this.EventRequestList.push(details)
+		this.EventRequestList.push(details);
 		return new MockPromise(details);
 	}
 }
