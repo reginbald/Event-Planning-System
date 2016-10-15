@@ -20,7 +20,7 @@ export class LoginProvider {
             if (results === null) {
                 res.status(401).send("ERROR_LOGIN");
             } else {
-                res.send(results.dataValues);
+                res.send(results);
             }
         })
     };
