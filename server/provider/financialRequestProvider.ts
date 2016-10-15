@@ -14,4 +14,13 @@ export class FinancialRequestProvider {
 			res.send(results);
 		})
 	};
+
+	createFinancialRequest = (req:any, res:any) => {
+		this.storageManager.createFinancialRequest(req.body)
+		.then((results) => {
+			res.send(results);
+		}).catch((err) => {
+			res.status(500).send(err.message);
+		});
+	};
 }
