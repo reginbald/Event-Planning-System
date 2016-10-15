@@ -25,7 +25,7 @@ const clients = [
 const generateDelay = () => {
   return Math.floor((Math.random()*1000)+400);
 };
-export default class ClientApi {
+export default class mockClientApi {
   static getAllClients() {
     return new Promise((resolve, reject) => {
       setTimeout(() => {

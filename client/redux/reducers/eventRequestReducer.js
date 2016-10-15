@@ -7,11 +7,9 @@ export default function eventRequestReducer(state = initialState.eventrequests, 
       return action.eventrequests;
 
     case types.SEND_NEW_EVENT_REQUEST_SUCCESS:
-      console.log("do something in the reducer");
-      return;
+      return state;
 
     default:
-      console.log("reducer returning default state");
       return state;
   }
 }

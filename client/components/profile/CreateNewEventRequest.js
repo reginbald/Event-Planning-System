@@ -32,7 +32,7 @@ class CreateNewEventRequest extends Component {
         name:'',
         budget: '',
         clientid:'0',
-        eventtype: '',
+        event_type: '',
         numberofattendees: '',
         decorations:false,
         soft_hot_drinks: false,
@@ -69,11 +69,9 @@ class CreateNewEventRequest extends Component {
   };
 
   handleSubmit() {
-    console.log("submitting event request object");
-    console.log(this.state.newEventRequest);
     const finalizedRequest = this.state.newEventRequest;
     this.setState({open: false});
-    console.log(this.props.actions);
+
     this.props.actions.createNewEventRequest(finalizedRequest);
   }
 
@@ -179,7 +177,7 @@ class CreateNewEventRequest extends Component {
                 onChange={this.updateClient}
                 hintText="Select Client" />
               <TextInput
-                name="eventtype"
+                name="event_type"
                 label="Event type"
                 placeholder="Birthday, graduations..."
                 onChange={this.updateEventState}/>

@@ -50,7 +50,8 @@ class HomePage extends Component {
 function mapStateToProps(state, ownProps) {
   let user = {id:'', username:'', password: '', authed:false}
   return {
-    user: state.user
+    user: state.user,
+    eventrequests: state.eventrequests
   };
 }
 function mapDispatchToProps(dispatch) {
