@@ -5,6 +5,7 @@ import * as userActions from '../../redux/actions/userActions';
 import * as eventRequestActions from '../../redux/actions/eventRequestActions';
 import {Grid, Row, Col } from 'react-flexbox-grid';
 import CreateNewEventRequest from './CreateNewEventRequest';
+import AddNewClient from './AddNewClient';
 
 class ProfilePage extends Component {
   constructor(props) {
@@ -28,16 +29,17 @@ class ProfilePage extends Component {
   }
 
   seniorCustomerServiceProfile() {
-
-    <Grid>
-      <Row>
-        <Col xs />
-        <Col xs >
-          <h1>Senior Customer Service</h1>
-        </Col>
-        <Col xs />
-      </Row>
-    </Grid>
+    return(
+        <Grid>
+          <Row>
+            <Col xs />
+            <Col xs >
+              <AddNewClient />
+            </Col>
+            <Col xs />
+          </Row>
+      </Grid>
+    );
   }
 
   customerServiceProfile() {
