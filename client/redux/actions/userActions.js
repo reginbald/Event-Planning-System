@@ -4,6 +4,7 @@ import * as types from './actionTypes';
 import { browserHistory } from  'react-router';
 
 /**
+* Login for all users
 * Param creds: object
 */
 export function userLoginSuccess(user) {
@@ -30,4 +31,15 @@ export function loginuser(creds) {
       throw(error);
     });
   };
+}
+
+/**
+* Customer service officer sends new event request
+* Param data: New Event Request object
+*/
+export function newEventRequestSuccess(data) {
+  return {type: types.USER_LOGIN_SUCCESS, user};
+}
+export function newEventRequestError(data) {
+  return { type: types.USER_LOGIN_ERROR, user}
 }

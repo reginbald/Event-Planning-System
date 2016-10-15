@@ -24,6 +24,7 @@ export interface EventRequestAttribute {
 export interface EventRequestInstance extends Sequelize.Instance<EventRequestAttribute>, EventRequestAttribute {
   getEventRequest: Sequelize.BelongsToGetAssociationMixin<EventRequestInstance>;
   createEventRequest: Sequelize.BelongsToCreateAssociationMixin<EventRequestInstance>;
+  dataValues:any;
 }
 
 export interface EventRequestModel extends Sequelize.Model<EventRequestInstance, EventRequestAttribute> { }

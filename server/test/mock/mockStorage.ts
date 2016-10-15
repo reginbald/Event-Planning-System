@@ -1,19 +1,27 @@
 import {StorageManager} from '../../provider/storage';
+import {MockPromise} from "./mockPromise";
 
 export class MockStorageManager implements StorageManager {
   public EmployeeList: any[];
 
   constructor() {
-    this.EmployeeList = ["1"];
+    this.EmployeeList = [];
   }
 
-  init(force?:boolean):Promise<any> {return new Promise<any>((resolve, reject) => {
-      resolve(true);
-    });
+  init(force?:boolean):any{
+      return true;
   };
 
-  getEmployees():Promise<any>{return new Promise<any[]>((resolve, reject) => {
-      resolve(this.EmployeeList);
-    });
+  getEmployees():any{
+    return new MockPromise({"dataValues": this.EmployeeList});
+  };
+  
+  getEmployeeByUsernameAndPassword(username:any, password:any):any{
+      for (let e of this.EmployeeList) {
+        if (e.username === username && e.password === password) {
+          return new MockPromise({"dataValues": e});
+        }
+      }
+      return new MockPromise(null);
   };
 }
