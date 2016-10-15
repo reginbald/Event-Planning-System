@@ -14,4 +14,12 @@ export class TaskProvider {
 			res.send(results);
 		})
 	};
+	createTask = (req:any, res:any) => {
+		this.storageManager.createTask(req.body)
+		.then((results) => {
+			res.send(results);
+		}).catch((err) => {
+			res.status(500).send(err.message);
+		});
+	};
 }

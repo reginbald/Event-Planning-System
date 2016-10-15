@@ -157,4 +157,13 @@ export class MockStorageManager implements StorageManager {
 	getTasks():any {
 		return new MockPromise(this.TaskList);
 	}
+	createTask(details:any):any {
+		if (details.error) {
+			let promise = new MockPromise(details)
+			promise.throw = true;
+			return promise;
+		}
+		this.TaskList.push(details);
+		return new MockPromise(details);
+	}
 }
