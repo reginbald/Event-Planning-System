@@ -24,19 +24,19 @@ describe('ClientProvider', () => {
 
 	describe('get all clients', () => {
 		it('should return all clients', () => {
-			let req = new MockRequest({});
+			let req = new MockRequest({}, {});
 			subject.getAllClients(req, mocResponse);
 			expect(mocResponse.data).to.deep.equal([{name: "name1"}, {name: "name2"}]);
 		});
 	});
 	describe('create new client', () => {
 		it('should return new client details', () => {
-			let req = new MockRequest(newClient);
+			let req = new MockRequest(newClient, {});
 			subject.createClient(req, mocResponse);
 			expect(mocResponse.data).to.deep.equal(newClient);
 		});
 		it('should return error on missing properties', () => {
-			let req = new MockRequest({name: "name", error: true});
+			let req = new MockRequest({name: "name", error: true}, {});
 			subject.createClient(req, mocResponse);
 			expect(mocResponse.data).to.deep.equal("error");
 		});

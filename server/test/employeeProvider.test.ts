@@ -36,12 +36,12 @@ describe('employeeProvider', () => {
 	});
 	describe('create new employee', () => {
 		it('should return new employee details', () => {
-			let req = new MockRequest(newEmployee);
+			let req = new MockRequest(newEmployee, {});
 			subject.createEmployee(req, mocResponse);
 			expect(mocResponse.data).to.deep.equal(newEmployee);
 		});
 		it('should return error on missing properties', () => {
-			let req = new MockRequest({name: "name", error: true});
+			let req = new MockRequest({name: "name", error: true}, {});
 			subject.createEmployee(req, mocResponse);
 			expect(mocResponse.data).to.deep.equal("error");
 		});

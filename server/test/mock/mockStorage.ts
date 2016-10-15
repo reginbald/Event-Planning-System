@@ -58,6 +58,14 @@ export class MockStorageManager implements StorageManager {
 	getEventRequests():any{
 		return new MockPromise(this.EventRequestList);
 	};
+	getEventRequestById(id:any):any{
+		for (let e of this.EventRequestList) {
+			if (e.id === id) {
+				return new MockPromise(e);
+			}
+		}
+		return new MockPromise({});
+	};
 
 	createEventRequest(details:any):any{
 		if (details.error) {
@@ -67,5 +75,23 @@ export class MockStorageManager implements StorageManager {
 		}
 		this.EventRequestList.push(details);
 		return new MockPromise(details);
+	}
+	updateEventRequest(id:any, details:any):any{
+		if (details.error) {
+			let promise = new MockPromise(details)
+			promise.throw = true;
+			return promise;
+		}
+		for (let e of this.EventRequestList) {
+			if (e.id === id) {
+				for (var property in details) {
+					if (details.hasOwnProperty(property)) {
+						e[property] = details[property];
+					}
+				}
+				return new MockPromise([1]);
+			}
+		}
+		return new MockPromise([0]);
 	}
 }
