@@ -19,7 +19,9 @@ export interface StorageManager {
     getClients():any;
     createClient(details:any):any;
     getEventRequests():any;
+    getEventRequestById(id:any):any;
     createEventRequest(details:any):any;
+    updateEventRequest(id:any, details:any):any;
 }
 
 export class SequelizeStorageManager implements StorageManager {
@@ -133,7 +135,13 @@ export class SequelizeStorageManager implements StorageManager {
     getEventRequests():any{
         return this.EventRequest.findAll();
     }
+    getEventRequestById(id:any):any{
+        return this.EventRequest.find({ where: { "id": id } });
+    }
     createEventRequest(details:any):any{
         return this.EventRequest.create(details);
+    }
+    updateEventRequest(id:any, details:any):any{
+        return this.EventRequest.update(details, { where: { "id": id } });
     }
 }

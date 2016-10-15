@@ -17,7 +17,7 @@ describe('eventRequestProvider', () => {
 	beforeEach(function() {
 		mockStorage = new MockStorageManager();
 		mocResponse = new MockResponse();
-		mockStorage.EventRequestList = [{name: "name1"}, {name: "name2"}]
+		mockStorage.EventRequestList = [{id: "0", name: "name1"}, {id: "1", name: "name2"}]
 		newEventRequest = {
 			budget:"900",
 			clientid:"Vlad",
@@ -36,21 +36,33 @@ describe('eventRequestProvider', () => {
 
 	describe('get all event reqeusts', () => {
 		it('should return all event requests', () => {
-			let req = new MockRequest({});
+			let req = new MockRequest({}, {});
 			subject.getAllEventRequests(req, mocResponse);
-			expect(mocResponse.data).to.deep.equal([{name: "name1"}, {name: "name2"}]);
+			expect(mocResponse.data).to.deep.equal([{id: "0", name: "name1"}, {id:"1", name: "name2"}]);
 		});
 	});
 	describe('create event reqeust', () => {
 		it('should return the created event request', () => {
-			let req = new MockRequest(newEventRequest);
+			let req = new MockRequest(newEventRequest, {});
 			subject.createEventRequest(req, mocResponse);
 			expect(mocResponse.data).to.deep.equal(newEventRequest);
 		});
 		it('should return error on missing properties', () => {
-			let req = new MockRequest({budget:"900", clientid:"Vlad", error: true});
+			let req = new MockRequest({budget:"900", clientid:"Vlad", error: true}, {});
 			subject.createEventRequest(req, mocResponse);
 			expect(mocResponse.data).to.deep.equal("error");
+		});
+	});
+	describe('update event reqeust', () => {
+		it('should return the updated event request', () => {
+			let req = new MockRequest({name: 'update'}, {id: "1"});
+			subject.updateEventRequest(req, mocResponse);
+			expect(mocResponse.data).to.deep.equal({id: "1", name: "update"});
+		});
+		it('should return the updated event request', () => {
+			let req = new MockRequest({name: 'update'}, {id: "99"});
+			subject.updateEventRequest(req, mocResponse);
+			expect(mocResponse.data).to.deep.equal("ERROR_404_EVENT_REQUEST_NOT_FOUND");
 		});
 	});
 });

@@ -22,4 +22,19 @@ export class EventRequestProvider {
 			res.status(500).send(err.message);
 		});
 	};
+	updateEventRequest = (req:any, res:any) => {
+		this.storageManager.updateEventRequest(req.params.id, req.body)
+		.then((results) => {
+			console.log("RESULTS ", results);
+			if(results[0] === 1){
+				return this.storageManager.getEventRequestById(req.params.id).then((result) => {
+					res.send(result);
+				})
+			} else {
+				res.status(404).send("ERROR_404_EVENT_REQUEST_NOT_FOUND");
+			}
+		}).catch((err) => {
+			res.status(500).send(err.message);
+		});
+	};
 }
