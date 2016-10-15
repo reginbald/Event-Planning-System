@@ -18,9 +18,9 @@ export class LoginProvider {
         let results:any = this.storageManager.getEmployeeByUsernameAndPassword(req.body.username, req.body.password);
         results.then((results) => {
             if (results === null) {
-                res.send("ERROR_LOGIN");
+                res.status(401).send("ERROR_LOGIN");
             } else {
-                res.status(401).send(results.dataValues);
+                res.send(results.dataValues);
             }
         })
     };
