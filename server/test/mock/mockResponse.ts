@@ -1,7 +1,12 @@
 export class MockResponse {
   data: any;
+  stat: any;
   send = (data:any) => {
-    console.log("send " + data);
     this.data = data;
+    return this;
   };
+  status = (status:any) => {
+    this.stat = status;
+    return this;
+  }
 }
