@@ -1,4 +1,8 @@
+/// <reference path="../typings/express/express.d.ts" />
+/// <reference path="../typings/body-parser/body-parser.d.ts" />
+
 import * as express from "express";
+import * as bodyParser from "body-parser";
 import {StorageManager, SequelizeStorageManager} from "./provider/storage";
 import {LoginProvider} from "./provider/loginProvider";
 import {EmployeeProvider} from "./provider/employeeProvider";
@@ -23,7 +27,7 @@ export function configureExpress():Promise<any> {
         }
       app.use(express.static('dist'));
 
-      //app.use(bodyParser.json());
+      app.use(bodyParser.json());
       //app.use(bodyParser.urlencoded({extended: false}));
       return app;
     });
@@ -34,7 +38,7 @@ export function congifureRoutes(app:express.Application, storageManager:StorageM
     let loginProvider = new LoginProvider(storageManager);
     let employeeProvider = new EmployeeProvider(storageManager);
 
-    app.get("/api/login/:user/:pass", loginProvider.login);
+    app.post("/api/login", loginProvider.login);
 
     app.get("/api/employee", employeeProvider.getAllEmployees);
 
