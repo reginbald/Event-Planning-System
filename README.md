@@ -5,7 +5,6 @@ https://event-planning-sep.herokuapp.com/
 ## Prerequisites
 ```
 npm install -g typescript
-npm install -g tsd
 npm install -g webpack
 ```
 
@@ -17,11 +16,16 @@ tsd install
 
 ## Compile
 ```
-tsc
+npm run build
+```
+
+## Test
+```
+npm test
 ```
 
 ## Run
 
 ```
-node server/app.js
+npm start
 ```
