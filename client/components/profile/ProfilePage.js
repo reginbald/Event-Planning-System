@@ -30,11 +30,13 @@ class ProfilePage extends Component {
   }
 
   seniorCustomerServiceProfile() {
+    const { eventRequests } = this.props;
     return(
         <Grid>
           <Row>
             <Col xs >
-              <EventRequestList />
+              <EventRequestList
+                eventrequests={eventRequests}/>
             </Col>
             <Col xs >
               <AddNewClient />
@@ -68,9 +70,10 @@ class ProfilePage extends Component {
   }
 }
 function mapStateToProps(state, ownProps) {
+  console.log("state from mstp: ", state);
   return {
     user: state.user,
-    eventrequests: state.eventrequests,
+    eventRequests: state.eventRequest,
     clients: state.clients
   };
 }
