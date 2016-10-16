@@ -5,11 +5,13 @@ import * as userActions from '../../redux/actions/userActions';
 import * as eventRequestActions from '../../redux/actions/eventRequestActions';
 import * as budgetRequestActions from '../../redux/actions/budgetRequestActions';
 import * as clientActions from '../../redux/actions/clientActions';
+import * as employeeActions from '../../redux/actions/employeeActions';
 import {Grid, Row, Col } from 'react-flexbox-grid';
 import CreateNewEventRequest from './CreateNewEventRequest';
 import AddNewClient from './AddNewClient';
 import BudgetRequest from './BudgetRequest';
 import Clients from './Clients';
+import Employees from './Employees';
 import EventRequestList from './EventRequestList';
 
 class ProfilePage extends Component {
@@ -37,6 +39,7 @@ class ProfilePage extends Component {
   financialManagerProfile() {
     this.props.actions.getAllBudgetRequests();
     this.props.actions.getAllClients();
+    this.props.actions.getAllEmployees();
     return(
         <Grid>
           <Row>
@@ -44,6 +47,7 @@ class ProfilePage extends Component {
             <Col xs >
               <BudgetRequest />
               <Clients />
+              <Employees />
             </Col>
             <Col xs />
           </Row>
@@ -103,7 +107,8 @@ function mapDispatchToProps(dispatch) {
       userActions, 
       eventRequestActions, 
       budgetRequestActions, 
-      clientActions
+      clientActions,
+      employeeActions
     ), dispatch)
   };
 }
