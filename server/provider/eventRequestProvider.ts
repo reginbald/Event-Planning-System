@@ -23,20 +23,19 @@ export class EventRequestProvider {
 			res.status(500).send(err.message);
 		});
 	};
-	updateEventRequest = (req:any, res:any) => {
-		this.storageManager.updateEventRequest(req.params.id, req.body)
-		.then((results) => {
+	updateEventRequest = (id:number, update:any, succ:Function, err:Function) => {
+		this.storageManager.updateEventRequest(id, update, (results) => {
 			if(results[0] === 1){
-				return this.storageManager.getEventRequestById(+req.params.id, (eventRequest) => {
-					res.send(eventRequest);
+				return this.storageManager.getEventRequestById(id, (eventRequest) => {
+					succ(eventRequest);
 				}, (error) => {
-					res.status(500).send(error.message);
+					err(error.message);
 				})
 			} else {
-				res.status(404).send("ERROR_404_EVENT_REQUEST_NOT_FOUND");
+				err("EVENT_REQUEST_NOT_FOUND");
 			}
-		}).catch((error) => {
-			res.status(500).send(error.message);
+		}, (error) => {
+			err(error.message);
 		});
 	};
 	updateEventRequestStatus = (id:number, status:string, succ, err) => {

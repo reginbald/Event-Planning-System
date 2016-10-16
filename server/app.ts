@@ -5,7 +5,6 @@ import * as express from "express";
 import * as bodyParser from "body-parser";
 import {StorageManager, SequelizeStorageManager} from "./provider/storage";
 import {RouteProvider} from "./provider/routeProvider";
-import {AccessProvider} from "./provider/accessProvider";
 import {EmployeeProvider} from "./provider/employeeProvider";
 import {ClientProvider} from "./provider/clientProvider";
 import {EventRequestProvider} from "./provider/eventRequestProvider";
@@ -38,6 +37,7 @@ export function configureExpress():Promise<any> {
 			app.use(bodyParser.json());
 			app.use(function(req, res, next) { // Allow while development is ongoing
 				res.header("Access-Control-Allow-Origin", "*");
+				res.header("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE,OPTIONS");
 				res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
 				next();
 			});
@@ -48,7 +48,6 @@ export function configureExpress():Promise<any> {
 export function congifureRoutes(app:express.Application, storageManager:StorageManager):Promise<any> {
   return new Promise((resolve) => {
 		let routeProvider = new RouteProvider(storageManager);
-    let accessProvider = new AccessProvider(storageManager);
     let employeeProvider = new EmployeeProvider(storageManager);
     let clientProvider = new ClientProvider(storageManager);
     let eventRequestProvider = new EventRequestProvider(storageManager);
@@ -71,7 +70,7 @@ export function congifureRoutes(app:express.Application, storageManager:StorageM
 
     app.get("/api/request/event", eventRequestProvider.getAllEventRequests);
     app.post("/api/request/event", eventRequestProvider.createEventRequest);
-    app.put("/api/request/event/:id", eventRequestProvider.updateEventRequest);
+    app.put("/api/request/event/:id", routeProvider.putEventRequest);
 		app.put("/api/request/event/:id/status", routeProvider.putEventRequestStatus);
 
     app.get("/api/event", eventProvider.getAllEvents);

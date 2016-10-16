@@ -27,7 +27,7 @@ export interface StorageManager {
     getEventRequests():any;
     getEventRequestById(id:number, succ:Function, err:Function):any;
     createEventRequest(details:any):any;
-    updateEventRequest(id:any, details:any):any;
+    updateEventRequest(id:number, update:any, succ:Function, err:Function):any;
     updateEventRequestStatus(id:number, status:string, succ:Function, err:Function):any;
 
     getEvents():any;
@@ -171,7 +171,7 @@ export class SequelizeStorageManager implements StorageManager {
     getEventRequests():any {
         return this.EventRequest.findAll();
     }
-    getEventRequestById(id:any, succ:Function, err:Function):any {
+    getEventRequestById(id:number, succ:Function, err:Function):any {
         this.EventRequest.find({ where: { "id": id } })
         .then((eventrequest) => {
             return succ(eventrequest);
@@ -183,8 +183,14 @@ export class SequelizeStorageManager implements StorageManager {
     createEventRequest(details:any):any {
         return this.EventRequest.create(details);
     }
-    updateEventRequest(id:any, details:any):any {
-        return this.EventRequest.update(details, { where: { "id": id } });
+    updateEventRequest(id:number, update:any, succ:Function, err:Function):any {
+        this.EventRequest.update(update, { where: { "id": id } })
+        .then((eventRequest) => {
+            return succ(eventRequest);
+        })
+        .catch((error) => {
+            return err(error.message);
+        });
     }
     updateEventRequestStatus(id:number, status:string, succ:Function, err:Function):any {
         this.EventRequest.update({status: status}, { where: { "id": id } })

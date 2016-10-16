@@ -55,14 +55,14 @@ describe('eventRequestProvider', () => {
 	});
 	describe('update event request', () => {
 		it('should return the updated event request', () => {
-			let req = new MockRequest({name: 'update'}, {id: "1"});
-			subject.updateEventRequest(req, mocResponse);
-			expect(mocResponse.data).to.deep.equal({id: "1", name: "update", status: "status"});
+			subject.updateEventRequest(1, {name: 'update'}, (updated) => {
+				expect(updated).to.deep.equal({id: "1", name: "update", status: "status"});
+			}, ()=>{});
 		});
 		it('should return the updated event request', () => {
-			let req = new MockRequest({name: 'update'}, {id: "99"});
-			subject.updateEventRequest(req, mocResponse);
-			expect(mocResponse.data).to.deep.equal("ERROR_404_EVENT_REQUEST_NOT_FOUND");
+			subject.updateEventRequest(99, {name: 'update'}, () => {}, (error)=>{
+				expect(error).to.deep.equal("EVENT_REQUEST_NOT_FOUND");
+			});
 		});
 	});
 	describe('update event request status', () => {
