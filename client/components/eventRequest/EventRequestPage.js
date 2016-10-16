@@ -45,7 +45,6 @@ class EventRequestPage extends Component {
 	}
 }
 function mapStateToProps(state, ownProps) {
-	console.log("asDASD ", state);
 	return {
 		eventRequests: state.eventRequest
 	};
