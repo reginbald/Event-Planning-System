@@ -19,7 +19,6 @@ export class EventRequestProvider {
 		.then((results) => {
 			res.send(results);
 		}).catch((err) => {
-			console.log(err);
 			res.status(500).send(err.message);
 		});
 	};

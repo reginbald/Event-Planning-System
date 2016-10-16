@@ -1,33 +1,4 @@
 
-/*const EventRequestList = ({eventrequests}) => {
-  console.log("eventrequest list has: ", eventrequests)
-  return (
-    <div>
-      {eventrequests.map(eventrequest =>
-      <MuiThemeProvider key={eventrequest.id}>
-        <Card>
-          <CardHeader
-            title={eventrequest.event_type}
-            subtitle={eventrequest.name}
-            actAsExpander={true}
-            showExpandableButton={true} />
-          <CardActions>
-            <FlatButton label="Deny" />
-            <FlatButton label="Accept" />
-          </CardActions>
-          <CardText expandable={true}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-            Donec mattis pretium massa. Aliquam erat volutpat. Nulla facilisi.
-            Donec vulputate interdum sollicitudin. Nunc lacinia auctor quam sed pellentesque.
-            Aliquam dui mauris, mattis quis lacus id, pellentesque lobortis odio.
-          </CardText>
-        </Card>
-      </MuiThemeProvider>)}
-    </div>
-  );
-};
-
-export default EventRequestList;*/
 import React, {Component, PropTypes} from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -42,21 +13,14 @@ import TextInput from '../common/TextInput';
 class EventRequestList extends Component {
   constructor(props){
     super(props);
-    console.log('eventrequestlist props:', props);
   }
 
   handleAccept(requestid) {
-    console.log("accepting");
-    console.log('requestid', requestid);
-    console.log(this.props.actions);
     this.props.actions.updateEventRequest({id:requestid, status:"accepted"});
-    // send put on status="accepted"
-
   }
 
   handleDeny(requestid) {
-    console.log("denying");
-    console.log("requestid", requestid);
+    this.props.actions.updateEventRequest({id:requestid, status:"denied"});
   }
   render() {
     const { eventRequests } = this.props;
