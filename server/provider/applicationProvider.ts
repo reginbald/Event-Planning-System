@@ -1,6 +1,6 @@
 import {StorageManager} from "./storage";
 
-export class RecruitmentRequestProvider {
+export class ApplicationProvider {
 
 	private storageManager:StorageManager;
 
@@ -8,14 +8,14 @@ export class RecruitmentRequestProvider {
 			this.storageManager = storageManager;
 	}
 
-	getAllRecruitmentRequests = (req:any, res:any) => {
-		this.storageManager.getRecruitmentRequests()
+	getAllApplications = (req:any, res:any) => {
+		this.storageManager.getApplications()
 		.then((results) => {
 			res.send(results);
 		})
 	};
-	createRecruitmentRequest = (req:any, res:any) => {
-		this.storageManager.createRecruitmentRequest(req.body)
+	createApplication = (req:any, res:any) => {
+		this.storageManager.createApplication(req.body)
 		.then((results) => {
 			res.send(results);
 		}).catch((err) => {

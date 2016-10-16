@@ -6,6 +6,8 @@ export class MockStorageManager implements StorageManager {
 	public ClientList: any[];
 	public EventRequestList: any[];
 	public EventList: any[];
+	public ApplicationList: any[];
+	public TaskList: any[];
 	public FinancialRequestList: any[];
 	public RecruitmentRequestList: any[];
 
@@ -14,6 +16,8 @@ export class MockStorageManager implements StorageManager {
 		this.ClientList = [];
 		this.EventRequestList = [];
 		this.EventList = [];
+		this.ApplicationList = [];
+		this.TaskList = [];
 		this.FinancialRequestList = [];
 		this.RecruitmentRequestList = [];
 	}
@@ -127,4 +131,39 @@ export class MockStorageManager implements StorageManager {
 	getRecruitmentRequests():any {
 		return new MockPromise(this.RecruitmentRequestList);
 	};
+	createRecruitmentRequest(details:any):any {
+		if (details.error) {
+			let promise = new MockPromise(details)
+			promise.throw = true;
+			return promise;
+		}
+		this.RecruitmentRequestList.push(details);
+		return new MockPromise(details);
+	}
+	//------------------------APPLICATION------------------------
+	getApplications():any {
+		return new MockPromise(this.ApplicationList);
+	}
+	createApplication(details:any):any {
+		if (details.error) {
+			let promise = new MockPromise(details)
+			promise.throw = true;
+			return promise;
+		}
+		this.ApplicationList.push(details);
+		return new MockPromise(details);
+	}
+	//------------------------Task------------------------
+	getTasks():any {
+		return new MockPromise(this.TaskList);
+	}
+	createTask(details:any):any {
+		if (details.error) {
+			let promise = new MockPromise(details)
+			promise.throw = true;
+			return promise;
+		}
+		this.TaskList.push(details);
+		return new MockPromise(details);
+	}
 }

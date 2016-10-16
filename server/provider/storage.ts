@@ -13,20 +13,32 @@ import {TaskModel, TaskInstance, TaskAttribute, TaskTable} from "../models/task"
 
 export interface StorageManager {
     init(force?:boolean):any;
+
     getEmployees():any;
     createEmployee(details:any):any;
     getEmployeeByUsernameAndPassword(username:string, password:string):any;
+
     getClients():any;
     createClient(details:any):any;
+
     getEventRequests():any;
     getEventRequestById(id:any):any;
     createEventRequest(details:any):any;
     updateEventRequest(id:any, details:any):any;
+
     getEvents():any;
     createEvent(details:any):any;
+
+    getApplications():any;
+    createApplication(details:any):any;
+
+    getTasks():any;
+    createTask(details:any):any;
+
     getFinancialRequests():any;
     createFinancialRequest(details:any):any;
     getRecruitmentRequests():any;
+    createRecruitmentRequest(details:any):any;
 }
 
 export class SequelizeStorageManager implements StorageManager {
@@ -165,5 +177,22 @@ export class SequelizeStorageManager implements StorageManager {
     //------------------------------RECRUITMENT REQUEST------------------------------
     getRecruitmentRequests():any {
         return this.RecruitmentRequest.findAll();
+    }
+    createRecruitmentRequest(details:any):any {
+        return this.RecruitmentRequest.create(details);
+    }
+    //------------------------------APPLICATION------------------------------
+    getApplications():any {
+        return this.Application.findAll();
+    }
+    createApplication(details:any):any {
+        return this.Application.create(details);
+    }
+    //------------------------------TASK------------------------------
+    getTasks():any {
+        return this.Task.findAll();
+    }
+    createTask(details:any):any {
+        return this.Task.create(details);
     }
 }
