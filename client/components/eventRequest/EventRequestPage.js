@@ -212,7 +212,7 @@ class EventRequestPage extends Component {
 }
 function mapStateToProps(state, ownProps) {
 	return {
-		eventRequests: state.eventRequest
+		eventRequests: state.eventRequest.filter(x => x.status === "SENIOR_ACCEPT")
 	};
 }
 function mapDispatchToProps(dispatch) {

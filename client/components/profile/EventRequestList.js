@@ -60,7 +60,7 @@ function mapStateToProps(state, ownProps) {
   return {
     user: state.user,
     clients: state.clients,
-    eventRequests: state.eventRequest.filter(e => e.status === ""),
+    eventRequests: state.eventRequest.filter(e => e.status === "PENDING"),
     events: state.events
   };
 }

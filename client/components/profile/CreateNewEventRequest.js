@@ -40,7 +40,7 @@ class CreateNewEventRequest extends Component {
         parties: false,
         from: '',
         to:'',
-        status: '',
+        status: 'PENDING',
         financial_feedback: '',
         discount:''
       }
