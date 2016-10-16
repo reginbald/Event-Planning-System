@@ -7,6 +7,7 @@ import * as employeeActions from '../../redux/actions/employeeActions';
 import {Grid, Row, Col } from 'react-flexbox-grid';
 import CreateNewEventRequest from './CreateNewEventRequest';
 import AddNewClient from './AddNewClient';
+import BudgetRequest from './BudgetRequest';
 import EventRequestList from './EventRequestList';
 import CreateApplication from './CreateApplication';
 
@@ -25,6 +26,8 @@ class ProfilePage extends Component {
         return this.customerServiceProfile();
       case 1:
         return this.seniorCustomerServiceProfile();
+      case 2:
+        return this.financialManagerProfile();
       case 4:
         if(user.departmentid === 1) {
           return this.productionDepartmentManagerProfile();
@@ -32,6 +35,7 @@ class ProfilePage extends Component {
         if(user.departmentid === 2){
           return this.serviceDepartmentManagerProfile();
         }
+
       default:
         return <h1>default</h1>;
     }
@@ -44,6 +48,20 @@ class ProfilePage extends Component {
           <Row>
             <Col xs >
               <CreateApplication />
+            </Col>
+            <Col xs />
+          </Row>
+        </Grid>
+      );
+    }
+
+  financialManagerProfile() {
+    return(
+        <Grid>
+          <Row>
+            <Col xs />
+            <Col xs >
+              <BudgetRequest />
             </Col>
             <Col xs />
           </Row>
