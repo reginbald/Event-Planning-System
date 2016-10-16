@@ -38,7 +38,7 @@ class BudgetRequestPage extends Component {
 							<TableRowColumn>{element.eventid}</TableRowColumn>
 							<TableRowColumn>{element.amount}</TableRowColumn>
 							<TableRowColumn>{element.reason}</TableRowColumn>
-							<TableRowColumn>{element.created_at}</TableRowColumn>
+							<TableRowColumn>{Date(element.created_at)}</TableRowColumn>
 						</TableRow>;
 					})}
 					</TableBody>
