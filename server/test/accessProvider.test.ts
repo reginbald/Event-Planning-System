@@ -22,30 +22,30 @@ describe('AccessProvider', () => {
 
 	describe('login', () => {
 		it('should give error if username is missing', () => {
-			let req = new MockRequest({}, {});
-			subject.login(req, mocResponse);
-			expect(mocResponse.data).to.deep.equal("ERROR_412_USERNAME");
+			subject.login("", "pass", () => {}, (error) => {
+				expect(error).to.deep.equal("UNAUTHORIZED");
+			});
 		});
 		it('should give error if password is missing', () => {
-			let req = new MockRequest({"username": "user"}, {});
-			subject.login(req, mocResponse);
-			expect(mocResponse.data).to.deep.equal("ERROR_412_PASSWORD");
+			subject.login("user", "", () => {}, (error) => {
+				expect(error).to.deep.equal("UNAUTHORIZED");
+			});
 		});
 	});
 
 	describe('Successful login', () => {
 		it('should return employee details', () => {
-			let req = new MockRequest({ "username": "user", "password": "pass"}, {});
-			subject.login(req, mocResponse);
-			expect(mocResponse.data).to.deep.equal({id: 0, username: "user", password: "pass", access: 0});
+			subject.login("user", "pass", (employee) => {
+				expect(employee).to.deep.equal({id: 0, username: "user", access: 0});
+			}, () => {});
 		});
 	});
 
 	describe('Unsuccessful login', () => {
-		it('should return LOGIN_ERROR', () => {
-			let req = new MockRequest({ "username": "user", "password": ""}, {});
-			subject.login(req, mocResponse);
-			expect(mocResponse.data).to.deep.equal("ERROR_LOGIN");
+		it('should return UNAUTHORIZED', () => {
+			subject.login("error", "error", () => {}, (error) => {
+				expect(error).to.deep.equal("UNAUTHORIZED");
+			});
 		});
 	});
 

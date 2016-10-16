@@ -18,7 +18,7 @@ export interface StorageManager {
     getEmployeeById(id:number, succ:Function, err:Function):any;
     getEmployeesForDepartmentId(id:any):any;
     createEmployee(details:any):any;
-    getEmployeeByUsernameAndPassword(username:string, password:string):any;
+    getEmployeeByUsernameAndPassword(username:string, password:string, succ:Function, err:Function):any;
     
 
     getClients():any;
@@ -140,7 +140,7 @@ export class SequelizeStorageManager implements StorageManager {
         .then((employee) => {
             return succ(employee);
         }).catch((error) => {
-            return succ(error);
+            return succ(error.message);
         });
     }
     getEmployeesForDepartmentId(id:any):any {
@@ -149,8 +149,13 @@ export class SequelizeStorageManager implements StorageManager {
     createEmployee(details:any):any{
         return this.Employee.create(details);
     }
-    getEmployeeByUsernameAndPassword(username:string, password:string):any {
-        return this.Employee.find({where: {username: username, password: password}});
+    getEmployeeByUsernameAndPassword(username:string, password:string, succ:Function, err:Function):any {
+        this.Employee.find({where: {username: username, password: password}})
+        .then((employee) => {
+            return succ(employee);
+        }).catch((error) => {
+            return succ(error.message);
+        });
     }
 
     //------------------------------CLIENT------------------------------
