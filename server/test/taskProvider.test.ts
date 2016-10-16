@@ -16,7 +16,7 @@ describe('TaskProvider', () => {
 	beforeEach(function() {
 		mockStorage = new MockStorageManager();
 		mocResponse = new MockResponse();
-		mockStorage.TaskList = [{id: "0", applicationid: "0"}, {id: "1", applicationid: "1"}];
+		mockStorage.TaskList = [{id: "0", applicationid: "0", employeeid: "0"}, {id: "1", applicationid: "1", employeeid: "1"}];
 		subject = new TaskProvider(mockStorage);
 		newTask = {
 			"applicationid": 2,
@@ -32,7 +32,14 @@ describe('TaskProvider', () => {
 		it('should return all tasks', () => {
 			let req = new MockRequest({}, {});
 			subject.getAllTasks(req, mocResponse);
-			expect(mocResponse.data).to.deep.equal([{id: "0", applicationid: "0"}, {id: "1", applicationid: "1"}]);
+			expect(mocResponse.data).to.deep.equal([{id: "0", applicationid: "0", employeeid: "0"}, {id: "1", applicationid: "1", employeeid: "1"}]);
+		});
+	});
+	describe('get tasks for employee id', () => {
+		it('should return all tasks for employee id', () => {
+			let req = new MockRequest({}, {id: "0"});
+			subject.getTasksForEmployeeId(req, mocResponse);
+			expect(mocResponse.data).to.deep.equal([{id: "0", applicationid: "0", employeeid: "0"}]);
 		});
 	});
 	describe('create task', () => {

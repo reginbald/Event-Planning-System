@@ -14,6 +14,14 @@ export class TaskProvider {
 			res.send(results);
 		})
 	};
+	getTasksForEmployeeId = (req:any, res:any) => {
+		this.storageManager.getTasksForEmployeeId(req.params.id)
+		.then((results) => {
+			res.send(results);
+		}).catch((err) => {
+			res.status(500).send(err.message);
+		});
+	};
 	createTask = (req:any, res:any) => {
 		this.storageManager.createTask(req.body)
 		.then((results) => {
