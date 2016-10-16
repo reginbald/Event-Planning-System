@@ -31,7 +31,7 @@ class CreateNewEventRequest extends Component {
       newEventRequest: {
         name:'',
         budget: '',
-        clientid:'0',
+        clientid:'',
         event_type: '',
         numberofattendees: '',
         decorations:false,
@@ -71,7 +71,6 @@ class CreateNewEventRequest extends Component {
   handleSubmit() {
     const finalizedRequest = this.state.newEventRequest;
     this.setState({open: false});
-
     this.props.actions.createNewEventRequest(finalizedRequest);
   }
 
@@ -83,18 +82,14 @@ class CreateNewEventRequest extends Component {
   }
 
   updateStartDate(event,date) {
-    this.setState({
-      newEventRequest: Object.assign({}, this.state.newEventRequest, {
-        startdate: date
-      })
-    });
+    let newEventRequest = this.state.newEventRequest;
+    newEventRequest['from'] = date;
+    return this.setState({newEventRequest, newEventRequest});
   }
   updateEndDate(event,date) {
-    this.setState({
-      newEventRequest: Object.assign({}, this.state.newEventRequest, {
-        enddate: date
-      })
-    });
+    let newEventRequest = this.state.newEventRequest;
+    newEventRequest['to'] = date;
+    return this.setState({newEventRequest, newEventRequest});
   }
 
   setDecorations() {
@@ -137,7 +132,7 @@ class CreateNewEventRequest extends Component {
     this.setState({
       optionValue: value,
       newEventRequest: Object.assign({}, this.state.newEventRequest, {
-        clientid: index
+        clientid: value
       })
     })
   }
@@ -191,10 +186,10 @@ class CreateNewEventRequest extends Component {
                 placeholder="Expected budget in $"
                 onChange={this.updateEventState}/>
               <DatePicker
-                hintText="Start Date"
+                hintText="From"
                 onChange={this.updateStartDate}/>
               <DatePicker
-                hintText="End Date"
+                hintText="To"
                 onChange={this.updateEndDate}/>
                 <RadioButton
                 onClick={this.setDecorations}
@@ -227,7 +222,8 @@ class CreateNewEventRequest extends Component {
 function mapStateToProps(state, ownProps) {
   return {
     user: state.user,
-    clients: state.clients
+    clients: state.clients,
+    eventRequests: state.eventRequest
   };
 }
 function mapDispatchToProps(dispatch) {

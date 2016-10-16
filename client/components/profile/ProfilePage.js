@@ -7,11 +7,11 @@ import {Grid, Row, Col } from 'react-flexbox-grid';
 import CreateNewEventRequest from './CreateNewEventRequest';
 import AddNewClient from './AddNewClient';
 import BudgetRequest from './BudgetRequest';
+import EventRequestList from './EventRequestList';
 
 class ProfilePage extends Component {
   constructor(props) {
     super(props);
-    console.log(props);
   }
   /**
   * Render different Profileviews for different actors.
@@ -46,19 +46,20 @@ class ProfilePage extends Component {
   }
 
   seniorCustomerServiceProfile() {
+    const { eventRequests } = this.props;
     return(
         <Grid>
           <Row>
-            <Col xs />
+            <Col xs >
+              <EventRequestList />
+            </Col>
             <Col xs >
               <AddNewClient />
             </Col>
-            <Col xs />
           </Row>
       </Grid>
     );
   }
-
   customerServiceProfile() {
 
       return(
@@ -85,7 +86,7 @@ class ProfilePage extends Component {
 function mapStateToProps(state, ownProps) {
   return {
     user: state.user,
-    eventrequests: state.eventrequests,
+    eventRequests: state.eventRequest,
     clients: state.clients
   };
 }

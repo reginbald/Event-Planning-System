@@ -1,4 +1,5 @@
 import request from 'superagent';
+import API_PATH from './apiConfig';
 import * as types from './actionTypes';
 
 /**
@@ -14,7 +15,8 @@ export function newEventRequestError(data) {
 
 export function createNewEventRequest(data) {
   return dispatch => {
-    return request.post('api/eventrequest')
+    return request
+    .post(API_PATH + 'request/event')
     .send(data)
     .set('Accept', 'application/json')
     .then(response => {
@@ -35,13 +37,37 @@ export function loadEventRequestSuccess(eventrequests) {
 
 export function getAllEventRequests() {
   return dispatch => {
-    return request.get('api/eventrequest')
+    return request
+    .get(API_PATH + 'request/event')
     .set('Accept', 'application/json')
     .then(response => {
       if(response) {
-        console.log('received response: ', response);
         dispatch(loadEventRequestSuccess(response.body));
-        //return browserHistory.push("/profile");
+      }
+      else{
+        // Do something here if we have time
+      }
+    }).catch(error => {
+      throw(error);
+    });
+  };
+}
+
+export function updateEventRequestSuccess(eventrequest) {
+  return {type: types.UPDATE_EVENT_REQUEST_SUCCESS, eventrequest};
+}
+
+export function updateEventRequest(data) {
+  const id = data.id;
+  const status = { status: data.status };
+  return dispatch => {
+    return request
+    .put(API_PATH + 'request/event/' + id + '/status')
+    .send(status)
+    .set('Accept', 'application/json')
+    .then(response => {
+      if(response) {
+        dispatch(updateEventRequestSuccess(response.body));
       }
       else{
         // Do something here if we have time
