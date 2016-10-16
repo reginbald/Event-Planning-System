@@ -9,6 +9,9 @@ import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
 import FlatButton from 'material-ui/FlatButton';
 import TextInput from '../common/TextInput';
 
+const cardStyle = {
+  margin:12
+};
 
 class EventRequestList extends Component {
   constructor(props){
@@ -28,7 +31,7 @@ class EventRequestList extends Component {
       <div>
         {eventRequests.map(eventRequest =>
         <MuiThemeProvider key={eventRequest.id}>
-          <Card>
+          <Card style={cardStyle}>
             <CardHeader
               title={eventRequest.event_type}
               subtitle={eventRequest.name}

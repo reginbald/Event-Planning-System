@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as userActions from '../../redux/actions/userActions';
 import * as eventRequestActions from '../../redux/actions/eventRequestActions';
+import * as employeeActions from '../../redux/actions/employeeActions';
 import {Grid, Row, Col } from 'react-flexbox-grid';
 import CreateNewEventRequest from './CreateNewEventRequest';
 import AddNewClient from './AddNewClient';
@@ -37,6 +38,7 @@ class ProfilePage extends Component {
   }
 
   productionDepartmentManagerProfile() {
+    this.props.actions.getEmployeesForDepartment(1);
     return(
         <Grid>
           <Row>
@@ -97,13 +99,12 @@ function mapStateToProps(state, ownProps) {
   return {
     user: state.user,
     eventRequests: state.eventRequest,
-    clients: state.clients,
-    employees: state.employees
+    clients: state.clients
   };
 }
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators(Object.assign({}, userActions, eventRequestActions), dispatch)
+    actions: bindActionCreators(Object.assign({}, userActions, employeeActions), dispatch)
   };
 }
 

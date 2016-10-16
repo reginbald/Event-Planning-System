@@ -21,7 +21,8 @@ class CreateApplication extends Component {
     this.state = {
       open:false,
       newApplication: {
-        tasks:[]
+        departmendid: null,
+        eventid: null  
       }
     }
     this.handleOpen = this.handleOpen.bind(this);
@@ -51,6 +52,7 @@ class CreateApplication extends Component {
   }
 
   render() {
+
     const actions = [
       <FlatButton
         label="Cancel"
@@ -67,9 +69,9 @@ class CreateApplication extends Component {
     return (
       <div>
         <MuiThemeProvider>
-          <Paper style={paperStyle} zDepth={1} rounded={false} >
+          <Paper zDepth={1} rounded={false} >
             <CreateButton
-              label="Create Event Request"
+              label="Create Application"
               onTouchTap={this.handleOpen}
               secondary={true} />
             <Dialog
@@ -89,10 +91,9 @@ class CreateApplication extends Component {
 }
 
 function mapStateToProps(state, ownProps) {
+  console.log("mstp createapp", state);
   return {
-    user: state.user,
-    clients: state.clients,
-    eventRequests: state.eventRequests
+    employees: state.employees
   };
 }
 function mapDispatchToProps(dispatch) {
