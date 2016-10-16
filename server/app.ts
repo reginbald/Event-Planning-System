@@ -22,21 +22,26 @@ const compiler = webpack(config);
 var port = process.env.PORT || 3000;
 
 export function configureExpress():Promise<any> {
-  return Promise
-    .resolve(express())
-      .then((app) => {
-        if(process.env.NODE_ENV !== 'production') {
-          app.use(require('webpack-dev-middleware')(compiler, {
-            noInfo: true,
-            publicPath:config.output.publicPath
-          }));
-          app.use(require('webpack-hot-middleware')(compiler));
-        }
-      app.use(express.static('dist'));
+	return Promise
+		.resolve(express())
+			.then((app) => {
+				if(process.env.NODE_ENV !== 'production') {
+					app.use(require('webpack-dev-middleware')(compiler, {
+						noInfo: true,
+						publicPath:config.output.publicPath
+					}));
+					app.use(require('webpack-hot-middleware')(compiler));
+				}
+			app.use(express.static('dist'));
 
-      app.use(bodyParser.json());
-      return app;
-    });
+			app.use(bodyParser.json());
+			app.use(function(req, res, next) { // Allow while development is ongoing
+				res.header("Access-Control-Allow-Origin", "*");
+				res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+				next();
+			});
+			return app;
+		});
 }
 
 export function congifureRoutes(app:express.Application, storageManager:StorageManager):Promise<any> {
