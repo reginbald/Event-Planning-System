@@ -37,7 +37,8 @@ export function loadEventRequestSuccess(eventrequests) {
 
 export function getAllEventRequests() {
   return dispatch => {
-    return request.get(API_PATH + 'request/event')
+    return request
+    .get(API_PATH + 'request/event')
     .set('Accept', 'application/json')
     .then(response => {
       if(response) {
@@ -51,3 +52,28 @@ export function getAllEventRequests() {
     });
   };
 }
+
+export function updateEventRequestSuccess(eventrequest) {
+  return {type: types.UPDATE_EVENT_REQUEST_SUCCESS, eventrequest};
+}
+
+export function updateEventRequest(data) {
+  return dispatch => {
+    return request
+    .post(API_PATH + 'request/event/' + data.id + '/status')
+    .send(data.status)
+    .set('Accept', 'application/json')
+    .then(response => {
+      if(response) {
+        dispatch(updateEventRequestSuccess(response.body));
+      }
+      else{
+        // Do something here if we have time
+      }
+    }).catch(error => {
+      throw(error);
+    });
+  };
+}
+
+"/api/request/event/:id/status"

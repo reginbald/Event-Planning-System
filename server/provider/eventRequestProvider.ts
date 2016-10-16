@@ -27,14 +27,31 @@ export class EventRequestProvider {
 		this.storageManager.updateEventRequest(req.params.id, req.body)
 		.then((results) => {
 			if(results[0] === 1){
-				return this.storageManager.getEventRequestById(req.params.id).then((result) => {
-					res.send(result);
+				return this.storageManager.getEventRequestById(+req.params.id, (eventRequest) => {
+					res.send(eventRequest);
+				}, (error) => {
+					res.status(500).send(error.message);
 				})
 			} else {
 				res.status(404).send("ERROR_404_EVENT_REQUEST_NOT_FOUND");
 			}
-		}).catch((err) => {
-			res.status(500).send(err.message);
+		}).catch((error) => {
+			res.status(500).send(error.message);
+		});
+	};
+	updateEventRequestStatus = (id:number, status:string, succ, err) => {
+		this.storageManager.updateEventRequestStatus(id, status, (results) => {
+			if(results[0] === 1){
+				return this.storageManager.getEventRequestById(id, (eventrequest) => {
+					succ(eventrequest);
+				}, (error) => {
+					err("ERROR_DATABASE");
+				});
+			} else {
+				err("EVENT_REQUEST_NOT_FOUND");
+			}
+		}, (error) => {
+			err("ERROR_DATABASE");
 		});
 	};
 }

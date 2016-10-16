@@ -25,9 +25,10 @@ export interface StorageManager {
     createClient(details:any):any;
 
     getEventRequests():any;
-    getEventRequestById(id:any):any;
+    getEventRequestById(id:number, succ:Function, err:Function):any;
     createEventRequest(details:any):any;
     updateEventRequest(id:any, details:any):any;
+    updateEventRequestStatus(id:number, status:string, succ:Function, err:Function):any;
 
     getEvents():any;
     createEvent(details:any):any;
@@ -140,7 +141,7 @@ export class SequelizeStorageManager implements StorageManager {
         .then((employee) => {
             return succ(employee);
         }).catch((error) => {
-            return succ(error.message);
+            return err(error.message);
         });
     }
     getEmployeesForDepartmentId(id:any):any {
@@ -154,7 +155,7 @@ export class SequelizeStorageManager implements StorageManager {
         .then((employee) => {
             return succ(employee);
         }).catch((error) => {
-            return succ(error.message);
+            return err(error.message);
         });
     }
 
@@ -170,14 +171,28 @@ export class SequelizeStorageManager implements StorageManager {
     getEventRequests():any {
         return this.EventRequest.findAll();
     }
-    getEventRequestById(id:any):any {
-        return this.EventRequest.find({ where: { "id": id } });
+    getEventRequestById(id:any, succ:Function, err:Function):any {
+        this.EventRequest.find({ where: { "id": id } })
+        .then((eventrequest) => {
+            return succ(eventrequest);
+        })
+        .catch((error) => {
+            return err(error);
+        });
     }
     createEventRequest(details:any):any {
         return this.EventRequest.create(details);
     }
     updateEventRequest(id:any, details:any):any {
         return this.EventRequest.update(details, { where: { "id": id } });
+    }
+    updateEventRequestStatus(id:number, status:string, succ:Function, err:Function):any {
+        this.EventRequest.update({status: status}, { where: { "id": id } })
+        .then((eventRequest) => {
+            return succ(eventRequest);
+        }).catch((error) => {
+            return err(error.message);
+        });
     }
 
     //------------------------------EVENT------------------------------

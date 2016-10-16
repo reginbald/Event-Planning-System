@@ -88,13 +88,16 @@ export class MockStorageManager implements StorageManager {
 	getEventRequests():any {
 		return new MockPromise(this.EventRequestList);
 	};
-	getEventRequestById(id:any):any{
+	getEventRequestById(id:any, succ:Function, err:Function):any {
+		if (this.dbERROR) {
+			return err("DB_ERROR");
+		}
 		for (let e of this.EventRequestList) {
-			if (e.id === id) {
-				return new MockPromise(e);
+			if (+e.id === id) {
+				return succ(e);
 			}
 		}
-		return new MockPromise({});
+		return succ({});
 	};
 
 	createEventRequest(details:any):any {
@@ -113,7 +116,7 @@ export class MockStorageManager implements StorageManager {
 			return promise;
 		}
 		for (let e of this.EventRequestList) {
-			if (e.id === id) {
+			if (+e.id === +id) {
 				for (var property in details) {
 					if (details.hasOwnProperty(property)) {
 						e[property] = details[property];
@@ -124,6 +127,19 @@ export class MockStorageManager implements StorageManager {
 		}
 		return new MockPromise([0]);
 	}
+	updateEventRequestStatus(id:number, status:string, succ:Function, err:Function):any {
+		if (this.dbERROR) {
+			return err("DB_ERROR");
+		}
+		for (let e of this.EventRequestList) {
+			if (+e.id === id) {
+				e.status = status;
+				return succ([1]);
+			}
+		}
+		return succ([0]);
+	}
+
 	//------------------------EVENT------------------------
 	getEvents() {
 		return new MockPromise(this.EventList);

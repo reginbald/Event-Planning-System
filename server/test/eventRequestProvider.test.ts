@@ -17,7 +17,7 @@ describe('eventRequestProvider', () => {
 	beforeEach(function() {
 		mockStorage = new MockStorageManager();
 		mocResponse = new MockResponse();
-		mockStorage.EventRequestList = [{id: "0", name: "name1"}, {id: "1", name: "name2"}]
+		mockStorage.EventRequestList = [{id: "0", name: "name1", status: "status"}, {id:"1", name: "name2", status: "status"}];
 		newEventRequest = {
 			budget:"900",
 			clientid:"Vlad",
@@ -38,7 +38,7 @@ describe('eventRequestProvider', () => {
 		it('should return all event requests', () => {
 			let req = new MockRequest({}, {});
 			subject.getAllEventRequests(req, mocResponse);
-			expect(mocResponse.data).to.deep.equal([{id: "0", name: "name1"}, {id:"1", name: "name2"}]);
+			expect(mocResponse.data).to.deep.equal([{id: "0", name: "name1", status: "status"}, {id:"1", name: "name2", status: "status"}]);
 		});
 	});
 	describe('create event reqeust', () => {
@@ -53,16 +53,23 @@ describe('eventRequestProvider', () => {
 			expect(mocResponse.data).to.deep.equal("error");
 		});
 	});
-	describe('update event reqeust', () => {
+	describe('update event request', () => {
 		it('should return the updated event request', () => {
 			let req = new MockRequest({name: 'update'}, {id: "1"});
 			subject.updateEventRequest(req, mocResponse);
-			expect(mocResponse.data).to.deep.equal({id: "1", name: "update"});
+			expect(mocResponse.data).to.deep.equal({id: "1", name: "update", status: "status"});
 		});
 		it('should return the updated event request', () => {
 			let req = new MockRequest({name: 'update'}, {id: "99"});
 			subject.updateEventRequest(req, mocResponse);
 			expect(mocResponse.data).to.deep.equal("ERROR_404_EVENT_REQUEST_NOT_FOUND");
+		});
+	});
+	describe('update event request status', () => {
+		it('should return the updated event request', () => {
+			subject.updateEventRequestStatus(1, "UPDATE", (updated) => {
+				expect(updated).to.deep.equal({id: "1", name: "name2", status: "UPDATE"});
+			}, () => {});
 		});
 	});
 });

@@ -52,4 +52,15 @@ export class RouteProvider {
 				return res.status(500).send("ERROR_500_DATABASE");
 		});
 	};
+	//------------------------------/api/request/event/------------------------------
+	putEventRequestStatus = (req:any, res:any) => {
+		if(!req.body.hasOwnProperty('status')) {
+			return res.status(412).send('ERROR_412_STATUS');
+		}
+		this.eventRequestProvider.updateEventRequestStatus(req.params.id, req.body.status, (eventrequest) => {
+			return res.send(eventrequest);
+		}, (error) => {
+				return res.status(500).send("ERROR_500_DATABASE");
+		});
+	}
 }

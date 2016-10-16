@@ -48,6 +48,7 @@ class EventRequestList extends Component {
   handleAccept(requestid) {
     console.log("accepting");
     console.log('requestid', requestid);
+    console.log(this.props.actions);
     // send put on status="accepted"
 
   }
@@ -85,7 +86,6 @@ class EventRequestList extends Component {
 }
 
 function mapStateToProps(state, ownProps) {
-  console.log("state from eventrequestlist mstp: ", state);
   return {
     user: state.user,
     clients: state.clients,
