@@ -7,6 +7,7 @@ import {Grid, Row, Col } from 'react-flexbox-grid';
 import CreateNewEventRequest from './CreateNewEventRequest';
 import AddNewClient from './AddNewClient';
 import EventRequestList from './EventRequestList';
+import CreateApplication from './CreateApplication';
 
 class ProfilePage extends Component {
   constructor(props) {
@@ -36,8 +37,15 @@ class ProfilePage extends Component {
   }
 
   productionDepartmentManagerProfile() {
-    return (
-      <h1>Production Department Manager</h1>
+    return(
+        <Grid>
+          <Row>
+            <Col xs >
+              <CreateApplication />
+            </Col>
+            <Col xs />
+          </Row>
+      </Grid>
     );
   }
 
@@ -89,7 +97,8 @@ function mapStateToProps(state, ownProps) {
   return {
     user: state.user,
     eventRequests: state.eventRequest,
-    clients: state.clients
+    clients: state.clients,
+    employees: state.employees
   };
 }
 function mapDispatchToProps(dispatch) {
