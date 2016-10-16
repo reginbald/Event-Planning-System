@@ -8,7 +8,7 @@ export class AccessProvider {
         this.storageManager = storageManager;
     }
 
-    login(req:any, res:any) {
+    login = (req:any, res:any) => {
         if(!req.body.hasOwnProperty('username')) {
             return res.status(412).send('ERROR_412_USERNAME');
         }
