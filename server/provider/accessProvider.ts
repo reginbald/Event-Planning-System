@@ -1,6 +1,6 @@
 import {StorageManager} from "./storage";
 
-export class LoginProvider {
+export class AccessProvider {
 
     private storageManager:StorageManager;
 
@@ -8,7 +8,7 @@ export class LoginProvider {
         this.storageManager = storageManager;
     }
 
-    login = (req:any, res:any) => {
+    login(req:any, res:any) {
         if(!req.body.hasOwnProperty('username')) {
             return res.status(412).send('ERROR_412_USERNAME');
         }
