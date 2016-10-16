@@ -71,7 +71,6 @@ class CreateNewEventRequest extends Component {
   handleSubmit() {
     const finalizedRequest = this.state.newEventRequest;
     this.setState({open: false});
-    console.log('finalized', finalizedRequest);
     this.props.actions.createNewEventRequest(finalizedRequest);
   }
 
@@ -83,13 +82,11 @@ class CreateNewEventRequest extends Component {
   }
 
   updateStartDate(event,date) {
-    console.log('updated date: ', date);
     let newEventRequest = this.state.newEventRequest;
     newEventRequest['from'] = date;
     return this.setState({newEventRequest, newEventRequest});
   }
   updateEndDate(event,date) {
-    console.log('updated date: ', date);
     let newEventRequest = this.state.newEventRequest;
     newEventRequest['to'] = date;
     return this.setState({newEventRequest, newEventRequest});
@@ -132,8 +129,6 @@ class CreateNewEventRequest extends Component {
     });
   }
   updateClient(event, index, value) {
-    console.log('clientid: ', index);
-    console.log('value from updateclient', value);
     this.setState({
       optionValue: value,
       newEventRequest: Object.assign({}, this.state.newEventRequest, {

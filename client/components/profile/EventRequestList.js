@@ -89,7 +89,7 @@ function mapStateToProps(state, ownProps) {
   return {
     user: state.user,
     clients: state.clients,
-    eventRequests: state.eventRequest
+    eventRequests: state.eventRequest.filter(e => e.status === "")
   };
 }
 function mapDispatchToProps(dispatch) {

@@ -26,8 +26,6 @@ export function createNewEventRequest(data) {
         // Do something here if we have time
       }
     }).catch(error => {
-      console.log('this is the error');
-      console.log(error);
       throw(error);
     });
   };
@@ -43,7 +41,6 @@ export function getAllEventRequests() {
     .set('Accept', 'application/json')
     .then(response => {
       if(response) {
-        console.log('received response: ', response);
         dispatch(loadEventRequestSuccess(response.body));
       }
       else{
