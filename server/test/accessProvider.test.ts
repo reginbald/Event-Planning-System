@@ -2,22 +2,22 @@
 /// <reference path="../../typings/chai/chai.d.ts" />
 import { expect } from 'chai';
 
-import {LoginProvider} from "../provider/loginProvider";
+import {AccessProvider} from "../provider/accessProvider";
 import {MockStorageManager} from "./mock/mockStorage";
 import {MockResponse} from "./mock/mockResponse";
 import {MockRequest} from "./mock/mockRequest";
 
-describe('loginProvider', () => {
+describe('AccessProvider', () => {
 	var mockStorage: MockStorageManager;
 	var mocResponse: MockResponse;
-	var subject: LoginProvider;
+	var subject: AccessProvider;
 	var result: any;
 
 	beforeEach(function() {
 		mockStorage = new MockStorageManager();
 		mocResponse = new MockResponse();
 		mockStorage.EmployeeList = [{username: "user", password: "pass"}]
-		subject = new LoginProvider(mockStorage);
+		subject = new AccessProvider(mockStorage);
 	});
 
 	describe('login', () => {

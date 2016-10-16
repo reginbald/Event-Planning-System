@@ -4,7 +4,7 @@
 import * as express from "express";
 import * as bodyParser from "body-parser";
 import {StorageManager, SequelizeStorageManager} from "./provider/storage";
-import {LoginProvider} from "./provider/loginProvider";
+import {AccessProvider} from "./provider/accessProvider";
 import {EmployeeProvider} from "./provider/employeeProvider";
 import {ClientProvider} from "./provider/clientProvider";
 import {EventRequestProvider} from "./provider/eventRequestProvider";
@@ -22,26 +22,31 @@ const compiler = webpack(config);
 var port = process.env.PORT || 3000;
 
 export function configureExpress():Promise<any> {
-  return Promise
-    .resolve(express())
-      .then((app) => {
-        if(process.env.NODE_ENV !== 'production') {
-          app.use(require('webpack-dev-middleware')(compiler, {
-            noInfo: true,
-            publicPath:config.output.publicPath
-          }));
-          app.use(require('webpack-hot-middleware')(compiler));
-        }
-      app.use(express.static('dist'));
+	return Promise
+		.resolve(express())
+			.then((app) => {
+				if(process.env.NODE_ENV !== 'production') {
+					app.use(require('webpack-dev-middleware')(compiler, {
+						noInfo: true,
+						publicPath:config.output.publicPath
+					}));
+					app.use(require('webpack-hot-middleware')(compiler));
+				}
+			app.use(express.static('dist'));
 
-      app.use(bodyParser.json());
-      return app;
-    });
+			app.use(bodyParser.json());
+			app.use(function(req, res, next) { // Allow while development is ongoing
+				res.header("Access-Control-Allow-Origin", "*");
+				res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+				next();
+			});
+			return app;
+		});
 }
 
 export function congifureRoutes(app:express.Application, storageManager:StorageManager):Promise<any> {
   return new Promise((resolve) => {
-    let loginProvider = new LoginProvider(storageManager);
+    let accessProvider = new AccessProvider(storageManager);
     let employeeProvider = new EmployeeProvider(storageManager);
     let clientProvider = new ClientProvider(storageManager);
     let eventRequestProvider = new EventRequestProvider(storageManager);
@@ -51,7 +56,7 @@ export function congifureRoutes(app:express.Application, storageManager:StorageM
     let financialRequestProvider = new FinancialRequestProvider(storageManager);
     let recruitmentRequestProvider = new RecruitmentRequestProvider(storageManager);
 
-    app.post("/api/login", loginProvider.login);
+    app.post("/api/login", accessProvider.login);
 
     app.get("/api/department/:id/employee", employeeProvider.getEmployeesForDepartmentId);
 
