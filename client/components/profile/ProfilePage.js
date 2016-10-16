@@ -4,10 +4,12 @@ import { bindActionCreators } from 'redux';
 import * as userActions from '../../redux/actions/userActions';
 import * as eventRequestActions from '../../redux/actions/eventRequestActions';
 import * as budgetRequestActions from '../../redux/actions/budgetRequestActions';
+import * as clientActions from '../../redux/actions/clientActions';
 import {Grid, Row, Col } from 'react-flexbox-grid';
 import CreateNewEventRequest from './CreateNewEventRequest';
 import AddNewClient from './AddNewClient';
 import BudgetRequest from './BudgetRequest';
+import Clients from './Clients';
 import EventRequestList from './EventRequestList';
 
 class ProfilePage extends Component {
@@ -34,12 +36,14 @@ class ProfilePage extends Component {
 
   financialManagerProfile() {
     this.props.actions.getAllBudgetRequests();
+    this.props.actions.getAllClients();
     return(
         <Grid>
           <Row>
             <Col xs />
             <Col xs >
               <BudgetRequest />
+              <Clients />
             </Col>
             <Col xs />
           </Row>
@@ -94,7 +98,13 @@ function mapStateToProps(state, ownProps) {
 }
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators(Object.assign({}, userActions, eventRequestActions, budgetRequestActions), dispatch)
+    actions: bindActionCreators(
+      Object.assign({}, 
+      userActions, 
+      eventRequestActions, 
+      budgetRequestActions, 
+      clientActions
+    ), dispatch)
   };
 }
 
