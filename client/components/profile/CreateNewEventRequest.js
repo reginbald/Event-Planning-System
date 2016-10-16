@@ -14,7 +14,6 @@ import DatePicker from 'material-ui/DatePicker';
 import RadioButton from 'material-ui/RadioButton';
 import SelectInput from '../common/SelectInput';
 
-
 const paperStyle = {
   height: 70,
   width: 300,
@@ -66,11 +65,18 @@ class CreateNewEventRequest extends Component {
 
   handleClose() {
     this.setState({open: false});
+    this.setState({newEventRequest: Object.assign({}, this.state.newEventRequest, {
+      decorations:false,
+      soft_hot_drinks: false,
+      breakfast_lunch_dinner: false,
+      photosfilming: false,
+      parties: false,
+    })});
   };
 
   handleSubmit() {
     const finalizedRequest = this.state.newEventRequest;
-    this.setState({open: false});
+    this.handleClose();
     this.props.actions.createNewEventRequest(finalizedRequest);
   }
 
@@ -176,6 +182,11 @@ class CreateNewEventRequest extends Component {
                 label="Event type"
                 placeholder="Birthday, graduations..."
                 onChange={this.updateEventState}/>
+                <TextInput
+                  name="name"
+                  label="Name"
+                  placeholder="Surprise book night for Toby"
+                  onChange={this.updateEventState}/>
               <TextInput
                 name="numberofattendees"
                 label="Number of attendees"

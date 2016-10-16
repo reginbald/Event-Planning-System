@@ -3,9 +3,9 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as userActions from '../../redux/actions/userActions';
 import * as eventRequestActions from '../../redux/actions/eventRequestActions';
+import * as employeeActions from '../../redux/actions/employeeActions';
 import * as budgetRequestActions from '../../redux/actions/budgetRequestActions';
 import * as clientActions from '../../redux/actions/clientActions';
-import * as employeeActions from '../../redux/actions/employeeActions';
 import {Grid, Row, Col } from 'react-flexbox-grid';
 import CreateNewEventRequest from './CreateNewEventRequest';
 import AddNewClient from './AddNewClient';
@@ -14,6 +14,7 @@ import Clients from './Clients';
 import Employees from './Employees';
 import EventRequests from './EventRequests';
 import EventRequestList from './EventRequestList';
+import CreateApplication from './CreateApplication';
 
 class ProfilePage extends Component {
   constructor(props) {
@@ -32,10 +33,32 @@ class ProfilePage extends Component {
         return this.seniorCustomerServiceProfile();
       case 2:
         return this.financialManagerProfile();
+      case 4:
+        if(user.departmentid === 1) {
+          return this.productionDepartmentManagerProfile();
+        }
+        if(user.departmentid === 2){
+          return this.serviceDepartmentManagerProfile();
+        }
+
       default:
         return <h1>default</h1>;
     }
   }
+
+  productionDepartmentManagerProfile() {
+    this.props.actions.getEmployeesForDepartment(1);
+    return(
+        <Grid>
+          <Row>
+            <Col xs >
+              <CreateApplication />
+            </Col>
+            <Col xs />
+          </Row>
+        </Grid>
+      );
+    }
 
   financialManagerProfile() {
     this.props.actions.getAllBudgetRequests();
@@ -55,6 +78,12 @@ class ProfilePage extends Component {
             <Col xs />
           </Row>
       </Grid>
+    );
+  }
+
+  serviceDepartmentManagerProfile() {
+    return (
+      <h1>Service Department Manager</h1>
     );
   }
 
@@ -106,10 +135,10 @@ function mapStateToProps(state, ownProps) {
 function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators(
-      Object.assign({}, 
-      userActions, 
-      eventRequestActions, 
-      budgetRequestActions, 
+      Object.assign({},
+      userActions,
+      eventRequestActions,
+      budgetRequestActions,
       clientActions,
       employeeActions
     ), dispatch)
