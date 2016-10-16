@@ -12,6 +12,7 @@ import AddNewClient from './AddNewClient';
 import BudgetRequest from './BudgetRequest';
 import Clients from './Clients';
 import Employees from './Employees';
+import EventRequests from './EventRequests';
 import EventRequestList from './EventRequestList';
 
 class ProfilePage extends Component {
@@ -40,6 +41,7 @@ class ProfilePage extends Component {
     this.props.actions.getAllBudgetRequests();
     this.props.actions.getAllClients();
     this.props.actions.getAllEmployees();
+    this.props.actions.getAllEventRequests();
     return(
         <Grid>
           <Row>
@@ -48,6 +50,7 @@ class ProfilePage extends Component {
               <BudgetRequest />
               <Clients />
               <Employees />
+              <EventRequests />
             </Col>
             <Col xs />
           </Row>
