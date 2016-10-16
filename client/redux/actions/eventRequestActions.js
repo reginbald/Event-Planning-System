@@ -1,4 +1,5 @@
 import request from 'superagent';
+import API_PATH from './apiConfig';
 import * as types from './actionTypes';
 
 /**
@@ -14,7 +15,8 @@ export function newEventRequestError(data) {
 
 export function createNewEventRequest(data) {
   return dispatch => {
-    return request.post('api/request/event')
+    return request
+    .post(API_PATH + 'request/event')
     .send(data)
     .set('Accept', 'application/json')
     .then(response => {
@@ -35,7 +37,7 @@ export function loadEventRequestSuccess(eventrequests) {
 
 export function getAllEventRequests() {
   return dispatch => {
-    return request.get('api/request/event')
+    return request.get(API_PATH + 'request/event')
     .set('Accept', 'application/json')
     .then(response => {
       if(response) {

@@ -2,6 +2,7 @@ import mockLoginApi from '../../api/mockLoginApi';
 import * as types from './actionTypes';
 import { browserHistory } from  'react-router';
 import request from 'superagent';
+import API_PATH from './apiConfig';
 
 /**
 * Login for all users
@@ -37,7 +38,8 @@ export function userLoginError(user) {
 }*/
 export function loginuser(creds) {
   return dispatch => {
-    return request.post('api/login')
+    return request
+    .post(API_PATH + 'login')
     .send(creds)
     .set('Accept', 'application/json')
     .then(user => {
