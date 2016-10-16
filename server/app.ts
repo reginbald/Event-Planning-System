@@ -4,6 +4,7 @@
 import * as express from "express";
 import * as bodyParser from "body-parser";
 import {StorageManager, SequelizeStorageManager} from "./provider/storage";
+import {RouteProvider} from "./provider/routeProvider";
 import {AccessProvider} from "./provider/accessProvider";
 import {EmployeeProvider} from "./provider/employeeProvider";
 import {ClientProvider} from "./provider/clientProvider";
@@ -46,6 +47,7 @@ export function configureExpress():Promise<any> {
 
 export function congifureRoutes(app:express.Application, storageManager:StorageManager):Promise<any> {
   return new Promise((resolve) => {
+		let routeProvider = new RouteProvider(storageManager);
     let accessProvider = new AccessProvider(storageManager);
     let employeeProvider = new EmployeeProvider(storageManager);
     let clientProvider = new ClientProvider(storageManager);
@@ -56,7 +58,7 @@ export function congifureRoutes(app:express.Application, storageManager:StorageM
     let financialRequestProvider = new FinancialRequestProvider(storageManager);
     let recruitmentRequestProvider = new RecruitmentRequestProvider(storageManager);
 
-    app.post("/api/login", accessProvider.login);
+    app.post("/api/login", routeProvider.login);
 
     app.get("/api/department/:id/employee", employeeProvider.getEmployeesForDepartmentId);
 

@@ -15,9 +15,11 @@ export interface StorageManager {
     init(force?:boolean):any;
 
     getEmployees():any;
+    getEmployeeById(id:number, succ:Function, err:Function):any;
     getEmployeesForDepartmentId(id:any):any;
     createEmployee(details:any):any;
-    getEmployeeByUsernameAndPassword(username:string, password:string):any;
+    getEmployeeByUsernameAndPassword(username:string, password:string, succ:Function, err:Function):any;
+    
 
     getClients():any;
     createClient(details:any):any;
@@ -130,8 +132,16 @@ export class SequelizeStorageManager implements StorageManager {
     }
     
     //------------------------------EMPLOYEE------------------------------
-    getEmployees():any{
+    getEmployees():any {
         return this.Employee.findAll();
+    }
+    getEmployeeById(id:number, succ:Function, err:Function):any {
+        this.Employee.find({where: {id: id}})
+        .then((employee) => {
+            return succ(employee);
+        }).catch((error) => {
+            return succ(error.message);
+        });
     }
     getEmployeesForDepartmentId(id:any):any {
         return this.Employee.findAll({where: {departmentid: id}});
@@ -139,8 +149,13 @@ export class SequelizeStorageManager implements StorageManager {
     createEmployee(details:any):any{
         return this.Employee.create(details);
     }
-    getEmployeeByUsernameAndPassword(username:string, password:string):any {
-        return this.Employee.find({where: {username: username, password: password}});
+    getEmployeeByUsernameAndPassword(username:string, password:string, succ:Function, err:Function):any {
+        this.Employee.find({where: {username: username, password: password}})
+        .then((employee) => {
+            return succ(employee);
+        }).catch((error) => {
+            return succ(error.message);
+        });
     }
 
     //------------------------------CLIENT------------------------------
@@ -196,7 +211,7 @@ export class SequelizeStorageManager implements StorageManager {
     createApplication(details:any):any {
         return this.Application.create(details);
     }
-    
+
     //------------------------------TASK------------------------------
     getTasks():any {
         return this.Task.findAll();

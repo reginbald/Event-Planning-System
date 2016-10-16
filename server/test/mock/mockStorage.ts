@@ -10,6 +10,7 @@ export class MockStorageManager implements StorageManager {
 	public TaskList: any[];
 	public FinancialRequestList: any[];
 	public RecruitmentRequestList: any[];
+	public dbERROR: boolean;
 
 	constructor() {
 		this.EmployeeList = [];
@@ -20,6 +21,7 @@ export class MockStorageManager implements StorageManager {
 		this.TaskList = [];
 		this.FinancialRequestList = [];
 		this.RecruitmentRequestList = [];
+		this.dbERROR = false;
 	}
 
 	init(force?:boolean):any{
@@ -28,6 +30,17 @@ export class MockStorageManager implements StorageManager {
 	//------------------------EMPLOYEE------------------------
 	getEmployees():any {
 		return new MockPromise(this.EmployeeList);
+	};
+	getEmployeeById(id:number, succ:Function, err:Function):any {
+		if (this.dbERROR) {
+			return err("DB_ERROR");
+		}
+		for (let e of this.EmployeeList) {
+			if (e.id === id) {
+				return succ(e); 
+			}
+		}
+		succ(null);
 	};
 	getEmployeesForDepartmentId(id:any):any {
 		let list = [];
@@ -47,13 +60,16 @@ export class MockStorageManager implements StorageManager {
 		this.EmployeeList.push(details);
 		return new MockPromise(details);
 	}
-	getEmployeeByUsernameAndPassword(username:any, password:any):any {
-			for (let e of this.EmployeeList) {
-				if (e.username === username && e.password === password) {
-					return new MockPromise(e);
-				}
+	getEmployeeByUsernameAndPassword(username:string, password:string, succ:Function, err:Function):any {
+		if (this.dbERROR) {
+			return err("DB_ERROR");
+		}
+		for (let e of this.EmployeeList) {
+			if (e.username === username && e.password === password) {
+				return succ(e);
 			}
-			return new MockPromise(null);
+		}
+		return succ(null);
 	};
 	//------------------------CLIENT------------------------
 	getClients():any {
