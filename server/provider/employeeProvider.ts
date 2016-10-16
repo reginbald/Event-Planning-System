@@ -17,6 +17,17 @@ export class EmployeeProvider {
             res.status(500).send(err.message);
         });
     };
+    
+    getEmployeesForDepartmentId = (req:any, res:any) => {
+      this.storageManager.getEmployeesForDepartmentId(req.params.id)
+        .then((employees:any) => {
+            res.send(employees);
+        })
+        .catch((err:any) => {
+            res.status(500).send(err.message);
+        });
+    };
+
     createEmployee = (req:any, res:any) => {
 		this.storageManager.createEmployee(req.body)
 		.then((results) => {

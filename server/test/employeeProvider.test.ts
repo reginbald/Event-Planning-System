@@ -17,21 +17,29 @@ describe('employeeProvider', () => {
 	beforeEach(function() {
 		mockStorage = new MockStorageManager();
 		mocResponse = new MockResponse();
-		newEmployee = {name: "name", email: "email@email.com"};
 		subject = new EmployeeProvider(mockStorage);
+		mockStorage.EmployeeList = [{name: "employee1", departmentid: "0"}, {name: "employee2", departmentid: "0"}];
+		newEmployee = {name: "name", email: "email@email.com"};
 	});
 
 	describe('get all employees', () => {
 		it('should return empty list', () => {
 			let req = {};
+			mockStorage.EmployeeList = [];
 			subject.getAllEmployees(req, mocResponse);
 			expect(mocResponse.data).to.deep.equal([]);
 		});
 		it('should return all employees', () => {
-			let req = {"params": { "user": "user", "pass": ""}};
-			mockStorage.EmployeeList = [{name: "employee1"}, {name: "employee2"}]
+			let req = {};
 			subject.getAllEmployees(req, mocResponse);
-			expect(mocResponse.data).to.deep.equal([{name: "employee1"}, {name: "employee2"}]);
+			expect(mocResponse.data).to.deep.equal(mockStorage.EmployeeList);
+		});
+	});
+	describe('get employees for department id', () => {
+		it('should return all employees for department id', () => {
+			let req = new MockRequest({}, {id: "0"});
+			subject.getEmployeesForDepartmentId(req, mocResponse);
+			expect(mocResponse.data).to.deep.equal(mockStorage.EmployeeList);
 		});
 	});
 	describe('create new employee', () => {

@@ -29,7 +29,15 @@ export class MockStorageManager implements StorageManager {
 	getEmployees():any {
 		return new MockPromise(this.EmployeeList);
 	};
-
+	getEmployeesForDepartmentId(id:any):any {
+		let list = [];
+		for (let e of this.EmployeeList) {
+			if (e.departmentid === id) {
+				list.push(e); 
+			}
+		}
+		return new MockPromise(list);
+	}
 	createEmployee(details:any):any {
 		if (details.error) {
 			let promise = new MockPromise(details)
@@ -38,8 +46,7 @@ export class MockStorageManager implements StorageManager {
 		}
 		this.EmployeeList.push(details);
 		return new MockPromise(details);
-    }
-
+	}
 	getEmployeeByUsernameAndPassword(username:any, password:any):any {
 			for (let e of this.EmployeeList) {
 				if (e.username === username && e.password === password) {
