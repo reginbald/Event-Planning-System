@@ -11,7 +11,6 @@ import EventRequestList from './EventRequestList';
 class ProfilePage extends Component {
   constructor(props) {
     super(props);
-    console.log('profile props:', props);
   }
   /**
   * Render different Profileviews for different actors.
@@ -35,13 +34,11 @@ class ProfilePage extends Component {
         <Grid>
           <Row>
             <Col xs >
-              <EventRequestList
-                eventrequests={eventRequests}/>
+              <EventRequestList />
             </Col>
             <Col xs >
               <AddNewClient />
             </Col>
-            <Col xs />
           </Row>
       </Grid>
     );
@@ -70,7 +67,6 @@ class ProfilePage extends Component {
   }
 }
 function mapStateToProps(state, ownProps) {
-  console.log("state from mstp: ", state);
   return {
     user: state.user,
     eventRequests: state.eventRequest,

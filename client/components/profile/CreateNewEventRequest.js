@@ -227,7 +227,8 @@ class CreateNewEventRequest extends Component {
 function mapStateToProps(state, ownProps) {
   return {
     user: state.user,
-    clients: state.clients
+    clients: state.clients,
+    eventRequests: state.eventRequest
   };
 }
 function mapDispatchToProps(dispatch) {
