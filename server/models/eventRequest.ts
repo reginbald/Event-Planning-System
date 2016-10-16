@@ -58,7 +58,7 @@ export class EventRequestTable implements Sequelize.DefineAttributes {
     }
 		this.name = {
       "type": Sequelize.STRING(128),
-      "allowNull": false
+      "allowNull": true
     }
 		this.clientid = {
       "type": Sequelize.INTEGER,
