@@ -53,11 +53,30 @@ export function getAllEventRequests() {
   };
 }
 
+export function updateEventRequest(id, data) {
+  return dispatch => {
+    return request
+    .put(API_PATH + 'request/event/' + id)
+    .send(data)
+    .set('Accept', 'application/json')
+    .then(response => {
+      if(response) {
+        dispatch(updateEventRequestSuccess(response.body));
+      }
+      else{
+        // Do something here if we have time
+      }
+    }).catch(error => {
+      throw(error);
+    });
+  };
+}
+
 export function updateEventRequestSuccess(eventrequest) {
   return {type: types.UPDATE_EVENT_REQUEST_SUCCESS, eventrequest};
 }
 
-export function updateEventRequest(data) {
+export function updateEventRequestStatus(data) {
   const id = data.id;
   const status = { status: data.status };
   return dispatch => {

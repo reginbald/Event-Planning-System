@@ -110,7 +110,7 @@ export class EventRequestTable implements Sequelize.DefineAttributes {
       "allowNull": false
     }
 		this.discount = {
-			"type": Sequelize.INTEGER,
+			"type": Sequelize.STRING(128),
       "allowNull": true
 		}
 		this.financial_feedback = {
