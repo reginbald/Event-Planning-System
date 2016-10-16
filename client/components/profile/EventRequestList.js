@@ -20,7 +20,7 @@ class EventRequestList extends Component {
 
   handleAccept(requestid) {
     const requestObject = this.props.eventRequests.filter(x => x.id === requestid);
-    this.props.actions.updateEventRequest({id:requestid, status:"accepted"});
+    this.props.actions.updateEventRequest({id:requestid, status:"SENIOR_ACCEPT"});
     this.props.actions.createNewEvent(requestObject[0]);
   }
 
