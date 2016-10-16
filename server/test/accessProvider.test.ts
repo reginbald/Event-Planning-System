@@ -16,7 +16,7 @@ describe('AccessProvider', () => {
 	beforeEach(function() {
 		mockStorage = new MockStorageManager();
 		mocResponse = new MockResponse();
-		mockStorage.EmployeeList = [{username: "user", password: "pass"}]
+		mockStorage.EmployeeList = [{id: 0, username: "user", password: "pass", access: 0}]
 		subject = new AccessProvider(mockStorage);
 	});
 
@@ -37,7 +37,7 @@ describe('AccessProvider', () => {
 		it('should return employee details', () => {
 			let req = new MockRequest({ "username": "user", "password": "pass"}, {});
 			subject.login(req, mocResponse);
-			expect(mocResponse.data).to.deep.equal({username: "user", password: "pass"});
+			expect(mocResponse.data).to.deep.equal({id: 0, username: "user", password: "pass", access: 0});
 		});
 	});
 
@@ -46,6 +46,30 @@ describe('AccessProvider', () => {
 			let req = new MockRequest({ "username": "user", "password": ""}, {});
 			subject.login(req, mocResponse);
 			expect(mocResponse.data).to.deep.equal("ERROR_LOGIN");
+		});
+	});
+
+	describe('user access', () => {
+		it('should return ERROR_ACCESS_DENIED on wrong access level', () => {
+			subject.checkAccess(0, [1,2,3], () => {}, (error)=> {
+				expect(error).to.deep.equal("ERROR_ACCESS_DENIED");
+			});
+		});
+		it('should return ERROR_EMPLOYEE_NOT_FOUND on wrong employee id', () => {
+			subject.checkAccess(99, [1,2,3], () => {}, (error)=> {
+				expect(error).to.deep.equal("ERROR_EMPLOYEE_NOT_FOUND");
+			});
+		});
+		it('should return ERROR_DATABASE on db error', () => {
+			mockStorage.dbERROR = true;
+			subject.checkAccess(0, [1,2,3], () => {}, (error)=> {
+				expect(error).to.deep.equal("ERROR_DATABASE");
+			});
+		});
+		it('should return employee element on currect access level', () => {
+			subject.checkAccess(0, [0,1,2,3], () => {}, (error)=> {
+				expect(error).to.deep.equal({id: 0, username: "user", access: 0});
+			});
 		});
 	});
 });
