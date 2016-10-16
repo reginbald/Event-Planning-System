@@ -36,6 +36,7 @@ import * as eventRequestActions from '../../redux/actions/eventRequestActions';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
 import FlatButton from 'material-ui/FlatButton';
+import TextInput from '../common/TextInput';
 
 
 class EventRequestList extends Component {
@@ -44,6 +45,17 @@ class EventRequestList extends Component {
     console.log('eventrequestlist props:', props);
   }
 
+  handleAccept(requestid) {
+    console.log("accepting");
+    console.log('requestid', requestid);
+    // send put on status="accepted"
+
+  }
+
+  handleDeny(requestid) {
+    console.log("denying");
+    console.log("requestid", requestid);
+  }
   render() {
     const { eventRequests } = this.props;
     return (
@@ -57,14 +69,13 @@ class EventRequestList extends Component {
               actAsExpander={true}
               showExpandableButton={true} />
             <CardActions>
-              <FlatButton label="Deny" />
-              <FlatButton label="Accept" />
+              <FlatButton label="Deny" onClick={this.handleDeny.bind(this, eventRequest.id)}/>
+              <FlatButton label="Accept"onClick={this.handleAccept.bind(this, eventRequest.id)}/>
             </CardActions>
             <CardText expandable={true}>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              Donec mattis pretium massa. Aliquam erat volutpat. Nulla facilisi.
-              Donec vulputate interdum sollicitudin. Nunc lacinia auctor quam sed pellentesque.
-              Aliquam dui mauris, mattis quis lacus id, pellentesque lobortis odio.
+              Budget: {eventRequest.budget}<br />
+              From: {eventRequest.from} <br/>
+              To: {eventRequest.to} <br/>
             </CardText>
           </Card>
         </MuiThemeProvider>)}

@@ -26,6 +26,8 @@ export function createNewEventRequest(data) {
         // Do something here if we have time
       }
     }).catch(error => {
+      console.log('this is the error');
+      console.log(error);
       throw(error);
     });
   };

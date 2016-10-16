@@ -13,7 +13,8 @@ export function getAllClients() {
     .set('Accept', 'application/json')
     .then(clients => {
       if(clients) {
-        dispatch(getAllClientsSuccess(clients));
+        console.log("all clients: ", clients.body);
+        dispatch(getAllClientsSuccess(clients.body));
       }
       else{
       /*
