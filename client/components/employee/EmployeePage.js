@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
 
-class BudgetRequestPage extends Component {
+class EmployeePage extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -12,32 +12,32 @@ class BudgetRequestPage extends Component {
 		};
 	}
 
-	budgetRequestSelected(id) {
+	employeeSelected(id) {
 		console.log("selected ", id);
 	}
 
 	render() {
 		return (
 		<div>
-		<h1>Budget Requests</h1>
+		<h1>Employees</h1>
 			<MuiThemeProvider>
-				<Table onRowSelection={this.budgetRequestSelected}>
+				<Table onRowSelection={this.employeeSelected}>
 					<TableHeader displaySelectAll={false}>
 						<TableRow>
-							<TableHeaderColumn>departmentID</TableHeaderColumn>
-							<TableHeaderColumn>eventID</TableHeaderColumn>
-							<TableHeaderColumn>Amount</TableHeaderColumn>
-							<TableHeaderColumn>Reason</TableHeaderColumn>
+							<TableHeaderColumn>Name</TableHeaderColumn>
+							<TableHeaderColumn>Job Title</TableHeaderColumn>
+							<TableHeaderColumn>Email</TableHeaderColumn>
+							<TableHeaderColumn>Department</TableHeaderColumn>
 							<TableHeaderColumn>Created</TableHeaderColumn>
 						</TableRow>
 					</TableHeader>
 					<TableBody showRowHover={true} displayRowCheckbox={false}>
-					{this.props.budgetRequests.map(function(element){
+					{this.props.employees.map(function(element){
 						return <TableRow key={element.id}>
+							<TableRowColumn>{element.name}</TableRowColumn>
+							<TableRowColumn>{element.job_title}</TableRowColumn>
+							<TableRowColumn>{element.email}</TableRowColumn>
 							<TableRowColumn>{element.departmentid}</TableRowColumn>
-							<TableRowColumn>{element.eventid}</TableRowColumn>
-							<TableRowColumn>{element.amount}</TableRowColumn>
-							<TableRowColumn>{element.reason}</TableRowColumn>
 							<TableRowColumn>{Date(element.created_at)}</TableRowColumn>
 						</TableRow>;
 					})}
@@ -50,7 +50,7 @@ class BudgetRequestPage extends Component {
 }
 function mapStateToProps(state, ownProps) {
 	return {
-		budgetRequests: state.budgetRequests
+		employees: state.employees
 	};
 }
 function mapDispatchToProps(dispatch) {
@@ -58,4 +58,4 @@ function mapDispatchToProps(dispatch) {
 		//actions: bindActionCreators(budgetRequestActions, dispatch)
 	};
 }
-export default connect(mapStateToProps, mapDispatchToProps)(BudgetRequestPage);
+export default connect(mapStateToProps, mapDispatchToProps)(EmployeePage);

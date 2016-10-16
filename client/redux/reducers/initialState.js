@@ -14,5 +14,7 @@ export default {
   clients:[],
   productionEmployees: [],
   budgetRequests: [],
-  events: []
+  events: [],
+  budgetRequests: [],
+  employees: []
 };
