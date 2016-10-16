@@ -23,9 +23,28 @@ class ProfilePage extends Component {
         return this.customerServiceProfile();
       case 1:
         return this.seniorCustomerServiceProfile();
+      case 4:
+        if(user.departmentid === 1) {
+          return this.productionDepartmentManagerProfile();
+        }
+        if(user.departmentid === 2){
+          return this.serviceDepartmentManagerProfile();
+        }
       default:
         return <h1>default</h1>;
     }
+  }
+
+  productionDepartmentManagerProfile() {
+    return (
+      <h1>Production Department Manager</h1>
+    );
+  }
+
+  serviceDepartmentManagerProfile() {
+    return (
+      <h1>Service Department Manager</h1>
+    );
   }
 
   seniorCustomerServiceProfile() {
