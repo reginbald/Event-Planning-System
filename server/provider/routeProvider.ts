@@ -53,11 +53,25 @@ export class RouteProvider {
 		});
 	};
 	//------------------------------/api/request/event/------------------------------
+	
+	//PUT: /api/request/event/:id
+	putEventRequest = (req:any, res:any) => {
+		if(req.body === undefined || Object.keys(req.body).length === 0 && req.body.constructor === Object) {
+			return res.status(412).send('ERROR_412_MISSING_PROPERTIES');
+		}
+		this.eventRequestProvider.updateEventRequest(+req.params.id, req.body, (eventrequest) => {
+			return res.send(eventrequest);
+		}, (error) => {
+				return res.status(500).send("ERROR_500_DATABASE");
+		});
+	}
+
+	//PUT: /api/request/event/:id/status
 	putEventRequestStatus = (req:any, res:any) => {
 		if(!req.body.hasOwnProperty('status')) {
 			return res.status(412).send('ERROR_412_STATUS');
 		}
-		this.eventRequestProvider.updateEventRequestStatus(req.params.id, req.body.status, (eventrequest) => {
+		this.eventRequestProvider.updateEventRequestStatus(+req.params.id, req.body.status, (eventrequest) => {
 			return res.send(eventrequest);
 		}, (error) => {
 				return res.status(500).send("ERROR_500_DATABASE");

@@ -109,23 +109,21 @@ export class MockStorageManager implements StorageManager {
 		this.EventRequestList.push(details);
 		return new MockPromise(details);
 	}
-	updateEventRequest(id:any, details:any):any {
-		if (details.error) {
-			let promise = new MockPromise(details)
-			promise.throw = true;
-			return promise;
+	updateEventRequest(id:number, update:any, succ:Function, err:Function):any {
+		if (this.dbERROR) {
+			return err("DB_ERROR");
 		}
 		for (let e of this.EventRequestList) {
 			if (+e.id === +id) {
-				for (var property in details) {
-					if (details.hasOwnProperty(property)) {
-						e[property] = details[property];
+				for (var property in update) {
+					if (update.hasOwnProperty(property)) {
+						e[property] = update[property];
 					}
 				}
-				return new MockPromise([1]);
+				return succ([1]);
 			}
 		}
-		return new MockPromise([0]);
+		return succ([0]);
 	}
 	updateEventRequestStatus(id:number, status:string, succ:Function, err:Function):any {
 		if (this.dbERROR) {
