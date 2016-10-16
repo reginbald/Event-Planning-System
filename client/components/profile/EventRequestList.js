@@ -49,6 +49,7 @@ class EventRequestList extends Component {
     console.log("accepting");
     console.log('requestid', requestid);
     console.log(this.props.actions);
+    this.props.actions.updateEventRequest({id:requestid, status:"accepted"});
     // send put on status="accepted"
 
   }
