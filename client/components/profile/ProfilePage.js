@@ -6,6 +6,7 @@ import * as eventRequestActions from '../../redux/actions/eventRequestActions';
 import {Grid, Row, Col } from 'react-flexbox-grid';
 import CreateNewEventRequest from './CreateNewEventRequest';
 import AddNewClient from './AddNewClient';
+import BudgetRequest from './BudgetRequest';
 
 class ProfilePage extends Component {
   constructor(props) {
@@ -23,9 +24,25 @@ class ProfilePage extends Component {
         return this.customerServiceProfile();
       case 1:
         return this.seniorCustomerServiceProfile();
+      case 2:
+        return this.financialManagerProfile();
       default:
         return <h1>default</h1>;
     }
+  }
+
+  financialManagerProfile() {
+    return(
+        <Grid>
+          <Row>
+            <Col xs />
+            <Col xs >
+              <BudgetRequest />
+            </Col>
+            <Col xs />
+          </Row>
+      </Grid>
+    );
   }
 
   seniorCustomerServiceProfile() {
