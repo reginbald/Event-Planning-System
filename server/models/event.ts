@@ -52,14 +52,14 @@ export class EventTable implements Sequelize.DefineAttributes {
 	computer_issues:any;
 	other_needs:any;
 
-  
+
 
   constructor() {
     this.id = {
       "type": Sequelize.INTEGER,
       "allowNull": false,
       "primaryKey": true,
-      "autoIncrement": true 
+      "autoIncrement": true
     }
     this.name = {
       "type": Sequelize.STRING(128),
@@ -89,7 +89,7 @@ export class EventTable implements Sequelize.DefineAttributes {
     }
 		this.description = {
       "type": Sequelize.STRING(128),
-      "allowNull": false
+      "allowNull": true
     }
 		this.attendees = {
       "type": Sequelize.INTEGER,

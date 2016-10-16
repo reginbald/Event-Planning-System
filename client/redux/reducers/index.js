@@ -4,13 +4,15 @@ import eventRequest from './eventRequestReducer';
 import budgetRequests from './budgetRequestReducer';
 import clients from './clientReducer';
 import employees from './employeeReducer';
+import events from './eventReducer';
 
 const rootReducer = combineReducers({
   user,
   eventRequest,
   budgetRequests,
   clients,
-  employees
+  employees,
+  events
 });
 
 export default rootReducer;

@@ -1,16 +1,16 @@
-
 import React, {Component, PropTypes} from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as userActions from '../../redux/actions/userActions';
 import * as eventRequestActions from '../../redux/actions/eventRequestActions';
+import * as eventActions from '../../redux/actions/eventActions';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
 import FlatButton from 'material-ui/FlatButton';
 import TextInput from '../common/TextInput';
 
 const cardStyle = {
-  margin:12
+  margin: 12
 };
 
 class EventRequestList extends Component {
@@ -19,7 +19,9 @@ class EventRequestList extends Component {
   }
 
   handleAccept(requestid) {
+    const requestObject = this.props.eventRequests.filter(x => x.id === requestid);
     this.props.actions.updateEventRequest({id:requestid, status:"accepted"});
+    this.props.actions.createNewEvent(requestObject[0]);
   }
 
   handleDeny(requestid) {
@@ -27,6 +29,7 @@ class EventRequestList extends Component {
   }
   render() {
     const { eventRequests } = this.props;
+    console.log(eventRequests);
     return (
       <div>
         {eventRequests.map(eventRequest =>
@@ -38,8 +41,8 @@ class EventRequestList extends Component {
               actAsExpander={true}
               showExpandableButton={true} />
             <CardActions>
-              <FlatButton label="Deny" onClick={this.handleDeny.bind(this, eventRequest.id)}/>
-              <FlatButton label="Accept"onClick={this.handleAccept.bind(this, eventRequest.id)}/>
+              <FlatButton label="Deny" secondary={true} onClick={this.handleDeny.bind(this, eventRequest.id)}/>
+              <FlatButton label="Accept" primary={true} onClick={this.handleAccept.bind(this, eventRequest.id)}/>
             </CardActions>
             <CardText expandable={true}>
               Budget: {eventRequest.budget}<br />
@@ -57,12 +60,13 @@ function mapStateToProps(state, ownProps) {
   return {
     user: state.user,
     clients: state.clients,
-    eventRequests: state.eventRequest.filter(e => e.status === "")
+    eventRequests: state.eventRequest.filter(e => e.status === ""),
+    events: state.events
   };
 }
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators(Object.assign({}, userActions, eventRequestActions), dispatch)
+    actions: bindActionCreators(Object.assign({}, userActions, eventRequestActions, eventActions), dispatch)
   };
 }
 
