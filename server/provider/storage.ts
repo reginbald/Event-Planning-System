@@ -15,6 +15,7 @@ export interface StorageManager {
     init(force?:boolean):any;
 
     getEmployees():any;
+    getEmployeesForDepartmentId(id:any):any;
     createEmployee(details:any):any;
     getEmployeeByUsernameAndPassword(username:string, password:string):any;
 
@@ -33,6 +34,7 @@ export interface StorageManager {
     createApplication(details:any):any;
 
     getTasks():any;
+    getTasksForEmployeeId(id:any):any;
     createTask(details:any):any;
 
     getFinancialRequests():any;
@@ -131,11 +133,12 @@ export class SequelizeStorageManager implements StorageManager {
     getEmployees():any{
         return this.Employee.findAll();
     }
-
+    getEmployeesForDepartmentId(id:any):any {
+        return this.Employee.findAll({where: {departmentid: id}});
+    }
     createEmployee(details:any):any{
         return this.Employee.create(details);
     }
-
     getEmployeeByUsernameAndPassword(username:string, password:string):any {
         return this.Employee.find({where: {username: username, password: password}});
     }
@@ -147,6 +150,7 @@ export class SequelizeStorageManager implements StorageManager {
     createClient(details:any):any {
         return this.Client.create(details);
     }
+
     //------------------------------EVENT REQUEST------------------------------
     getEventRequests():any {
         return this.EventRequest.findAll();
@@ -160,6 +164,7 @@ export class SequelizeStorageManager implements StorageManager {
     updateEventRequest(id:any, details:any):any {
         return this.EventRequest.update(details, { where: { "id": id } });
     }
+
     //------------------------------EVENT------------------------------
     getEvents():any {
         return this.Event.findAll();
@@ -167,6 +172,7 @@ export class SequelizeStorageManager implements StorageManager {
     createEvent(details:any):any {
         return this.Event.create(details);
     }
+
     //------------------------------FINANCIAL REQUEST------------------------------
     getFinancialRequests():any {
         return this.FinancialRequest.findAll();
@@ -174,6 +180,7 @@ export class SequelizeStorageManager implements StorageManager {
     createFinancialRequest(details:any):any {
         return this.FinancialRequest.create(details);
     }
+
     //------------------------------RECRUITMENT REQUEST------------------------------
     getRecruitmentRequests():any {
         return this.RecruitmentRequest.findAll();
@@ -181,6 +188,7 @@ export class SequelizeStorageManager implements StorageManager {
     createRecruitmentRequest(details:any):any {
         return this.RecruitmentRequest.create(details);
     }
+
     //------------------------------APPLICATION------------------------------
     getApplications():any {
         return this.Application.findAll();
@@ -188,9 +196,13 @@ export class SequelizeStorageManager implements StorageManager {
     createApplication(details:any):any {
         return this.Application.create(details);
     }
+    
     //------------------------------TASK------------------------------
     getTasks():any {
         return this.Task.findAll();
+    }
+    getTasksForEmployeeId(id:any):any {
+        return this.Task.findAll({ where: { "employeeid": id } });
     }
     createTask(details:any):any {
         return this.Task.create(details);
