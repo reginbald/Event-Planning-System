@@ -53,11 +53,11 @@ export function getAllEventRequests() {
   };
 }
 
-export function updateEventRequestSuccess(eventrequest) {
-  return {type: types.UPDATE_EVENT_REQUEST_SUCCESS, eventrequest};
+export function updateEventRequestStatusSuccess(eventrequest) {
+  return {type: types.UPDATE_EVENT_REQUEST_STATUS_SUCCESS, eventrequest};
 }
 
-export function updateEventRequest(data) {
+export function updateEventRequestStatus(data) {
   const id = data.id;
   const status = { status: data.status };
   return dispatch => {
@@ -67,7 +67,7 @@ export function updateEventRequest(data) {
     .set('Accept', 'application/json')
     .then(response => {
       if(response) {
-        dispatch(updateEventRequestSuccess(response.body));
+        dispatch(updateEventRequestStatusSuccess(response.body));
       }
       else{
         // Do something here if we have time

@@ -9,7 +9,7 @@ export default function eventRequestReducer(state = initialState.eventrequests, 
     case types.SEND_NEW_EVENT_REQUEST_SUCCESS:
       return state;
 
-    case types.UPDATE_EVENT_REQUEST_SUCCESS:
+    case types.UPDATE_EVENT_REQUEST_STATUS_SUCCESS:
       return state;
 
     default:
