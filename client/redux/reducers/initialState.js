@@ -11,5 +11,6 @@ export default {
     job_title:''
   },
   eventrequests: [],
-  clients:[]
+  clients:[],
+  budgetRequests: []
 };
