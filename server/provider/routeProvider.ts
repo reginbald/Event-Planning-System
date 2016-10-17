@@ -8,6 +8,7 @@ import {ApplicationProvider} from "./applicationProvider"
 import {TaskProvider} from "./taskProvider"
 import {FinancialRequestProvider} from "./financialRequestProvider"
 import {RecruitmentRequestProvider} from "./recruitmentRequestProvider"
+import {JobApplicationProvider} from "./jobApplicationProvider"
 
 export class RouteProvider {
 
@@ -21,6 +22,7 @@ export class RouteProvider {
 	private taskProvider:TaskProvider;
 	private financialRequestProvider:FinancialRequestProvider;
 	private recruitmentRequestProvider:RecruitmentRequestProvider;
+	private jobApplicationProvider:JobApplicationProvider;
 
 	constructor(storageManager:StorageManager) {
 		this.storageManager = storageManager;
@@ -33,9 +35,12 @@ export class RouteProvider {
 		this.taskProvider = new TaskProvider(storageManager);
 		this.financialRequestProvider = new FinancialRequestProvider(storageManager);
 		this.recruitmentRequestProvider = new RecruitmentRequestProvider(storageManager);
+		this.jobApplicationProvider = new JobApplicationProvider(storageManager);
 	}
 
 	//------------------------------/api/login------------------------------
+
+	//POST: /api/login
 	login = (req:any, res:any) => {
 		if(!req.body.hasOwnProperty('username')) {
 			return res.status(412).send('ERROR_412_USERNAME');
@@ -74,6 +79,17 @@ export class RouteProvider {
 		}
 		this.eventRequestProvider.updateEventRequestStatus(+req.params.id, req.body.status, (eventrequest) => {
 			return res.send(eventrequest);
+		}, (error) => {
+				return res.status(500).send("ERROR_500_DATABASE");
+		});
+	}
+
+	//------------------------------/api/jobapplication/------------------------------
+
+	//GET: /api/jobapplication
+	getAllJobApplications = (req:any, res:any) => {
+		this.jobApplicationProvider.getAllJobApplications((applications) => {
+			return res.send(applications);
 		}, (error) => {
 				return res.status(500).send("ERROR_500_DATABASE");
 		});

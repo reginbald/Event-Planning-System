@@ -88,6 +88,8 @@ export function congifureRoutes(app:express.Application, storageManager:StorageM
     app.get("/api/request/recruitment", recruitmentRequestProvider.getAllRecruitmentRequests);
     app.post("/api/request/recruitment", recruitmentRequestProvider.createRecruitmentRequest);
 
+    app.get("/api/jobapplication", routeProvider.getAllJobApplications);
+
     resolve();
   });
 }

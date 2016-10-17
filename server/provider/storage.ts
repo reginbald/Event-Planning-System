@@ -46,6 +46,8 @@ export interface StorageManager {
     createFinancialRequest(details:any):any;
     getRecruitmentRequests():any;
     createRecruitmentRequest(details:any):any;
+
+    getJobApplications(succ:Function, err:Function):any;
 }
 
 export class SequelizeStorageManager implements StorageManager {
@@ -252,5 +254,13 @@ export class SequelizeStorageManager implements StorageManager {
     }
     createTask(details:any):any {
         return this.Task.create(details);
+    }
+    //------------------------------JOB APPLICATION------------------------------
+    getJobApplications(succ:Function, err:Function):any {
+        this.JobApplication.findAll().then((applications) => {
+            return succ(applications);
+        }).catch((error) => {
+            return err(error.message);
+        });
     }
 }
