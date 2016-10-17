@@ -5,10 +5,12 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
+import RaisedButton from 'material-ui/RaisedButton';
 import TextInput from '../common/TextInput';
 import SelectInput from '../common/SelectInput';
 import FlatButton from 'material-ui/FlatButton';
 import Dialog from 'material-ui/Dialog';
+import Divider from 'material-ui/Divider';
 
 const PRIORITY = [{id:0, name:'HIGH'}, {id:1, name:'MEDIUM'}, {id:2, name:'LOW'}];
 const PRODUCTION_TASK_TYPES = [{id:0, name:'Decorations'}, {id:1, name:'Photos'}, {id:2, name:'Filming'}, {id:3, name:'Music/Audio'}, {id:4, name:'Graphic Design'}, {id:5, name:'Decorations'}, {id:6, name:'Computer Related'}];
@@ -24,7 +26,7 @@ class EventPage extends Component {
 			priorityOptionValue: '',
 			newApplication: {
 				departmentid: this.props.departmentid,
-				eventid: ''
+				eventid: null
 			},
 			newTask: {
 				applicationid: null,
@@ -48,6 +50,7 @@ class EventPage extends Component {
 		this.updateAssignee = this.updateAssignee.bind(this);
 		this.updatePriority = this.updatePriority.bind(this);
 		this.updateTaskType = this.updateTaskType.bind(this);
+		this.newTask = this.newTask.bind(this);
 	}
 
 	handleClose() {
@@ -64,24 +67,37 @@ class EventPage extends Component {
 				description: '',
 				priority: ''
 			})
-		})
+		});
 	}
 
 	eventSelected(id) {
-		this.setState({open: true});
-		console.log('id of event', this.props.events[id].id);
+		let evId = this.props.events[id].id
+
 		this.setState({
-			eventId: this.props.events[id].id,
+			open: true,
+			eventId: evId,
 			eventType: this.props.events[id].event_type,
-			newTask: Object.assign({}, this.state.newApplication, {
-				eventid: this.props.events[id].id
+			newApplication: Object.assign({}, this.state.newApplication, {
+				eventid: evId
 			})
 		});
 	}
 
 	handleSubmit() {
 		console.log('submitting');
-		console.log(this.state.newTask);
+		let application = this.state.newApplication;
+		let totalTasks = this.state.tasks;
+		let leftover = this.state.newTask;
+		if(leftover.priority !== '') {
+			totalTasks.push(leftover);
+		}
+
+		const data = {
+			newApplication: application,
+			tasks: totalTasks
+		};
+
+		console.log('this will go to the action', data);
 	}
 
 	updateEventState(event) {
@@ -91,12 +107,11 @@ class EventPage extends Component {
 		return this.setState({newTask, newTask});
 	}
 
-
 	updateAssignee(event,index, value) {
 		this.setState({
 			assigneeOptionValue: value,
 			newTask: Object.assign({}, this.state.newTask, {
-				clientid: value
+				employeeid: value
 			})
 		});
 	}
@@ -109,11 +124,39 @@ class EventPage extends Component {
       })
     });
 	}
+
 	updateTaskType(event, index, value) {
+		let taskTypeString = '';
+		if(this.props.departmentid === 1){
+			taskTypeString = PRODUCTION_TASK_TYPES[value].name;
+		}
+		else{
+			taskTypeString = SERVICE_TASK_TYPES[value].name;
+		}
 		this.setState({
 			taskTypeOptionValue: value,
 			newTask: Object.assign({}, this.state.newTask, {
-				type: value
+				type: taskTypeString
+			})
+		});
+	}
+
+	newTask() {
+		let eventTasks = this.state.tasks;
+		let newestTask = this.state.newTask;
+		eventTasks.push(newestTask);
+		this.setState({
+			tasks: eventTasks,
+			taskTypeOptionValue: '',
+			assigneeOptionValue: '',
+			priorityOptionValue: '',
+			newTask: Object.assign({}, this.state.newTask, {
+				applicationid: null,
+				employeeid: null,
+				senderid: this.props.user.id,
+				type: '',
+				description: '',
+				priority: ''
 			})
 		});
 	}
@@ -145,8 +188,13 @@ class EventPage extends Component {
 								open={this.state.open}
 								onRequestClose={this.handleClose}
 								autoScrollBodyContent={true} >
-								{this.state.eventType}
-								<TextInput name="description" label="Task" onChange={this.updateEventState} placeholder="Description of task" />
+								{this.state.eventType} <Divider />
+								{"Total tasks for this event: " + this.state.tasks.length}
+								<TextInput
+									name="description"
+									label="Task"
+									onChange={this.updateEventState}
+									placeholder="Description of task" />
 								<SelectInput
 									value={this.state.priorityOptionValue}
 									options={PRIORITY}
@@ -167,6 +215,10 @@ class EventPage extends Component {
 										options={SERVICE_TASK_TYPES}
 										onChange={this.updateTaskType}
 										hintText="Select type" /> }
+								<RaisedButton
+									label="Add new task"
+									primary={true}
+									onClick={this.newTask} />
 							</Dialog>
 							<Table onRowSelection={this.eventSelected}>
 								<TableHeader displaySelectAll={false}>
