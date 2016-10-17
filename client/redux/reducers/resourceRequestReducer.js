@@ -6,6 +6,12 @@ export default function resourceRequestReducer(state = initialState.resourceRequ
     case types.LOAD_RESOURCE_REQUESTS_SUCCESS:
       return action.resourceRequests;
 
+    case types.ADD_NEW_RESOURCE_REQUEST_SUCCESS:
+      return [
+        ...state,
+        Object.assign({}, action.resourceRequest)
+      ];
+
     default:
       return state;
   }
