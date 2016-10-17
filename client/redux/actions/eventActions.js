@@ -8,8 +8,6 @@ export function createnewEventSuccess(event) {
 
 
 export function createNewEvent(data) {
-  console.log("dont create yet!!");
-  console.log("data to be sent", data);
   // Extract necessary data from the event request object.
   const newEvent = {
     name: data.name, //string

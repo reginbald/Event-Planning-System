@@ -76,6 +76,10 @@ export function updateEventRequest(id, data) {
   };
 }
 
+export function updateEventRequestStatusSuccess(eventrequest) {
+  return {type: types.UPDATE_EVENT_REQUEST_STATUS_SUCCESS, eventrequest};
+}
+
 export function updateEventRequestStatus(data) {
   const id = data.id;
   const status = { status: data.status };
