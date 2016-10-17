@@ -8,6 +8,7 @@ import ClientPage from './components/client/ClientPage';
 import EmployeePage from './components/employee/EmployeePage';
 import EventRequestPage from './components/eventRequest/EventRequestPage';
 import EventPage from './components/event/EventPage';
+import ResourceRequestPage from './components/resourceRequest/ResourceRequestPage';
 
 export default (
   <Route path="/" component={App}>
@@ -18,5 +19,6 @@ export default (
     <Route path="/profile/employee" component={EmployeePage} />
     <Route path="/profile/eventrequest" component={EventRequestPage} />
     <Route path="/profile/event" component={EventPage} />
+    <Route path="/profile/resourcerequest" component={ResourceRequestPage} />
   </Route>
 );

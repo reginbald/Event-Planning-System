@@ -6,6 +6,7 @@ import * as eventRequestActions from '../../redux/actions/eventRequestActions';
 import * as eventActions from '../../redux/actions/eventActions';
 import * as employeeActions from '../../redux/actions/employeeActions';
 import * as budgetRequestActions from '../../redux/actions/budgetRequestActions';
+import * as resourceRequestActions from '../../redux/actions/resourceRequestActions';
 import * as clientActions from '../../redux/actions/clientActions';
 import {Grid, Row, Col } from 'react-flexbox-grid';
 import CreateNewEventRequest from './CreateNewEventRequest';
@@ -17,6 +18,7 @@ import EventRequests from './EventRequests';
 import Events from './Events';
 import EventRequestList from './EventRequestList';
 import CreateApplication from './CreateApplication';
+import ResourceRequests from './ResourceRequests';
 
 class ProfilePage extends Component {
   constructor(props) {
@@ -42,6 +44,8 @@ class ProfilePage extends Component {
         if(user.departmentid === 2){
           return this.serviceDepartmentManagerProfile();
         }
+      case 6:
+        return this.hrManagerProfile();
 
       default:
         return <h1>default</h1>;
@@ -107,7 +111,6 @@ class ProfilePage extends Component {
     );
   }
   customerServiceProfile() {
-
       return(
         <Grid>
           <Row>
@@ -119,6 +122,23 @@ class ProfilePage extends Component {
           </Row>
         </Grid>
       );
+  }
+
+  hrManagerProfile() {
+    this.props.actions.getAllEmployees();
+    this.props.actions.getAllResourceRequests();
+    return(
+      <Grid>
+        <Row>
+          <Col>
+            <Employees />
+          </Col>
+          <Col>
+            <ResourceRequests/>
+          </Col>
+        </Row>
+      </Grid>
+    );
   }
 
   render() {
@@ -143,6 +163,7 @@ function mapDispatchToProps(dispatch) {
       userActions,
       eventRequestActions,
       budgetRequestActions,
+      resourceRequestActions,
       clientActions,
       employeeActions,
       eventActions
