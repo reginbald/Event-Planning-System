@@ -1,4 +1,5 @@
 import {StorageManager} from "./storage";
+import {NewApplicationViewModel} from "../viewModels/newApplicationViewModel";
 
 export class ApplicationProvider {
 
@@ -12,18 +13,7 @@ export class ApplicationProvider {
 		this.storageManager.getApplications(succ, err);
 	}
 
-	//getAllApplications = (req:any, res:any) => {
-	//	this.storageManager.getApplications()
-	//	.then((results) => {
-	//		res.send(results);
-	//	})
-	//};
-	createApplication = (req:any, res:any) => {
-		this.storageManager.createApplication(req.body)
-		.then((results) => {
-			res.send(results);
-		}).catch((err) => {
-			res.status(500).send(err.message);
-		});
-	};
+	createApplication = (newApp:NewApplicationViewModel, succ:Function, err:Function) =>{
+		this.storageManager.createApplication(newApp, succ, err);
+	}
 }

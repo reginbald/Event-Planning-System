@@ -78,7 +78,7 @@ export function congifureRoutes(app:express.Application, storageManager:StorageM
 		app.post("/api/event", eventProvider.createEvent);
 
 		app.get("/api/application", routeProvider.getAllApplications);
-		app.post("/api/application", applicationProvider.createApplication);
+		app.post("/api/application", routeProvider.postApplication);
 
 		app.get("/api/task", taskProvider.getAllTasks);
 		app.post("/api/task", taskProvider.createTask);

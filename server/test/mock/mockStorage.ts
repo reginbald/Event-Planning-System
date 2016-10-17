@@ -200,14 +200,12 @@ export class MockStorageManager implements StorageManager {
 		}
 		succ(this.ApplicationList);
 	}
-	createApplication(details:any):any {
-		if (details.error) {
-			let promise = new MockPromise(details)
-			promise.throw = true;
-			return promise;
+	createApplication(newApp:any, succ:Function, err:Function):void {
+		if (this.dbERROR) {
+			return err("DB_ERROR");
 		}
-		this.ApplicationList.push(details);
-		return new MockPromise(details);
+		this.ApplicationList.push(newApp);
+		succ(newApp);
 	}
 	//------------------------Task------------------------
 	getTasks():any {

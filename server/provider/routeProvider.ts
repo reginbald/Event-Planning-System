@@ -11,6 +11,7 @@ import {RecruitmentRequestProvider} from "./recruitmentRequestProvider";
 import {JobApplicationProvider} from "./jobApplicationProvider";
 
 import {NewJobApplicationViewModel} from"../viewModels/newJobApplicationViewModel";
+import {NewApplicationViewModel} from"../viewModels/newApplicationViewModel";
 
 export class RouteProvider {
 
@@ -96,11 +97,27 @@ export class RouteProvider {
 		});
 	}
 
-	//------------------------------/api/jobapplication/------------------------------
+	//------------------------------/api/application/------------------------------
 
 	//GET: /api/application
 	getAllApplications = (req:any, res:any) => {
 		this.applicationProvider.getAllApplications((applications) => {
+			return res.send(applications);
+		}, (error) => {
+				return res.status(500).send("ERROR_500_DATABASE");
+		});
+	}
+
+	//POST: /api/application
+	postApplication = (req:any, res:any) => {
+		if(!req.body.hasOwnProperty('departmentid')) {
+			return res.status(412).send('ERROR_412_DEPARTMENTID');
+		}
+		if(!req.body.hasOwnProperty('eventid')) {
+			return res.status(412).send('ERROR_412_EVENTID');
+		}
+		let application = new NewApplicationViewModel(+req.body.departmentid, +req.body.eventid);
+		this.applicationProvider.createApplication(application, (applications) => {
 			return res.send(applications);
 		}, (error) => {
 				return res.status(500).send("ERROR_500_DATABASE");

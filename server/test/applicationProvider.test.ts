@@ -4,25 +4,16 @@ import { expect } from 'chai';
 
 import {ApplicationProvider} from "../provider/applicationProvider";
 import {MockStorageManager} from "./mock/mockStorage";
-import {MockResponse} from "./mock/mockResponse";
-import {MockRequest} from "./mock/mockRequest";
+import {NewApplicationViewModel} from "../viewModels/newApplicationViewModel";
 
 describe('ApplicationProvider', () => {
 	var mockStorage: MockStorageManager;
-	var mocResponse: MockResponse;
 	var subject: ApplicationProvider;
-	var newApplication: any;
 
 	beforeEach(function() {
 		mockStorage = new MockStorageManager();
-		mocResponse = new MockResponse();
 		mockStorage.ApplicationList = [{id: "0", eventid: "0"}, {id: "1", eventid: "1"}];
 		subject = new ApplicationProvider(mockStorage);
-		newApplication = {
-			"id": 2,
-			"departmentid": 0,
-			"eventid": 1
-		}
 	});
 
 	describe('getAllApplications function', () => {
@@ -32,11 +23,12 @@ describe('ApplicationProvider', () => {
 			}, ()=>{});
 		});
 	});
-	describe('create application', () => {
+	describe('createApplication function', () => {
 		it('should return the newly created application', () => {
-			let req = new MockRequest(newApplication, {});
-			subject.createApplication(req, mocResponse);
-			expect(mocResponse.data).to.deep.equal(newApplication);
+			let newApplication = new NewApplicationViewModel(1,2);
+			subject.createApplication(newApplication, (application)=>{
+							expect(application).to.deep.equal(newApplication);
+			}, ()=>{});
 		});
 	});
 });
