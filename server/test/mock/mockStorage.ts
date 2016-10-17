@@ -11,6 +11,7 @@ export class MockStorageManager implements StorageManager {
 	public FinancialRequestList: any[];
 	public RecruitmentRequestList: any[];
 	public dbERROR: boolean;
+	public JobApplicationList: any[];
 
 	constructor() {
 		this.EmployeeList = [];
@@ -22,6 +23,7 @@ export class MockStorageManager implements StorageManager {
 		this.FinancialRequestList = [];
 		this.RecruitmentRequestList = [];
 		this.dbERROR = false;
+		this.JobApplicationList = [];
 	}
 
 	init(force?:boolean):any{
@@ -211,5 +213,19 @@ export class MockStorageManager implements StorageManager {
 		}
 		this.TaskList.push(details);
 		return new MockPromise(details);
+	}
+	//------------------------------JOB APPLICATION------------------------------
+	getJobApplications(succ:Function, err:Function):any {
+		if (this.dbERROR) {
+			return err("DB_ERROR");
+		}
+		return succ(this.JobApplicationList);
+	}
+	createJobApplication(application:any, succ:Function, err:Function):any {
+		if (this.dbERROR) {
+			return err("DB_ERROR");
+		}
+		this.TaskList.push(application);
+		return succ(application);
 	}
 }

@@ -6,6 +6,7 @@ import clients from './clientReducer';
 import {productionEmployees, employees} from './employeeReducer';
 import events from './eventReducer';
 import resourceRequests from './resourceRequestReducer';
+import jobApplications from './jobApplicationReducer'
 
 const rootReducer = combineReducers({
   user,
@@ -16,6 +17,7 @@ const rootReducer = combineReducers({
   productionEmployees,
   employees,
   events,
+  jobApplications
 });
 
 export default rootReducer;

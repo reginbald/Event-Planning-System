@@ -9,7 +9,7 @@ import {FinancialRequestModel, FinancialRequestInstance, FinancialRequestAttribu
 import {RecruitmentRequestModel, RecruitmentRequestInstance, RecruitmentRequestAttribute, RecruitmentRequestTable} from "../models/recruitmentRequest"
 import {ApplicationModel, ApplicationInstance, ApplicationAttribute, ApplicationTable} from "../models/application"
 import {TaskModel, TaskInstance, TaskAttribute, TaskTable} from "../models/task"
-
+import {JobApplicationModel, JobApplicationInstance, JobApplicationAttribute, JobApplicationTable} from "../models/jobApplication"
 
 export interface StorageManager {
     init(force?:boolean):any;
@@ -44,6 +44,9 @@ export interface StorageManager {
     createFinancialRequest(details:any):any;
     getRecruitmentRequests():any;
     createRecruitmentRequest(details:any):any;
+
+    getJobApplications(succ:Function, err:Function):any;
+    createJobApplication(application:any, succ:Function, err:Function):any;
 }
 
 export class SequelizeStorageManager implements StorageManager {
@@ -57,6 +60,7 @@ export class SequelizeStorageManager implements StorageManager {
     public RecruitmentRequest:RecruitmentRequestModel;
     public Application:ApplicationModel;
     public Task:TaskModel;
+    public JobApplication:JobApplicationModel;
 
     constructor() {
 
@@ -121,6 +125,13 @@ export class SequelizeStorageManager implements StorageManager {
         this.Task = this.sequelize.define<TaskInstance, TaskAttribute>("Task", new TaskTable(),
             {
                 "tableName": "task",
+                "timestamps": true,
+                "createdAt": "created_at",
+                "updatedAt": "updated_at",
+            });
+        this.JobApplication = this.sequelize.define<JobApplicationInstance, JobApplicationAttribute>("JobApplication", new JobApplicationTable(),
+            {
+                "tableName": "jobapplication",
                 "timestamps": true,
                 "createdAt": "created_at",
                 "updatedAt": "updated_at",
@@ -242,5 +253,20 @@ export class SequelizeStorageManager implements StorageManager {
     }
     createTask(details:any):any {
         return this.Task.create(details);
+    }
+    //------------------------------JOB APPLICATION------------------------------
+    getJobApplications(succ:Function, err:Function):any {
+        this.JobApplication.findAll().then((applications) => {
+            return succ(applications);
+        }).catch((error) => {
+            return err(error.message);
+        });
+    }
+    createJobApplication(application:any, succ:Function, err:Function):any {
+         this.JobApplication.create(application).then((application) => {
+            return succ(application);
+        }).catch((error) => {
+            return err(error.message);
+        });
     }
 }

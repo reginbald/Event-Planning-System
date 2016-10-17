@@ -13,13 +13,12 @@ import ResourceRequestPage from './components/resourceRequest/ResourceRequestPag
 export default (
   <Route path="/" component={App}>
     <IndexRoute component={HomePage} />
-    <Route path="/profile" component={ProfilePage}>
-      <Route path="/profile/budgetrequest" component={BudgetRequestPage} />
-      <Route path="/profile/client" component={ClientPage} />
-      <Route path="/profile/employee" component={EmployeePage} />
-      <Route path="/profile/eventrequest" component={EventRequestPage} />
-      <Route path="/profile/event" component={EventPage} />
-      <Route path="/profile/resourcerequest" component={ResourceRequestPage} />
-    </Route>
+    <Route path="/profile" component={ProfilePage} />
+    <Route path="/profile/budgetrequest" component={BudgetRequestPage} />
+    <Route path="/profile/client" component={ClientPage} />
+    <Route path="/profile/employee" component={EmployeePage} />
+    <Route path="/profile/eventrequest" component={EventRequestPage} />
+    <Route path="/profile/event" component={EventPage} />
+    <Route path="/profile/resourcerequest" component={ResourceRequestPage} />
   </Route>
 );

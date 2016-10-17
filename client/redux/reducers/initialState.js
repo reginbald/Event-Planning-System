@@ -16,5 +16,6 @@ export default {
   budgetRequests: [],
   resourceRequests: [],
   events: [],
-  employees: []
+  employees: [],
+  jobApplications: []
 };
