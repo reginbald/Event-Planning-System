@@ -7,7 +7,7 @@ import {clients, clientEvents} from './clientReducer';
 import events from './eventReducer';
 import resourceRequests from './resourceRequestReducer';
 import jobApplications from './jobApplicationReducer';
-import {tasks} from './taskReducer';
+import { tasks } from './taskReducer';
 
 const rootReducer = combineReducers({
   user,

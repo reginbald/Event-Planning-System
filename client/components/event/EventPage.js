@@ -72,6 +72,7 @@ class EventPage extends Component {
 		console.log('id of event', this.props.events[id].id);
 		this.setState({
 			eventId: this.props.events[id].id,
+			eventType: this.props.events[id].event_type,
 			newTask: Object.assign({}, this.state.newApplication, {
 				eventid: this.props.events[id].id
 			})
@@ -144,6 +145,7 @@ class EventPage extends Component {
 								open={this.state.open}
 								onRequestClose={this.handleClose}
 								autoScrollBodyContent={true} >
+								{this.state.eventType}
 								<TextInput name="description" label="Task" onChange={this.updateEventState} placeholder="Description of task" />
 								<SelectInput
 									value={this.state.priorityOptionValue}
