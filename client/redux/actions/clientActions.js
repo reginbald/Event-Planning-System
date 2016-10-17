@@ -82,3 +82,26 @@ export function addNewClient(newClient) {
     });
   };
 }*/
+
+export function getAllClientEventsSuccess(events) {
+  return {type: types.LOAD_CLIENT_EVENTS_SUCCESS, events };
+}
+export function getAllClientEvents(id) {
+  return dispatch => {
+    return request
+    .get(API_PATH +'client/' + id + '/event' )
+    .set('Accept', 'application/json')
+    .then(events => {
+      if(events) {
+        dispatch(getAllClientEventsSuccess(events.body));
+      }
+      else{
+      /*
+      * Do something here if we have time
+      */
+      }
+    }).catch(error => {
+      throw(error);
+    });
+  };
+}

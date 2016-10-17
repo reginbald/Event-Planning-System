@@ -150,10 +150,12 @@ class ProfilePage extends Component {
   }
 
   administrationManagerProfile() {
+    this.props.actions.getAllClients();
     return(
       <Grid>
         <Row>
           <Col>
+            <Clients/>
           </Col>
         </Row>
       </Grid>

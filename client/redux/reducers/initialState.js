@@ -17,5 +17,6 @@ export default {
   resourceRequests: [],
   events: [],
   employees: [],
-  jobApplications: []
+  jobApplications: [],
+  clientEvents: []
 };

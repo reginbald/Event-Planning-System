@@ -2,7 +2,7 @@ import { combineReducers } from 'redux';
 import user from './userReducer';
 import eventRequest from './eventRequestReducer';
 import budgetRequests from './budgetRequestReducer';
-import clients from './clientReducer';
+import {clients, clientEvents} from './clientReducer';
 import {productionEmployees, employees} from './employeeReducer';
 import events from './eventReducer';
 import resourceRequests from './resourceRequestReducer';
@@ -17,7 +17,8 @@ const rootReducer = combineReducers({
   productionEmployees,
   employees,
   events,
-  jobApplications
+  jobApplications,
+  clientEvents
 });
 
 export default rootReducer;
