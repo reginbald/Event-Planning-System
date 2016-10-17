@@ -11,6 +11,7 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 import { getAllClients } from './redux/actions/clientActions';
 import { getAllEventRequests } from './redux/actions/eventRequestActions';
 import { getAllEvents } from './redux/actions/eventActions';
+import { getAllJobApplications } from './redux/actions/jobApplicationActions';
 
 // Needed for onTouchTap
 // http://stackoverflow.com/a/34015469/988941
@@ -21,6 +22,7 @@ const store = configureStore();
 store.dispatch(getAllClients());
 store.dispatch(getAllEventRequests());
 store.dispatch(getAllEvents());
+store.dispatch(getAllJobApplications());
 
 render(
 	<Provider store={store}>

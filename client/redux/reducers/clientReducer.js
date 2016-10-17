@@ -1,7 +1,7 @@
 import * as types from '../actions/actionTypes';
 import initialState from './initialState';
 
-export default function clientReducer(state = initialState.clients, action) {
+export function clients(state = initialState.clients, action) {
   switch(action.type) {
     case types.LOAD_CLIENTS_SUCCESS:
       return action.clients;
@@ -11,6 +11,16 @@ export default function clientReducer(state = initialState.clients, action) {
         ...state,
         Object.assign({}, action.client)
       ];
+
+    default:
+      return state;
+  }
+}
+
+export function clientEvents(state = initialState.clientEvents, action) {
+  switch(action.type) {
+    case types.LOAD_CLIENT_EVENTS_SUCCESS:
+      return action.events;
     default:
       return state;
   }

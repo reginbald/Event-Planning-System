@@ -16,13 +16,13 @@ const buttonStyle = {
   margin: 14
 };
 
-export default class Clients extends Component {
+export default class Tasks extends Component {
 	constructor(props){
 		super(props);
 	}
 
 	handleOpen() {
-		return browserHistory.push("profile/client");
+		return browserHistory.push("profile/task");
   };
 
 	render() {
@@ -30,7 +30,7 @@ export default class Clients extends Component {
 			<MuiThemeProvider>
 				<Paper style={paperStyle} zDepth={1} rounded={false} >
 						<RaisedButton 
-						label="Clients" 
+						label="Tasks" 
 						secondary={true} 
 						style={buttonStyle}
 						onTouchTap={this.handleOpen}/>

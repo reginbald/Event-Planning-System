@@ -18,5 +18,7 @@ export default {
   events: [],
   employees: [],
   jobApplications: [],
-  departmentid: null
+  departmentid: null,
+  clientEvents: [],
+  tasks:[]
 };

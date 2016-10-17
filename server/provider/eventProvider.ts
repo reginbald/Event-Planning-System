@@ -22,4 +22,7 @@ export class EventProvider {
 			res.status(500).send(err.message);
 		});
 	};
+	getAllEventsForClientId = (id:number, succ, err) => {
+		this.storageManager.getEventsForClientId(id, succ, err);
+	}
 }

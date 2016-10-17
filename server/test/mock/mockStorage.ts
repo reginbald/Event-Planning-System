@@ -153,6 +153,20 @@ export class MockStorageManager implements StorageManager {
 		this.EventList.push(details);
 		return new MockPromise(details);
 	}
+	getEventsForClientId(id:number, succ:Function, err:Function):void {
+		console.log("iD ", id);
+		if (this.dbERROR) {
+			return err("DB_ERROR");
+		}
+		let list = [];
+		for (let e of this.EventList) {
+			if (+e.clientid === +id) {
+				list.push(e); 
+			}
+		}
+		return succ(list);
+	}
+
 	//------------------------FINANCIAL REQUEST------------------------
 	getFinancialRequests():any {
 		return new MockPromise(this.FinancialRequestList);
@@ -180,17 +194,18 @@ export class MockStorageManager implements StorageManager {
 		return new MockPromise(details);
 	}
 	//------------------------APPLICATION------------------------
-	getApplications():any {
-		return new MockPromise(this.ApplicationList);
-	}
-	createApplication(details:any):any {
-		if (details.error) {
-			let promise = new MockPromise(details)
-			promise.throw = true;
-			return promise;
+	getApplications(succ:Function, err:Function):void {
+		if (this.dbERROR) {
+			return err("DB_ERROR");
 		}
-		this.ApplicationList.push(details);
-		return new MockPromise(details);
+		succ(this.ApplicationList);
+	}
+	createApplication(newApp:any, succ:Function, err:Function):void {
+		if (this.dbERROR) {
+			return err("DB_ERROR");
+		}
+		this.ApplicationList.push(newApp);
+		succ(newApp);
 	}
 	//------------------------Task------------------------
 	getTasks():any {

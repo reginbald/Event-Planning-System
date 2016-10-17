@@ -8,6 +8,7 @@ import * as employeeActions from '../../redux/actions/employeeActions';
 import * as budgetRequestActions from '../../redux/actions/budgetRequestActions';
 import * as resourceRequestActions from '../../redux/actions/resourceRequestActions';
 import * as clientActions from '../../redux/actions/clientActions';
+import * as taskActions from '../../redux/actions/taskActions';
 import {Grid, Row, Col } from 'react-flexbox-grid';
 import CreateNewEventRequest from './CreateNewEventRequest';
 import AddNewClient from './AddNewClient';
@@ -19,6 +20,7 @@ import Events from './Events';
 import EventRequestList from './EventRequestList';
 import ResourceRequests from './ResourceRequests';
 import CreateJobApplication from './CreateJobApplication';
+import Tasks from './Tasks';
 
 class ProfilePage extends Component {
   constructor(props) {
@@ -29,6 +31,7 @@ class ProfilePage extends Component {
   */
   renderContent() {
     const { user } = this.props;
+    console.log("render");
 
     switch (user.access) {
       case 0:
@@ -37,6 +40,8 @@ class ProfilePage extends Component {
         return this.seniorCustomerServiceProfile();
       case 2:
         return this.financialManagerProfile();
+      case 3: 
+        return this.administrationManagerProfile();
       case 4:
         if(user.departmentid === 1) {
           return this.productionDepartmentManagerProfile();
@@ -44,6 +49,8 @@ class ProfilePage extends Component {
         if(user.departmentid === 2){
           return this.serviceDepartmentManagerProfile();
         }
+      case 5: 
+        return this.teamProfile();
       case 6:
         return this.hrManagerProfile();
 
@@ -69,9 +76,7 @@ class ProfilePage extends Component {
 
   financialManagerProfile() {
     this.props.actions.getAllBudgetRequests();
-    this.props.actions.getAllClients();
     this.props.actions.getAllEmployees();
-    this.props.actions.getAllEventRequests();
     return(
         <Grid>
           <Row>
@@ -95,15 +100,34 @@ class ProfilePage extends Component {
   }
 
   seniorCustomerServiceProfile() {
+    this.props.actions.getAllEvents();
     const { eventRequests } = this.props;
+    const list = eventRequests.filter(x => x.status === 'PENDING');
     return(
         <Grid>
           <Row>
             <Col xs >
-              <EventRequestList />
+              <Row>
+                <Col>
+                  <AddNewClient/>
+                </Col>
+              </Row>
+              <Row>
+                <Col>
+                  <Clients />
+                </Col>
+              </Row>
+              <Row>
+                <Col>
+                  <Events />
+                </Col>
+              </Row>
             </Col>
             <Col xs >
-              <AddNewClient />
+              <EventRequestList 
+                statusaccept="SENIOR_ACCEPT"
+                statusdenied="SENIOR_DENIED"
+                eventRequests={list}/>
             </Col>
           </Row>
       </Grid>
@@ -143,6 +167,41 @@ class ProfilePage extends Component {
     );
   }
 
+  administrationManagerProfile() {
+    const { eventRequests } = this.props;
+    const list = eventRequests.filter(x => x.status === 'FINANCIAL_ACCEPT');
+    return(
+      <Grid>
+        <Row>
+        <Col xs >
+          <EventRequestList 
+          statusaccept="ADMINISTRATION_ACCEPT"
+          statusdenied="ADMINISTRATION_DENIED"
+          eventRequests={list}/>
+        </Col>
+          <Col>
+            <Clients/>
+          </Col>
+        </Row>
+      </Grid>
+    );
+  }
+
+  teamProfile() {
+    this.props.actions.getTasksForEmployee(this.props.user.id);
+    return(
+      <Grid>
+        <Row>
+          <Col xs />
+          <Col xs >
+            <Tasks/>
+          </Col>
+          <Col xs />
+        </Row>
+      </Grid>
+    );
+  }
+
   render() {
     return(
       <div>
@@ -168,7 +227,8 @@ function mapDispatchToProps(dispatch) {
       resourceRequestActions,
       clientActions,
       employeeActions,
-      eventActions
+      eventActions,
+      taskActions
     ), dispatch)
   };
 }

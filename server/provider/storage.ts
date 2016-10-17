@@ -32,9 +32,10 @@ export interface StorageManager {
 
     getEvents():any;
     createEvent(details:any):any;
+    getEventsForClientId(id:number, succ:Function, err:Function):void;
 
-    getApplications():any;
-    createApplication(details:any):any;
+    getApplications(succ:Function, err:Function):void;
+    createApplication(newApp:any, succ:Function, err:Function):void;
 
     getTasks():any;
     getTasksForEmployeeId(id:any):any;
@@ -220,6 +221,16 @@ export class SequelizeStorageManager implements StorageManager {
         return this.Event.create(details);
     }
 
+    getEventsForClientId(id:number, succ:Function, err:Function):void {
+        this.Event.findAll({ where: { "clientid": id } })
+        .then((events) => {
+            return succ(events);
+        })
+        .catch((error) => {
+            return err(error);
+        });
+    }
+
     //------------------------------FINANCIAL REQUEST------------------------------
     getFinancialRequests():any {
         return this.FinancialRequest.findAll();
@@ -237,11 +248,23 @@ export class SequelizeStorageManager implements StorageManager {
     }
 
     //------------------------------APPLICATION------------------------------
-    getApplications():any {
-        return this.Application.findAll();
+    getApplications(succ:Function, err:Function):void {
+        this.Application.findAll()
+        .then((applications)=>{
+            succ(applications);
+        })
+        .catch((error)=>{
+            err(error);
+        });
     }
-    createApplication(details:any):any {
-        return this.Application.create(details);
+    createApplication(newApp:any, succ:Function, err:Function):void {
+        this.Application.create(newApp)
+        .then((application)=>{
+            succ(application);
+        })
+        .catch((error)=>{
+            err(error);
+        });
     }
 
     //------------------------------TASK------------------------------

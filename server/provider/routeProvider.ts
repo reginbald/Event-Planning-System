@@ -11,6 +11,7 @@ import {RecruitmentRequestProvider} from "./recruitmentRequestProvider";
 import {JobApplicationProvider} from "./jobApplicationProvider";
 
 import {NewJobApplicationViewModel} from"../viewModels/newJobApplicationViewModel";
+import {NewApplicationViewModel} from"../viewModels/newApplicationViewModel";
 
 export class RouteProvider {
 
@@ -59,6 +60,17 @@ export class RouteProvider {
 				return res.status(500).send("ERROR_500_DATABASE");
 		});
 	};
+
+	//------------------------------/api/client/------------------------------
+	//PUT: /api/client/:id/event
+	getAllEventsForClientId = (req:any, res:any) => {
+		this.eventProvider.getAllEventsForClientId(+req.params.id, (events) => {
+			return res.send(events);
+		}, (error) => {
+				return res.status(500).send("ERROR_500_DATABASE");
+		});
+	}
+
 	//------------------------------/api/request/event/------------------------------
 
 	//PUT: /api/request/event/:id
@@ -80,6 +92,33 @@ export class RouteProvider {
 		}
 		this.eventRequestProvider.updateEventRequestStatus(+req.params.id, req.body.status, (eventrequest) => {
 			return res.send(eventrequest);
+		}, (error) => {
+				return res.status(500).send("ERROR_500_DATABASE");
+		});
+	}
+
+	//------------------------------/api/application/------------------------------
+
+	//GET: /api/application
+	getAllApplications = (req:any, res:any) => {
+		this.applicationProvider.getAllApplications((applications) => {
+			return res.send(applications);
+		}, (error) => {
+				return res.status(500).send("ERROR_500_DATABASE");
+		});
+	}
+
+	//POST: /api/application
+	postApplication = (req:any, res:any) => {
+		if(!req.body.hasOwnProperty('departmentid')) {
+			return res.status(412).send('ERROR_412_DEPARTMENTID');
+		}
+		if(!req.body.hasOwnProperty('eventid')) {
+			return res.status(412).send('ERROR_412_EVENTID');
+		}
+		let application = new NewApplicationViewModel(+req.body.departmentid, +req.body.eventid);
+		this.applicationProvider.createApplication(application, (applications) => {
+			return res.send(applications);
 		}, (error) => {
 				return res.status(500).send("ERROR_500_DATABASE");
 		});
