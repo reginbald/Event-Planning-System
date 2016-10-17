@@ -19,6 +19,7 @@ import Events from './Events';
 import EventRequestList from './EventRequestList';
 import CreateApplication from './CreateApplication';
 import ResourceRequests from './ResourceRequests';
+import CreateJobApplication from './CreateJobApplication';
 
 class ProfilePage extends Component {
   constructor(props) {
@@ -136,6 +137,9 @@ class ProfilePage extends Component {
           <Col>
             <ResourceRequests/>
           </Col>
+        </Row>
+        <Row>
+          <Col><CreateJobApplication/></Col>
         </Row>
       </Grid>
     );
