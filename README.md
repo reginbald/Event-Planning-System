@@ -8,10 +8,14 @@ npm install -g typescript
 npm install -g webpack
 ```
 
-## install
+## Install
 ```
 npm install
 tsd install
+```
+## Develop
+```
+npm run dev
 ```
 
 ## Compile
