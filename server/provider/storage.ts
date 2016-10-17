@@ -11,8 +11,6 @@ import {ApplicationModel, ApplicationInstance, ApplicationAttribute, Application
 import {TaskModel, TaskInstance, TaskAttribute, TaskTable} from "../models/task"
 import {JobApplicationModel, JobApplicationInstance, JobApplicationAttribute, JobApplicationTable} from "../models/jobApplication"
 
-
-
 export interface StorageManager {
     init(force?:boolean):any;
 

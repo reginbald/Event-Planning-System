@@ -4,6 +4,7 @@ import { expect } from 'chai';
 
 import {JobApplicationProvider} from "../provider/jobApplicationProvider";
 import {MockStorageManager} from "./mock/mockStorage";
+import {NewJobApplicationViewModel} from"../viewModels/newJobApplicationViewModel";
 
 describe('JobApplicationProvider', () => {
 	var mockStorage: MockStorageManager;
@@ -24,7 +25,7 @@ describe('JobApplicationProvider', () => {
 	});
 	describe('createJobApplication function', () => {
 		it('should return newly created job application', () => {
-			let newJobApp = {id: "3"};
+				let newJobApp = new NewJobApplicationViewModel(3,3,"contract_type",4,"job_title","job_description");
 			subject.createJobApplication(newJobApp, (application)=>{
 				expect(application).to.deep.equal(newJobApp);
 			}, ()=>{});

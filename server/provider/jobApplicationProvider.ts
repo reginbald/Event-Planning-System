@@ -1,4 +1,5 @@
 import {StorageManager} from "./storage";
+import {NewJobApplicationViewModel} from"../viewModels/newJobApplicationViewModel";
 
 export class JobApplicationProvider {
 
@@ -12,7 +13,7 @@ export class JobApplicationProvider {
 		this.storageManager.getJobApplications(succ, err);
 	};
 
-	createJobApplication = (application:any, succ:Function, err:Function) => {
+	createJobApplication = (application:NewJobApplicationViewModel, succ:Function, err:Function) => {
 		this.storageManager.createJobApplication(application, succ, err);
 	};
 }
