@@ -13,6 +13,7 @@ import SelectInput from '../common/SelectInput';
 import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
 import {Grid, Row, Col } from 'react-flexbox-grid';
 import Snackbar from 'material-ui/Snackbar';
+import * as jobApplicationActions from '../../redux/actions/jobApplicationActions';
 
 const paperStyle = {
   height: 70,
@@ -39,6 +40,7 @@ class CreateJobApplication extends Component {
       newJobApplication: {
         contract_type: 'full_time',
 				departmentid: 0,
+				recruitment_request_id: 4,
 				years_experience: 0,
 				job_title: '',
 				job_description: ''
@@ -59,7 +61,8 @@ class CreateJobApplication extends Component {
   };
 
   handleSubmit() {
-		// Do something with job application
+		console.log("JOB", this.state.newJobApplication);
+		this.props.actions.addNewJobApplication(this.state.newJobApplication);
 		this.setState({snack: true});
     this.setState({open: false});
   }
@@ -200,7 +203,7 @@ function mapStateToProps(state, ownProps) {
 }
 function mapDispatchToProps(dispatch) {
   return {
-    //actions: bindActionCreators(Object.assign({}), dispatch)
+    actions: bindActionCreators(jobApplicationActions, dispatch)
   };
 }
 
