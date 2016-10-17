@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as userActions from '../../redux/actions/userActions';
 import * as eventRequestActions from '../../redux/actions/eventRequestActions';
+import * as eventActions from '../../redux/actions/eventActions';
 import * as employeeActions from '../../redux/actions/employeeActions';
 import * as budgetRequestActions from '../../redux/actions/budgetRequestActions';
 import * as clientActions from '../../redux/actions/clientActions';
@@ -13,6 +14,7 @@ import BudgetRequest from './BudgetRequest';
 import Clients from './Clients';
 import Employees from './Employees';
 import EventRequests from './EventRequests';
+import Events from './Events';
 import EventRequestList from './EventRequestList';
 import CreateApplication from './CreateApplication';
 
@@ -48,11 +50,13 @@ class ProfilePage extends Component {
 
   productionDepartmentManagerProfile() {
     this.props.actions.getEmployeesForDepartment(1);
+    this.props.actions.getAllEvents();
     return(
         <Grid>
           <Row>
             <Col xs >
               <CreateApplication />
+              <Events />
             </Col>
             <Col xs />
           </Row>
@@ -140,7 +144,8 @@ function mapDispatchToProps(dispatch) {
       eventRequestActions,
       budgetRequestActions,
       clientActions,
-      employeeActions
+      employeeActions,
+      eventActions
     ), dispatch)
   };
 }
