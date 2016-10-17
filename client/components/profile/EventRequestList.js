@@ -16,16 +16,17 @@ const cardStyle = {
 class EventRequestList extends Component {
   constructor(props){
     super(props);
+    console.log('props from req list', props);
   }
 
   handleAccept(requestid) {
-    const requestObject = this.props.eventRequests.filter(x => x.id === requestid);
     this.props.actions.updateEventRequestStatus({id:requestid, status:"SENIOR_ACCEPT"});
+    const requestObject = this.props.eventRequests.filter(x => x.id === requestid);
     this.props.actions.createNewEvent(requestObject[0]);
   }
 
   handleDeny(requestid) {
-    this.props.actions.updateEventRequest({id:requestid, status:"denied"});
+    this.props.actions.updateEventRequestStatus({id:requestid, status:"SENIOR_DENIED"});
   }
   render() {
     const { eventRequests } = this.props;

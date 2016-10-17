@@ -82,13 +82,15 @@ export function updateEventRequestStatusSuccess(eventrequest) {
 
 export function updateEventRequestStatus(data) {
   const id = data.id;
-  const status = { status: data.status };
+  const status = { status: data.status } ;
+
   return dispatch => {
     return request
     .put(API_PATH + 'request/event/' + id + '/status')
     .send(status)
     .set('Accept', 'application/json')
     .then(response => {
+      console.log('respo: ', response);
       if(response) {
         dispatch(updateEventRequestStatusSuccess(response.body));
       }
@@ -96,6 +98,7 @@ export function updateEventRequestStatus(data) {
         // Do something here if we have time
       }
     }).catch(error => {
+      console.log('got error');
       throw(error);
     });
   };

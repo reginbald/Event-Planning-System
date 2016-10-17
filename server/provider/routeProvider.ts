@@ -53,7 +53,7 @@ export class RouteProvider {
 		});
 	};
 	//------------------------------/api/request/event/------------------------------
-	
+
 	//PUT: /api/request/event/:id
 	putEventRequest = (req:any, res:any) => {
 		if(req.body === undefined || Object.keys(req.body).length === 0 && req.body.constructor === Object) {
@@ -69,6 +69,7 @@ export class RouteProvider {
 	//PUT: /api/request/event/:id/status
 	putEventRequestStatus = (req:any, res:any) => {
 		if(!req.body.hasOwnProperty('status')) {
+			console.log("going to return 412");
 			return res.status(412).send('ERROR_412_STATUS');
 		}
 		this.eventRequestProvider.updateEventRequestStatus(+req.params.id, req.body.status, (eventrequest) => {
