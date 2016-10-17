@@ -3,7 +3,7 @@ import user from './userReducer';
 import eventRequest from './eventRequestReducer';
 import budgetRequests from './budgetRequestReducer';
 import clients from './clientReducer';
-import {productionEmployees, employees} from './employeeReducer';
+import {departmentEmloyees, employees, departmentid} from './employeeReducer';
 import events from './eventReducer';
 import resourceRequests from './resourceRequestReducer';
 import jobApplications from './jobApplicationReducer'
@@ -14,10 +14,11 @@ const rootReducer = combineReducers({
   budgetRequests,
   resourceRequests,
   clients,
-  productionEmployees,
+  departmentEmloyees,
   employees,
   events,
-  jobApplications
+  jobApplications,
+  departmentid
 });
 
 export default rootReducer;

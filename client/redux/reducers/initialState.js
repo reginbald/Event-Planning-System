@@ -12,10 +12,11 @@ export default {
   },
   eventrequests: [],
   clients:[],
-  productionEmployees: [],
+  departmentEmloyees: [],
   budgetRequests: [],
   resourceRequests: [],
   events: [],
   employees: [],
-  jobApplications: []
+  jobApplications: [],
+  departmentid: null
 };

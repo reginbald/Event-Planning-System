@@ -17,7 +17,6 @@ import Employees from './Employees';
 import EventRequests from './EventRequests';
 import Events from './Events';
 import EventRequestList from './EventRequestList';
-import CreateApplication from './CreateApplication';
 import ResourceRequests from './ResourceRequests';
 import CreateJobApplication from './CreateJobApplication';
 
@@ -54,14 +53,13 @@ class ProfilePage extends Component {
   }
 
   productionDepartmentManagerProfile() {
-    this.props.actions.getEmployeesForDepartment(1);
-    this.props.actions.getAllEvents();
+    const departmentid = 1;
+    this.props.actions.getEmployeesForDepartment(departmentid);
     return(
         <Grid>
           <Row>
             <Col xs >
-              <CreateApplication />
-              <Events />
+              <Events department={departmentid}/>
             </Col>
             <Col xs />
           </Row>

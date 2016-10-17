@@ -5,6 +5,9 @@ import * as types from './actionTypes';
 export function getEmployeesForDepartmentSuccess(employees) {
   return {type: types.LOAD_EMPLOYEES_FOR_PRODUCTION_DEPARTMENT_SUCCESS, employees};
 }
+export function setEmployeeDepartmentId(id) {
+  return {type: types.SET_EMPLOYEE_DEPARTMENT_ID, id}
+}
 
 export function getEmployeesForDepartment(id) {
   return dispatch => {
@@ -14,6 +17,7 @@ export function getEmployeesForDepartment(id) {
     .then(response => {
       if(response) {
         dispatch(getEmployeesForDepartmentSuccess(response.body));
+        dispatch(setEmployeeDepartmentId(id));
       }
       else{
         // Do something here if we have time

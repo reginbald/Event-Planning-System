@@ -33,7 +33,7 @@ export class TaskTable implements Sequelize.DefineAttributes {
       "type": Sequelize.INTEGER,
       "allowNull": false,
       "primaryKey": true,
-      "autoIncrement": true 
+      "autoIncrement": true
     }
 		this.applicationid = {
       "type": Sequelize.INTEGER,
