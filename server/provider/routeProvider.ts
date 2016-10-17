@@ -98,6 +98,17 @@ export class RouteProvider {
 
 	//------------------------------/api/jobapplication/------------------------------
 
+	//GET: /api/application
+	getAllApplications = (req:any, res:any) => {
+		this.applicationProvider.getAllApplications((applications) => {
+			return res.send(applications);
+		}, (error) => {
+				return res.status(500).send("ERROR_500_DATABASE");
+		});
+	}
+
+	//------------------------------/api/jobapplication/------------------------------
+
 	//GET: /api/jobapplication
 	getAllJobApplications = (req:any, res:any) => {
 		this.jobApplicationProvider.getAllJobApplications((applications) => {

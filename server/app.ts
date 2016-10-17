@@ -46,55 +46,54 @@ export function configureExpress():Promise<any> {
 }
 
 export function congifureRoutes(app:express.Application, storageManager:StorageManager):Promise<any> {
-  return new Promise((resolve) => {
+	return new Promise((resolve) => {
 		let routeProvider = new RouteProvider(storageManager);
-    let employeeProvider = new EmployeeProvider(storageManager);
-    let clientProvider = new ClientProvider(storageManager);
-    let eventRequestProvider = new EventRequestProvider(storageManager);
-    let eventProvider = new EventProvider(storageManager);
-    let applicationProvider = new ApplicationProvider(storageManager);
-    let taskProvider = new TaskProvider(storageManager);
-    let financialRequestProvider = new FinancialRequestProvider(storageManager);
-    let recruitmentRequestProvider = new RecruitmentRequestProvider(storageManager);
+		let employeeProvider = new EmployeeProvider(storageManager);
+		let clientProvider = new ClientProvider(storageManager);
+		let eventRequestProvider = new EventRequestProvider(storageManager);
+		let eventProvider = new EventProvider(storageManager);
+		let applicationProvider = new ApplicationProvider(storageManager);
+		let taskProvider = new TaskProvider(storageManager);
+		let financialRequestProvider = new FinancialRequestProvider(storageManager);
+		let recruitmentRequestProvider = new RecruitmentRequestProvider(storageManager);
 
-    app.post("/api/login", routeProvider.login);
+		app.post("/api/login", routeProvider.login);
 
-    app.get("/api/department/:id/employee", employeeProvider.getEmployeesForDepartmentId);
+		app.get("/api/department/:id/employee", employeeProvider.getEmployeesForDepartmentId);
 
-    app.get("/api/employee", employeeProvider.getAllEmployees);
-    app.post("/api/employee", employeeProvider.createEmployee);
-    app.post("/api/employee/:id/task", taskProvider.getTasksForEmployeeId);
+		app.get("/api/employee", employeeProvider.getAllEmployees);
+		app.post("/api/employee", employeeProvider.createEmployee);
+		app.post("/api/employee/:id/task", taskProvider.getTasksForEmployeeId);
 
-    app.get("/api/client", clientProvider.getAllClients);
-    app.post("/api/client", clientProvider.createClient);
-    app.get("/api/client/:id/event", routeProvider.getAllEventsForClientId);
+		app.get("/api/client", clientProvider.getAllClients);
+		app.post("/api/client", clientProvider.createClient);
+		app.get("/api/client/:id/event", routeProvider.getAllEventsForClientId);
 
-    app.get("/api/request/event", eventRequestProvider.getAllEventRequests);
-    app.post("/api/request/event", eventRequestProvider.createEventRequest);
-    app.put("/api/request/event/:id", routeProvider.putEventRequest);
+		app.get("/api/request/event", eventRequestProvider.getAllEventRequests);
+		app.post("/api/request/event", eventRequestProvider.createEventRequest);
+		app.put("/api/request/event/:id", routeProvider.putEventRequest);
 		app.put("/api/request/event/:id/status", routeProvider.putEventRequestStatus);
 
-    app.get("/api/event", eventProvider.getAllEvents);
-    app.post("/api/event", eventProvider.createEvent);
+		app.get("/api/event", eventProvider.getAllEvents);
+		app.post("/api/event", eventProvider.createEvent);
 
-    app.get("/api/application", applicationProvider.getAllApplications);
-    app.post("/api/application", applicationProvider.createApplication);
+		app.get("/api/application", routeProvider.getAllApplications);
+		app.post("/api/application", applicationProvider.createApplication);
 
-    app.get("/api/task", taskProvider.getAllTasks);
-    app.post("/api/task", taskProvider.createTask);
+		app.get("/api/task", taskProvider.getAllTasks);
+		app.post("/api/task", taskProvider.createTask);
 
-    app.get("/api/request/financial", financialRequestProvider.getAllFinancialRequests);
-    app.post("/api/request/financial", financialRequestProvider.createFinancialRequest);
+		app.get("/api/request/financial", financialRequestProvider.getAllFinancialRequests);
+		app.post("/api/request/financial", financialRequestProvider.createFinancialRequest);
 
-    app.get("/api/request/recruitment", recruitmentRequestProvider.getAllRecruitmentRequests);
-    app.post("/api/request/recruitment", recruitmentRequestProvider.createRecruitmentRequest);
+		app.get("/api/request/recruitment", recruitmentRequestProvider.getAllRecruitmentRequests);
+		app.post("/api/request/recruitment", recruitmentRequestProvider.createRecruitmentRequest);
 
-    app.get("/api/jobapplication", routeProvider.getAllJobApplications);
-    app.post("/api/jobapplication", routeProvider.postJobApplication);
-    
+		app.get("/api/jobapplication", routeProvider.getAllJobApplications);
+		app.post("/api/jobapplication", routeProvider.postJobApplication);
 
-    resolve();
-  });
+		resolve();
+	});
 }
 
 export function start():Promise<any> {

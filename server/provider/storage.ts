@@ -34,7 +34,7 @@ export interface StorageManager {
     createEvent(details:any):any;
     getEventsForClientId(id:number, succ:Function, err:Function):void;
 
-    getApplications():any;
+    getApplications(succ:Function, err:Function):void;
     createApplication(details:any):any;
 
     getTasks():any;
@@ -248,8 +248,14 @@ export class SequelizeStorageManager implements StorageManager {
     }
 
     //------------------------------APPLICATION------------------------------
-    getApplications():any {
-        return this.Application.findAll();
+    getApplications(succ:Function, err:Function):void {
+        this.Application.findAll()
+        .then((applications)=>{
+            succ(applications);
+        })
+        .catch((error)=>{
+            err(error);
+        });
     }
     createApplication(details:any):any {
         return this.Application.create(details);

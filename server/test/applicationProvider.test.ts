@@ -25,11 +25,11 @@ describe('ApplicationProvider', () => {
 		}
 	});
 
-	describe('get all applications', () => {
+	describe('getAllApplications function', () => {
 		it('should return all applications', () => {
-			let req = new MockRequest({}, {});
-			subject.getAllApplications(req, mocResponse);
-			expect(mocResponse.data).to.deep.equal([{id: "0", eventid: "0"}, {id: "1", eventid: "1"}]);
+			subject.getAllApplications((applications)=>{
+				expect(applications).to.deep.equal(mockStorage.ApplicationList);
+			}, ()=>{});
 		});
 	});
 	describe('create application', () => {

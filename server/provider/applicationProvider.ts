@@ -8,12 +8,16 @@ export class ApplicationProvider {
 			this.storageManager = storageManager;
 	}
 
-	getAllApplications = (req:any, res:any) => {
-		this.storageManager.getApplications()
-		.then((results) => {
-			res.send(results);
-		})
-	};
+	getAllApplications = (succ:Function, err:Function) => {
+		this.storageManager.getApplications(succ, err);
+	}
+
+	//getAllApplications = (req:any, res:any) => {
+	//	this.storageManager.getApplications()
+	//	.then((results) => {
+	//		res.send(results);
+	//	})
+	//};
 	createApplication = (req:any, res:any) => {
 		this.storageManager.createApplication(req.body)
 		.then((results) => {
