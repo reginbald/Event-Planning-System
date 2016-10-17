@@ -9,6 +9,8 @@ import {FinancialRequestModel, FinancialRequestInstance, FinancialRequestAttribu
 import {RecruitmentRequestModel, RecruitmentRequestInstance, RecruitmentRequestAttribute, RecruitmentRequestTable} from "../models/recruitmentRequest"
 import {ApplicationModel, ApplicationInstance, ApplicationAttribute, ApplicationTable} from "../models/application"
 import {TaskModel, TaskInstance, TaskAttribute, TaskTable} from "../models/task"
+import {JobApplicationModel, JobApplicationInstance, JobApplicationAttribute, JobApplicationTable} from "../models/jobApplication"
+
 
 
 export interface StorageManager {
@@ -57,6 +59,7 @@ export class SequelizeStorageManager implements StorageManager {
     public RecruitmentRequest:RecruitmentRequestModel;
     public Application:ApplicationModel;
     public Task:TaskModel;
+    public JobApplication:JobApplicationModel;
 
     constructor() {
 
@@ -121,6 +124,13 @@ export class SequelizeStorageManager implements StorageManager {
         this.Task = this.sequelize.define<TaskInstance, TaskAttribute>("Task", new TaskTable(),
             {
                 "tableName": "task",
+                "timestamps": true,
+                "createdAt": "created_at",
+                "updatedAt": "updated_at",
+            });
+        this.JobApplication = this.sequelize.define<JobApplicationInstance, JobApplicationAttribute>("JobApplication", new JobApplicationTable(),
+            {
+                "tableName": "jobapplication",
                 "timestamps": true,
                 "createdAt": "created_at",
                 "updatedAt": "updated_at",
