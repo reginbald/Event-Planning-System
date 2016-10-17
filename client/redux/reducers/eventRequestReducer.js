@@ -10,7 +10,15 @@ export default function eventRequestReducer(state = initialState.eventrequests, 
       return state;
 
     case types.UPDATE_EVENT_REQUEST_STATUS_SUCCESS:
-      return state;
+      let newState = [];
+      for(let i = 0; i < state.length; i++){
+        if(state[i].id === action.eventrequest.id) {
+          state[i].status = action.eventrequest.status;
+        }
+        newState.push(state[i]);
+      }
+
+      return newState;
 
     default:
       return state;

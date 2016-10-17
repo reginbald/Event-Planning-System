@@ -19,21 +19,18 @@ class EventRequestList extends Component {
   }
 
   handleAccept(requestid) {
-    const requestObject = this.props.eventRequests.filter(x => x.id === requestid);
     this.props.actions.updateEventRequestStatus({id:requestid, status:"SENIOR_ACCEPT"});
+    const requestObject = this.props.eventRequests.filter(x => x.id === requestid);
     this.props.actions.createNewEvent(requestObject[0]);
   }
 
   handleDeny(requestid) {
-    this.props.actions.updateEventRequest({id:requestid, status:"denied"});
+    this.props.actions.updateEventRequestStatus({id:requestid, status:"SENIOR_DENIED"});
   }
   render() {
-    const { eventRequests } = this.props;
-    let filteredRequests = eventRequests.filter(e => e.status === "PENDING")
-    console.log(eventRequests);
     return (
       <div>
-        {filteredRequests.map(eventRequest =>
+        {this.props.eventRequests.map(eventRequest =>
         <MuiThemeProvider key={eventRequest.id}>
           <Card style={cardStyle}>
             <CardHeader
@@ -61,7 +58,7 @@ function mapStateToProps(state, ownProps) {
   return {
     user: state.user,
     clients: state.clients,
-    eventRequests: state.eventRequest,
+    eventRequests: state.eventRequest.filter(e => e.status === "PENDING"),
     events: state.events
   };
 }

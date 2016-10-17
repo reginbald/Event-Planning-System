@@ -82,7 +82,8 @@ export function updateEventRequestStatusSuccess(eventrequest) {
 
 export function updateEventRequestStatus(data) {
   const id = data.id;
-  const status = { status: data.status };
+  const status = { status: data.status } ;
+
   return dispatch => {
     return request
     .put(API_PATH + 'request/event/' + id + '/status')
