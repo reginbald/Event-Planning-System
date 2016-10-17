@@ -12,6 +12,7 @@ import {JobApplicationProvider} from "./jobApplicationProvider";
 
 import {NewJobApplicationViewModel} from"../viewModels/newJobApplicationViewModel";
 import {NewApplicationViewModel} from"../viewModels/newApplicationViewModel";
+import {NewClientViewModel} from"../viewModels/newClientViewModel";
 
 export class RouteProvider {
 
@@ -62,7 +63,32 @@ export class RouteProvider {
 	};
 
 	//------------------------------/api/client/------------------------------
-	//PUT: /api/client/:id/event
+	//GET: /api/client
+	getAllClients = (req:any, res:any) => {
+		this.clientProvider.getAllClients((clients) => {
+			return res.send(clients);
+		}, (error) => {
+				return res.status(500).send("ERROR_500_DATABASE");
+		});
+	}
+
+	//POST: /api/client
+	postClient = (req:any, res:any) => {
+		if(!req.body.hasOwnProperty('name')) {
+			return res.status(412).send('ERROR_412_NAME');
+		}
+		if(!req.body.hasOwnProperty('email')) {
+			return res.status(412).send('ERROR_412_EMAIL');
+		}
+		let newClient = new NewClientViewModel(req.body.name, req.body.email);
+		this.clientProvider.createClient(newClient, (client) => {
+			return res.send(client);
+		}, (error) => {
+				return res.status(500).send("ERROR_500_DATABASE");
+		});
+	}
+
+	//GET: /api/client/:id/event
 	getAllEventsForClientId = (req:any, res:any) => {
 		this.eventProvider.getAllEventsForClientId(+req.params.id, (events) => {
 			return res.send(events);
@@ -166,6 +192,20 @@ export class RouteProvider {
 		this.jobApplicationProvider.createJobApplication(newJobApp, (application) => {
 			return res.send(application);
 		}, (error) => {
+				return res.status(500).send("ERROR_500_DATABASE");
+		});
+	}
+
+	//------------------------------/api/jobapplication/------------------------------
+
+	//GET: /api/event/:eid/department/:did/tasks
+	getAllTasksForEventAndDepartment = (req:any, res:any) => {
+		this.taskProvider.getAllTasksForEventAndDepartment(+req.params.eid, +req.params.did, (tasks) => {
+			return res.send(tasks);
+		}, (error) => {
+				if (error === "NOT_FOUND"){
+					return res.status(404).send("ERROR_404_NOT_FOUND");
+				}
 				return res.status(500).send("ERROR_500_DATABASE");
 		});
 	}

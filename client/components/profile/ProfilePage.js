@@ -21,6 +21,8 @@ import EventRequestList from './EventRequestList';
 import ResourceRequests from './ResourceRequests';
 import CreateJobApplication from './CreateJobApplication';
 import Tasks from './Tasks';
+import CreateResourceRequest from './CreateResourceRequest';
+
 
 class ProfilePage extends Component {
   constructor(props) {
@@ -68,7 +70,9 @@ class ProfilePage extends Component {
             <Col xs >
               <Events department={departmentid}/>
             </Col>
-            <Col xs />
+            <Col xs >
+              <CreateResourceRequest/>
+            </Col>
           </Row>
         </Grid>
       );

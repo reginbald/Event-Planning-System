@@ -4,41 +4,39 @@ import { expect } from 'chai';
 
 import {ClientProvider} from "../provider/clientProvider";
 import {MockStorageManager} from "./mock/mockStorage";
-import {MockResponse} from "./mock/mockResponse";
-import {MockRequest} from "./mock/mockRequest";
+import {NewClientViewModel} from "../viewModels/newClientViewModel";
 
 describe('ClientProvider', () => {
 	var mockStorage: MockStorageManager;
-	var mocResponse: MockResponse;
 	var subject: ClientProvider;
 	var result: any;
-	var newClient: any;
 
 	beforeEach(function() {
 		mockStorage = new MockStorageManager();
-		mocResponse = new MockResponse();
 		mockStorage.ClientList = [{name: "name1"}, {name: "name2"}]
-		newClient = {name: "name", email: "email@email.com"};
 		subject = new ClientProvider(mockStorage);
 	});
 
-	describe('get all clients', () => {
+	describe('getAllClients function', () => {
 		it('should return all clients', () => {
-			let req = new MockRequest({}, {});
-			subject.getAllClients(req, mocResponse);
-			expect(mocResponse.data).to.deep.equal([{name: "name1"}, {name: "name2"}]);
+			subject.getAllClients((clients) => {
+				expect(clients).to.deep.equal(mockStorage.ClientList);
+			}, () => {});
 		});
 	});
-	describe('create new client', () => {
+	describe('createClient function', () => {
 		it('should return new client details', () => {
-			let req = new MockRequest(newClient, {});
-			subject.createClient(req, mocResponse);
-			expect(mocResponse.data).to.deep.equal(newClient);
+			let newClient = new NewClientViewModel("name", "email@email.com");
+			subject.createClient(newClient, (client) => {
+				expect(client).to.deep.equal(newClient);
+			}, () => {});
 		});
-		it('should return error on missing properties', () => {
-			let req = new MockRequest({name: "name", error: true}, {});
-			subject.createClient(req, mocResponse);
-			expect(mocResponse.data).to.deep.equal("error");
+		it('should return DB_ERROR when database fails', () => {
+			this.dbERROR = true;
+			let newClient = new NewClientViewModel("name", "email@email.com");
+			subject.createClient(newClient, () => {}, (error)=>{
+				expect(error).to.deep.equal("DB_ERROR");
+			});
 		});
 	});
 });

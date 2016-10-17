@@ -23,3 +23,29 @@ export function getAllResourceRequests() {
     });
   };
 }
+
+
+
+export function newResourceRequestSuccess(resourceRequest) {
+  return {type: types.ADD_NEW_RESOURCE_REQUEST_SUCCESS, resourceRequest };
+}
+export function newResourceRequest(newResourceRequest) {
+  return dispatch => {
+    return request
+    .post(API_PATH + 'request/recruitment')
+    .send(newResourceRequest)
+    .set('Accept', 'application/json')
+    .then(resourceRequest => {
+      if(resourceRequest) {
+        dispatch(newResourceRequestSuccess(resourceRequest));
+      }
+      else{
+
+      // Do something here if we have time
+
+      }
+    }).catch(error => {
+      throw(error);
+    });
+  };
+}

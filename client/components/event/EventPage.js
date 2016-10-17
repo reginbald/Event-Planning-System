@@ -72,6 +72,17 @@ class EventPage extends Component {
 
 	eventSelected(id) {
 		let evId = this.props.events[id].id
+		const data = {
+			eventid: evId,
+			departmentid: this.props.departmentid
+		};
+
+		this.props.actions.getTasksForEventAndDepartment(evId, this.props.departmentid)
+		.then((tasks)=> {
+			console.log('received something', tasks);
+		}).catch((err)=>{
+			console.log('received error', err);
+		});
 
 		this.setState({
 			open: true,

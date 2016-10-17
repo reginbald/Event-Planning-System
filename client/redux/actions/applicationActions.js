@@ -30,7 +30,12 @@ export function createApplicationAndTasksRequest(data) {
 
 /**
 * data contains eventid and departmentid
+* /api/event/:eid/department/:did/tasks
 */
-export function getApplicationAndTasksForEvent(data){
-
+export function getTasksForEventAndDepartment(data){
+  const eventid = data.eventid;
+  const departmentid = data.departmentid;
+    return request
+    .get(API_PATH + 'event/' + eventid + '/department/' + departmentid + '/tasks')
+    .set('Accept', 'application/json');
 }
