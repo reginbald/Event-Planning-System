@@ -100,19 +100,34 @@ class ProfilePage extends Component {
   }
 
   seniorCustomerServiceProfile() {
+    this.props.actions.getAllEvents();
     const { eventRequests } = this.props;
     const list = eventRequests.filter(x => x.status === 'PENDING');
     return(
         <Grid>
           <Row>
             <Col xs >
+              <Row>
+                <Col>
+                  <AddNewClient/>
+                </Col>
+              </Row>
+              <Row>
+                <Col>
+                  <Clients />
+                </Col>
+              </Row>
+              <Row>
+                <Col>
+                  <Events />
+                </Col>
+              </Row>
+            </Col>
+            <Col xs >
               <EventRequestList 
                 statusaccept="SENIOR_ACCEPT"
                 statusdenied="SENIOR_DENIED"
                 eventRequests={list}/>
-            </Col>
-            <Col xs >
-              <AddNewClient />
             </Col>
           </Row>
       </Grid>
