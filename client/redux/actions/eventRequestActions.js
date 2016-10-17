@@ -90,7 +90,6 @@ export function updateEventRequestStatus(data) {
     .send(status)
     .set('Accept', 'application/json')
     .then(response => {
-      console.log('respo: ', response);
       if(response) {
         dispatch(updateEventRequestStatusSuccess(response.body));
       }
@@ -98,7 +97,6 @@ export function updateEventRequestStatus(data) {
         // Do something here if we have time
       }
     }).catch(error => {
-      console.log('got error');
       throw(error);
     });
   };

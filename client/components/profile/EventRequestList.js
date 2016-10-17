@@ -16,7 +16,6 @@ const cardStyle = {
 class EventRequestList extends Component {
   constructor(props){
     super(props);
-    console.log('props from req list', props);
   }
 
   handleAccept(requestid) {
@@ -29,12 +28,9 @@ class EventRequestList extends Component {
     this.props.actions.updateEventRequestStatus({id:requestid, status:"SENIOR_DENIED"});
   }
   render() {
-    const { eventRequests } = this.props;
-    let filteredRequests = eventRequests.filter(e => e.status === "PENDING")
-    console.log(eventRequests);
     return (
       <div>
-        {filteredRequests.map(eventRequest =>
+        {this.props.eventRequests.map(eventRequest =>
         <MuiThemeProvider key={eventRequest.id}>
           <Card style={cardStyle}>
             <CardHeader
@@ -62,7 +58,7 @@ function mapStateToProps(state, ownProps) {
   return {
     user: state.user,
     clients: state.clients,
-    eventRequests: state.eventRequest,
+    eventRequests: state.eventRequest.filter(e => e.status === "PENDING"),
     events: state.events
   };
 }
