@@ -30,6 +30,7 @@ class ProfilePage extends Component {
   */
   renderContent() {
     const { user } = this.props;
+    console.log("render");
 
     switch (user.access) {
       case 0:
@@ -75,9 +76,7 @@ class ProfilePage extends Component {
 
   financialManagerProfile() {
     this.props.actions.getAllBudgetRequests();
-    this.props.actions.getAllClients();
     this.props.actions.getAllEmployees();
-    this.props.actions.getAllEventRequests();
     return(
         <Grid>
           <Row>
@@ -102,11 +101,15 @@ class ProfilePage extends Component {
 
   seniorCustomerServiceProfile() {
     const { eventRequests } = this.props;
+    const list = eventRequests.filter(x => x.status === 'PENDING');
     return(
         <Grid>
           <Row>
             <Col xs >
-              <EventRequestList />
+              <EventRequestList 
+                statusaccept="SENIOR_ACCEPT"
+                statusdenied="SENIOR_DENIED"
+                eventRequests={list}/>
             </Col>
             <Col xs >
               <AddNewClient />
@@ -150,10 +153,17 @@ class ProfilePage extends Component {
   }
 
   administrationManagerProfile() {
-    this.props.actions.getAllClients();
+    const { eventRequests } = this.props;
+    const list = eventRequests.filter(x => x.status === 'FINANCIAL_ACCEPT');
     return(
       <Grid>
         <Row>
+        <Col xs >
+          <EventRequestList 
+          statusaccept="ADMINISTRATION_ACCEPT"
+          statusdenied="ADMINISTRATION_DENIED"
+          eventRequests={list}/>
+        </Col>
           <Col>
             <Clients/>
           </Col>

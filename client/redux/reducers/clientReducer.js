@@ -4,6 +4,7 @@ import initialState from './initialState';
 export function clients(state = initialState.clients, action) {
   switch(action.type) {
     case types.LOAD_CLIENTS_SUCCESS:
+      console.log("LOAD_CLIENTS_SUCCESS");
       return action.clients;
 
     case types.ADD_NEW_CLIENT_SUCCESS:

@@ -16,16 +16,17 @@ const cardStyle = {
 class EventRequestList extends Component {
   constructor(props){
     super(props);
+    console.log(props);
   }
 
   handleAccept(requestid) {
-    this.props.actions.updateEventRequestStatus({id:requestid, status:"SENIOR_ACCEPT"});
+    this.props.actions.updateEventRequestStatus({id:requestid, status:this.props.statusaccept});
     const requestObject = this.props.eventRequests.filter(x => x.id === requestid);
     this.props.actions.createNewEvent(requestObject[0]);
   }
 
   handleDeny(requestid) {
-    this.props.actions.updateEventRequestStatus({id:requestid, status:"SENIOR_DENIED"});
+    this.props.actions.updateEventRequestStatus({id:requestid, status:this.props.statusdenied});
   }
   render() {
     return (
@@ -58,7 +59,6 @@ function mapStateToProps(state, ownProps) {
   return {
     user: state.user,
     clients: state.clients,
-    eventRequests: state.eventRequest.filter(e => e.status === "PENDING"),
     events: state.events
   };
 }

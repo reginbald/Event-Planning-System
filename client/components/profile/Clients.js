@@ -1,5 +1,4 @@
 import React, {Component, PropTypes} from 'react';
-import { connect } from 'react-redux';
 import { browserHistory } from  'react-router';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Paper from 'material-ui/Paper';
@@ -17,11 +16,9 @@ const buttonStyle = {
   margin: 14
 };
 
-class Clients extends Component {
+export default class Clients extends Component {
 	constructor(props){
 		super(props);
-		this.state = {
-		}
 	}
 
 	handleOpen() {
@@ -42,18 +39,3 @@ class Clients extends Component {
 		);
 	}
 }
-
-function mapStateToProps(state, ownProps) {
-	return {
-		//user: state.user,
-		//clients: state.clients,
-		//eventrequests: state.eventrequests
-	};
-}
-function mapDispatchToProps(dispatch) {
-	return {
-		//actions: bindActionCreators(Object.assign({}, userActions, eventRequestActions, clientActions), dispatch)
-	};
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Clients);
