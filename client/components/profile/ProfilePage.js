@@ -38,6 +38,8 @@ class ProfilePage extends Component {
         return this.seniorCustomerServiceProfile();
       case 2:
         return this.financialManagerProfile();
+      case 3: 
+        return this.administrationManagerProfile();
       case 4:
         if(user.departmentid === 1) {
           return this.productionDepartmentManagerProfile();
@@ -45,6 +47,8 @@ class ProfilePage extends Component {
         if(user.departmentid === 2){
           return this.serviceDepartmentManagerProfile();
         }
+      case 5: 
+        return this.teamProfile();
       case 6:
         return this.hrManagerProfile();
 
@@ -140,6 +144,28 @@ class ProfilePage extends Component {
         </Row>
         <Row>
           <Col><CreateJobApplication/></Col>
+        </Row>
+      </Grid>
+    );
+  }
+
+  administrationManagerProfile() {
+    return(
+      <Grid>
+        <Row>
+          <Col>
+          </Col>
+        </Row>
+      </Grid>
+    );
+  }
+
+  teamProfile() {
+    return(
+      <Grid>
+        <Row>
+          <Col>
+          </Col>
         </Row>
       </Grid>
     );
