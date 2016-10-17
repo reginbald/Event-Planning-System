@@ -153,6 +153,20 @@ export class MockStorageManager implements StorageManager {
 		this.EventList.push(details);
 		return new MockPromise(details);
 	}
+	getEventsForClientId(id:number, succ:Function, err:Function):void {
+		console.log("iD ", id);
+		if (this.dbERROR) {
+			return err("DB_ERROR");
+		}
+		let list = [];
+		for (let e of this.EventList) {
+			if (+e.clientid === +id) {
+				list.push(e); 
+			}
+		}
+		return succ(list);
+	}
+
 	//------------------------FINANCIAL REQUEST------------------------
 	getFinancialRequests():any {
 		return new MockPromise(this.FinancialRequestList);

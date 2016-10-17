@@ -33,7 +33,7 @@ describe('EventProvider', () => {
 			let req = new MockRequest({}, {});
 			mockStorage.EventList = [{id: "0", name: "name1"}, {id: "1", name: "name2"}]
 			subject.getAllEvents(req, mocResponse);
-			expect(mocResponse.data).to.deep.equal([{id: "0", name: "name1"}, {id:"1", name: "name2"}]);
+			expect(mocResponse.data).to.deep.equal(mockStorage.EventList);
 		});
 	});
 	describe('create event', () => {
@@ -41,6 +41,20 @@ describe('EventProvider', () => {
 			let req = new MockRequest(newEvent, {});
 			subject.createEvent(req, mocResponse);
 			expect(mocResponse.data).to.deep.equal(newEvent);
+		});
+	});
+	describe('getAllEventsForClientId', () => {
+		it('should return all events with clientid == id', () => {
+			mockStorage.EventList = [{id: 0, clientid: 0, name: "name1"}, {id: 1, clientid: 0, name: "name2"}]
+			subject.getAllEventsForClientId(0, (data)=>{
+				expect(data).to.deep.equal(mockStorage.EventList);
+			}, ()=>{});
+		});
+		it('should return emptylist on no matching clientid', () => {
+			mockStorage.EventList = [{id: 0, clientid: 0, name: "name1"}, {id: 1, clientid: 0, name: "name2"}]
+			subject.getAllEventsForClientId(99, (data)=>{
+				expect(data).to.deep.equal([]);
+			}, ()=>{});
 		});
 	});
 });

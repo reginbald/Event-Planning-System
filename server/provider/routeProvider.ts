@@ -59,6 +59,17 @@ export class RouteProvider {
 				return res.status(500).send("ERROR_500_DATABASE");
 		});
 	};
+
+	//------------------------------/api/client/------------------------------
+	//PUT: /api/client/:id/event
+	getAllEventsForClientId = (req:any, res:any) => {
+		this.eventProvider.getAllEventsForClientId(+req.params.id, (events) => {
+			return res.send(events);
+		}, (error) => {
+				return res.status(500).send("ERROR_500_DATABASE");
+		});
+	}
+
 	//------------------------------/api/request/event/------------------------------
 
 	//PUT: /api/request/event/:id
