@@ -66,7 +66,7 @@ export function congifureRoutes(app:express.Application, storageManager:StorageM
 		app.get("/api/employee/:id/task", taskProvider.getTasksForEmployeeId);
 
 		app.get("/api/client", routeProvider.getAllClients);
-		app.post("/api/client", clientProvider.createClient);
+		app.post("/api/client", routeProvider.postClient);
 		app.get("/api/client/:id/event", routeProvider.getAllEventsForClientId);
 
 		app.get("/api/request/event", eventRequestProvider.getAllEventRequests);

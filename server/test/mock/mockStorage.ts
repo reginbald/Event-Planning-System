@@ -80,14 +80,12 @@ export class MockStorageManager implements StorageManager {
 		}
 		succ(this.ClientList);
 	};
-	createClient(details:any):any {
-		if (details.error) {
-			let promise = new MockPromise(details)
-			promise.throw = true;
-			return promise;
+	createClient(newClient:any, succ:Function, err:Function):void {
+		if (this.dbERROR) {
+			return err("DB_ERROR");
 		}
-		this.ClientList.push(details);
-		return new MockPromise(details);
+		this.ClientList.push(newClient);
+		succ(newClient);
 	}
 	//------------------------EVENT REQUEST------------------------
 	getEventRequests():any {

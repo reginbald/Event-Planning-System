@@ -1,4 +1,5 @@
 import {StorageManager} from "./storage";
+import {NewClientViewModel} from "../viewModels/newClientViewModel";
 
 export class ClientProvider {
 
@@ -11,13 +12,8 @@ export class ClientProvider {
 	getAllClients = (succ:Function, err:Function) => {
 		this.storageManager.getClients(succ, err);
 	};
-	
-	createClient = (req:any, res:any) => {
-		this.storageManager.createClient(req.body)
-		.then((results) => {
-			res.send(results);
-		}).catch((err) => {
-			res.status(500).send(err.message);
-		});
+
+	createClient = (newClient:NewClientViewModel, succ:Function, err:Function) => {
+		this.storageManager.createClient(newClient, succ, err);
 	};
 }

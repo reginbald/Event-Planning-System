@@ -22,7 +22,7 @@ export interface StorageManager {
     
 
     getClients(succ:Function, err:Function):void;
-    createClient(details:any):any;
+    createClient(newClient:any, succ:Function, err:Function):void;
 
     getEventRequests():any;
     getEventRequestById(id:number, succ:Function, err:Function):any;
@@ -177,8 +177,10 @@ export class SequelizeStorageManager implements StorageManager {
         .then((clients) => {succ(clients)})
         .catch((error)=>{err(error)});
     }
-    createClient(details:any):any {
-        return this.Client.create(details);
+    createClient(newClient:any, succ:Function, err:Function):void {
+        this.Client.create(newClient)
+        .then((client) => {succ(client)})
+        .catch((error)=>{err(error)});
     }
 
     //------------------------------EVENT REQUEST------------------------------

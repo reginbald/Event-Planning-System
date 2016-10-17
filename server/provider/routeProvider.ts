@@ -12,6 +12,7 @@ import {JobApplicationProvider} from "./jobApplicationProvider";
 
 import {NewJobApplicationViewModel} from"../viewModels/newJobApplicationViewModel";
 import {NewApplicationViewModel} from"../viewModels/newApplicationViewModel";
+import {NewClientViewModel} from"../viewModels/newClientViewModel";
 
 export class RouteProvider {
 
@@ -66,6 +67,22 @@ export class RouteProvider {
 	getAllClients = (req:any, res:any) => {
 		this.clientProvider.getAllClients((clients) => {
 			return res.send(clients);
+		}, (error) => {
+				return res.status(500).send("ERROR_500_DATABASE");
+		});
+	}
+
+	//POST: /api/client
+	postClient = (req:any, res:any) => {
+		if(!req.body.hasOwnProperty('name')) {
+			return res.status(412).send('ERROR_412_NAME');
+		}
+		if(!req.body.hasOwnProperty('email')) {
+			return res.status(412).send('ERROR_412_EMAIL');
+		}
+		let newClient = new NewClientViewModel(req.body.name, req.body.email);
+		this.clientProvider.createClient(newClient, (client) => {
+			return res.send(client);
 		}, (error) => {
 				return res.status(500).send("ERROR_500_DATABASE");
 		});
