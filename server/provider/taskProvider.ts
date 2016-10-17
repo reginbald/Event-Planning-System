@@ -30,4 +30,13 @@ export class TaskProvider {
 			res.status(500).send(err.message);
 		});
 	};
+
+	getAllTasksForEventAndDepartment = (eventId:number, departmentId, succ:Function, err:Function) => {
+		this.storageManager.getApplicationForEventAndDepartment(eventId, departmentId, (application) => {
+			if (application === null) {
+				return err("NOT_FOUND");
+			}
+			this.storageManager.getTasksForApplication(application.id, succ, err);
+		}, err);
+	};
 }

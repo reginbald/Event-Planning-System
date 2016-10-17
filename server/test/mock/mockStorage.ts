@@ -155,7 +155,6 @@ export class MockStorageManager implements StorageManager {
 		return new MockPromise(details);
 	}
 	getEventsForClientId(id:number, succ:Function, err:Function):void {
-		console.log("iD ", id);
 		if (this.dbERROR) {
 			return err("DB_ERROR");
 		}
@@ -208,6 +207,18 @@ export class MockStorageManager implements StorageManager {
 		this.ApplicationList.push(newApp);
 		succ(newApp);
 	}
+	getApplicationForEventAndDepartment(eventId:number, departmentId:number, succ:Function, err:Function):void {
+		if (this.dbERROR) {
+			return err("DB_ERROR");
+		}
+    let list = [];
+		for (let e of this.ApplicationList) {
+			if (+e.eventid === +eventId && +e.departmentid === +departmentId) {
+				return succ(e);
+			}
+		}
+		succ(null);
+  }
 	//------------------------Task------------------------
 	getTasks():any {
 		return new MockPromise(this.TaskList);
@@ -230,6 +241,18 @@ export class MockStorageManager implements StorageManager {
 		this.TaskList.push(details);
 		return new MockPromise(details);
 	}
+	getTasksForApplication(id:number, succ:Function, err:Function):void {
+		if (this.dbERROR) {
+			return err("DB_ERROR");
+		}
+		let list = [];
+		for (let e of this.TaskList) {
+			if (+e.applicationid === +id) {
+				list.push(e); 
+			}
+		}
+		succ(list);
+    }
 	//------------------------------JOB APPLICATION------------------------------
 	getJobApplications(succ:Function, err:Function):any {
 		if (this.dbERROR) {

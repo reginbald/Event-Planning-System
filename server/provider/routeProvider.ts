@@ -195,4 +195,18 @@ export class RouteProvider {
 				return res.status(500).send("ERROR_500_DATABASE");
 		});
 	}
+
+	//------------------------------/api/jobapplication/------------------------------
+
+	//GET: /api/event/:eid/department/:did/tasks
+	getAllTasksForEventAndDepartment = (req:any, res:any) => {
+		this.taskProvider.getAllTasksForEventAndDepartment(+req.params.eid, +req.params.did, (tasks) => {
+			return res.send(tasks);
+		}, (error) => {
+				if (error === "NOT_FOUND"){
+					return res.status(404).send("ERROR_404_NOT_FOUND");
+				}
+				return res.status(500).send("ERROR_500_DATABASE");
+		});
+	}
 }

@@ -49,4 +49,25 @@ describe('TaskProvider', () => {
 			expect(mocResponse.data).to.deep.equal(newTask);
 		});
 	});
+	describe('getAllTasksForEventAndDepartment function', () => {
+		it('should return all tasks for an event and department', () => {
+			mockStorage.ApplicationList = [{id: 0, departmentid: 0, eventid: 0}];
+			subject.getAllTasksForEventAndDepartment(0, 0, (tasks) => {
+				expect(tasks).to.deep.equal([{id: "0", applicationid: "0", employeeid: "0"}]);
+			}, () =>{});
+		});
+		it('should return NOT_FOUND if application is not found', () => {
+			mockStorage.ApplicationList = [{id: 0, departmentid: 0, eventid: 0}];
+			subject.getAllTasksForEventAndDepartment(99, 99, () => {}, (error) =>{
+				expect(error).to.deep.equal("NOT_FOUND");
+			});
+		});
+		it('should return DB_ERROR if database fails', () => {
+			mockStorage.dbERROR = true;
+			mockStorage.ApplicationList = [{id: 0, departmentid: 0, eventid: 0}];
+			subject.getAllTasksForEventAndDepartment(0, 0, () => {}, (error) =>{
+				expect(error).to.deep.equal("DB_ERROR");
+			});
+		});
+	});
 });
