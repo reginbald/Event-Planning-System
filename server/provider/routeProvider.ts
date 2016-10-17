@@ -62,7 +62,16 @@ export class RouteProvider {
 	};
 
 	//------------------------------/api/client/------------------------------
-	//PUT: /api/client/:id/event
+	//GET: /api/client
+	getAllClients = (req:any, res:any) => {
+		this.clientProvider.getAllClients((clients) => {
+			return res.send(clients);
+		}, (error) => {
+				return res.status(500).send("ERROR_500_DATABASE");
+		});
+	}
+
+	//GET: /api/client/:id/event
 	getAllEventsForClientId = (req:any, res:any) => {
 		this.eventProvider.getAllEventsForClientId(+req.params.id, (events) => {
 			return res.send(events);

@@ -21,7 +21,7 @@ export interface StorageManager {
     getEmployeeByUsernameAndPassword(username:string, password:string, succ:Function, err:Function):any;
     
 
-    getClients():any;
+    getClients(succ:Function, err:Function):void;
     createClient(details:any):any;
 
     getEventRequests():any;
@@ -172,8 +172,10 @@ export class SequelizeStorageManager implements StorageManager {
     }
 
     //------------------------------CLIENT------------------------------
-    getClients():any {
-        return this.Client.findAll();
+    getClients(succ:Function, err:Function):void {
+        this.Client.findAll()
+        .then((clients) => {succ(clients)})
+        .catch((error)=>{err(error)});
     }
     createClient(details:any):any {
         return this.Client.create(details);

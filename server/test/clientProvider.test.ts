@@ -22,11 +22,11 @@ describe('ClientProvider', () => {
 		subject = new ClientProvider(mockStorage);
 	});
 
-	describe('get all clients', () => {
+	describe('getAllClients function', () => {
 		it('should return all clients', () => {
-			let req = new MockRequest({}, {});
-			subject.getAllClients(req, mocResponse);
-			expect(mocResponse.data).to.deep.equal([{name: "name1"}, {name: "name2"}]);
+			subject.getAllClients((clients) => {
+				expect(clients).to.deep.equal(mockStorage.ClientList);
+			}, () => {});
 		});
 	});
 	describe('create new client', () => {

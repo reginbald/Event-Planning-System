@@ -8,12 +8,10 @@ export class ClientProvider {
 			this.storageManager = storageManager;
 	}
 
-	getAllClients = (req:any, res:any) => {
-		this.storageManager.getClients()
-		.then((results) => {
-			res.send(results);
-		})
+	getAllClients = (succ:Function, err:Function) => {
+		this.storageManager.getClients(succ, err);
 	};
+	
 	createClient = (req:any, res:any) => {
 		this.storageManager.createClient(req.body)
 		.then((results) => {
