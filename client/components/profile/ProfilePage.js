@@ -8,6 +8,7 @@ import * as employeeActions from '../../redux/actions/employeeActions';
 import * as budgetRequestActions from '../../redux/actions/budgetRequestActions';
 import * as resourceRequestActions from '../../redux/actions/resourceRequestActions';
 import * as clientActions from '../../redux/actions/clientActions';
+import * as taskActions from '../../redux/actions/taskActions';
 import {Grid, Row, Col } from 'react-flexbox-grid';
 import CreateNewEventRequest from './CreateNewEventRequest';
 import AddNewClient from './AddNewClient';
@@ -20,6 +21,7 @@ import EventRequestList from './EventRequestList';
 import CreateApplication from './CreateApplication';
 import ResourceRequests from './ResourceRequests';
 import CreateJobApplication from './CreateJobApplication';
+import Tasks from './Tasks';
 
 class ProfilePage extends Component {
   constructor(props) {
@@ -188,11 +190,15 @@ class ProfilePage extends Component {
   }
 
   teamProfile() {
+    this.props.actions.getTasksForEmployee(this.props.user.id);
     return(
       <Grid>
         <Row>
-          <Col>
+          <Col xs />
+          <Col xs >
+            <Tasks/>
           </Col>
+          <Col xs />
         </Row>
       </Grid>
     );
@@ -223,7 +229,8 @@ function mapDispatchToProps(dispatch) {
       resourceRequestActions,
       clientActions,
       employeeActions,
-      eventActions
+      eventActions,
+      taskActions
     ), dispatch)
   };
 }
