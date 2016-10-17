@@ -89,6 +89,8 @@ export function congifureRoutes(app:express.Application, storageManager:StorageM
     app.post("/api/request/recruitment", recruitmentRequestProvider.createRecruitmentRequest);
 
     app.get("/api/jobapplication", routeProvider.getAllJobApplications);
+    app.post("/api/jobapplication", routeProvider.postJobApplication);
+    
 
     resolve();
   });

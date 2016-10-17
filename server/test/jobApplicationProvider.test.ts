@@ -15,10 +15,18 @@ describe('JobApplicationProvider', () => {
 		subject = new JobApplicationProvider(mockStorage);
 	});
 
-	describe('get all job applications', () => {
+	describe('getAllJobApplications function', () => {
 		it('should return all job applications', () => {
 			subject.getAllJobApplications((applications)=>{
 				expect(applications).to.deep.equal(mockStorage.JobApplicationList);
+			}, ()=>{});
+		});
+	});
+	describe('createJobApplication function', () => {
+		it('should return newly created job application', () => {
+			let newJobApp = {id: "3"};
+			subject.createJobApplication(newJobApp, (application)=>{
+				expect(application).to.deep.equal(newJobApp);
 			}, ()=>{});
 		});
 	});

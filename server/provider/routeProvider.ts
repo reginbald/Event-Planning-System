@@ -4,11 +4,13 @@ import {EmployeeProvider} from "./employeeProvider";
 import {ClientProvider} from "./clientProvider";
 import {EventRequestProvider} from "./eventRequestProvider";
 import {EventProvider} from "./eventProvider";
-import {ApplicationProvider} from "./applicationProvider"
-import {TaskProvider} from "./taskProvider"
-import {FinancialRequestProvider} from "./financialRequestProvider"
-import {RecruitmentRequestProvider} from "./recruitmentRequestProvider"
-import {JobApplicationProvider} from "./jobApplicationProvider"
+import {ApplicationProvider} from "./applicationProvider";
+import {TaskProvider} from "./taskProvider";
+import {FinancialRequestProvider} from "./financialRequestProvider";
+import {RecruitmentRequestProvider} from "./recruitmentRequestProvider";
+import {JobApplicationProvider} from "./jobApplicationProvider";
+
+import {NewJobApplicationViewModel} from"../viewModels/newJobApplicationViewModel";
 
 export class RouteProvider {
 
@@ -74,7 +76,6 @@ export class RouteProvider {
 	//PUT: /api/request/event/:id/status
 	putEventRequestStatus = (req:any, res:any) => {
 		if(!req.body.hasOwnProperty('status')) {
-			console.log("going to return 412");
 			return res.status(412).send('ERROR_412_STATUS');
 		}
 		this.eventRequestProvider.updateEventRequestStatus(+req.params.id, req.body.status, (eventrequest) => {
@@ -90,6 +91,41 @@ export class RouteProvider {
 	getAllJobApplications = (req:any, res:any) => {
 		this.jobApplicationProvider.getAllJobApplications((applications) => {
 			return res.send(applications);
+		}, (error) => {
+				return res.status(500).send("ERROR_500_DATABASE");
+		});
+	}
+
+	//POST: /api/jobapplication
+	postJobApplication = (req:any, res:any) => {
+		if(!req.body.hasOwnProperty('departmentid')) {
+			return res.status(412).send('ERROR_412_DEPARTMENTID');
+		}
+		if(!req.body.hasOwnProperty('recruitment_request_id')) {
+			return res.status(412).send('ERROR_412_RECRUITMENT_REQUEST_ID');
+		}
+		if(!req.body.hasOwnProperty('contract_type')) {
+			return res.status(412).send('ERROR_412_CONTRACT_TYPE');
+		}
+		if(!req.body.hasOwnProperty('years_experience')) {
+			return res.status(412).send('ERROR_412_YEARS_EXPERIENCE');
+		}
+		if(!req.body.hasOwnProperty('job_title')) {
+			return res.status(412).send('ERROR_412_JOB_TITLE');
+		}
+		if(!req.body.hasOwnProperty('job_description')) {
+			return res.status(412).send('ERROR_412_JOB_DESCRIPTION');
+		}
+		let newJobApp = new NewJobApplicationViewModel(
+			req.body.departmentid,
+			req.body.recruitment_request_id,
+			req.body.contract_type,
+			req.body.years_experience,
+			req.body.job_title,
+			req.body.job_description
+		);
+		this.jobApplicationProvider.createJobApplication(newJobApp, (application) => {
+			return res.send(application);
 		}, (error) => {
 				return res.status(500).send("ERROR_500_DATABASE");
 		});

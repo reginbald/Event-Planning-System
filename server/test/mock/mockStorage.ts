@@ -221,4 +221,11 @@ export class MockStorageManager implements StorageManager {
 		}
 		return succ(this.JobApplicationList);
 	}
+	createJobApplication(application:any, succ:Function, err:Function):any {
+		if (this.dbERROR) {
+			return err("DB_ERROR");
+		}
+		this.TaskList.push(application);
+		return succ(application);
+	}
 }
