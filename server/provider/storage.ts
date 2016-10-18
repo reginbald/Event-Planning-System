@@ -33,6 +33,7 @@ export interface StorageManager {
     getEvents(succ:Function, err:Function):void;
     createEvent(details:any):any;
     getEventsForClientId(id:number, succ:Function, err:Function):void;
+    getAllEventsWithApplicationTasksForDepartment(id:number, succ:Function, err:Function):void;
 
     getApplications(succ:Function, err:Function):void;
     createApplication(newApp:any, succ:Function, err:Function):void;
@@ -50,6 +51,13 @@ export interface StorageManager {
 
     getJobApplications(succ:Function, err:Function):any;
     createJobApplication(application:any, succ:Function, err:Function):any;
+}
+
+class HasManyOptions implements Sequelize.AssociationOptionsHasMany {
+    public joinTableName: ''
+    constructor(name) {
+        this.joinTableName = name;
+    }
 }
 
 export class SequelizeStorageManager implements StorageManager {
@@ -139,6 +147,8 @@ export class SequelizeStorageManager implements StorageManager {
                 "createdAt": "created_at",
                 "updatedAt": "updated_at",
             });
+            this.Event.hasMany(this.Application);
+            this.Application.hasMany(this.Task);
     }
 
     init(force?:boolean):Promise<any> {
@@ -241,6 +251,23 @@ export class SequelizeStorageManager implements StorageManager {
         .catch((error) => {
             return err(error);
         });
+    }
+
+    getAllEventsWithApplicationTasksForDepartment(id:number, succ:Function, err:Function):void {
+        this.Event.findAll({ 
+            include: [
+                {
+                    model: this.Application,
+                    include: [
+                        {
+                            model: this.Task
+                        }
+                    ]
+                }
+            ]
+        })
+        .then((events)=>{succ(events)})
+        .catch((error)=>{err(error)});
     }
 
     //------------------------------FINANCIAL REQUEST------------------------------

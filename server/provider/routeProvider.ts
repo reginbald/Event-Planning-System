@@ -62,6 +62,18 @@ export class RouteProvider {
 		});
 	};
 
+	//------------------------------/api/department/------------------------------
+	//GET: /api/department/:id/event
+	getAllEventsWithApplicationTasksForDepartment = (req:any, res:any) => {
+		console.log("departmentid ", req.params.id);
+		this.eventProvider.getAllEventsWithApplicationTasksForDepartment(+req.params.id, (events) => {
+			return res.send(events);
+		}, (error) => {
+			console.log("ERROR ", error);
+				return res.status(500).send("ERROR_500_DATABASE");
+		});
+	}
+
 	//------------------------------/api/client/------------------------------
 	//GET: /api/client
 	getAllClients = (req:any, res:any) => {
@@ -97,7 +109,7 @@ export class RouteProvider {
 		});
 	}
 
-	//------------------------------/api/client/------------------------------
+	//------------------------------/api/employee/------------------------------
 
 	//GET: /api/employee
 	getAllEmployees = (req:any, res:any) => {

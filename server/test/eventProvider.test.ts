@@ -17,6 +17,8 @@ describe('EventProvider', () => {
 		mocResponse = new MockResponse();
 		subject = new EventProvider(mockStorage);
 		mockStorage.EventList = [{id: 0, clientid: 0, name: "name1"}, {id: 1, clientid: 0, name: "name2"}];
+		mockStorage.ApplicationList = [{id: 0, eventid: 0, departmentid: 0}];
+		mockStorage.TaskList = [{applicationid: 0, type: "test1" }, {applicationid: 0, type: "test2" }];
 	});
 
 	describe('getAllEvents function', () => {
@@ -42,7 +44,7 @@ describe('EventProvider', () => {
 			expect(mocResponse.data).to.deep.equal(newEvent);
 		});
 	});
-	describe('getAllEventsForClientId', () => {
+	describe('getAllEventsForClientId function', () => {
 		it('should return all events with clientid == id', () => {
 			subject.getAllEventsForClientId(0, (data)=>{
 				expect(data).to.deep.equal(mockStorage.EventList);
@@ -51,6 +53,31 @@ describe('EventProvider', () => {
 		it('should return emptylist on no matching clientid', () => {
 			subject.getAllEventsForClientId(99, (data)=>{
 				expect(data).to.deep.equal([]);
+			}, ()=>{});
+		});
+	});
+	describe('getAllEventsWithApplicationTasksForDepartment function', () => {
+		it('should return all events, applications and tasks for departmentid == id', () => {
+			subject.getAllEventsWithApplicationTasksForDepartment(0, (data)=>{
+				expect(data).to.deep.equal([{
+					id: 0, 
+					clientid: 0, 
+					name: "name1", 
+					applications:[{
+						id: 0, 
+						eventid: 0, 
+						departmentid: 0,
+						tasks: [
+							{applicationid: 0, type: "test1" }, {applicationid: 0, type: "test2" }
+						]
+					}] 
+				}, {id: 1, clientid: 0, name: "name2", applications:[]}]);
+			}, ()=>{});
+		});
+		it('should return empty list if there are no events', () => {
+			mockStorage.EventList = [];
+			subject.getAllEventsWithApplicationTasksForDepartment(0, (data)=>{
+				expect(data).to.deep.equal(mockStorage.EventList);
 			}, ()=>{});
 		});
 	});

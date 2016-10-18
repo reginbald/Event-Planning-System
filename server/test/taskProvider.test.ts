@@ -53,7 +53,7 @@ describe('TaskProvider', () => {
 		it('should return all tasks for an event and department', () => {
 			mockStorage.ApplicationList = [{id: 0, departmentid: 0, eventid: 0}];
 			subject.getAllTasksForEventAndDepartment(0, 0, (tasks) => {
-				expect(tasks).to.deep.equal([{id: "0", applicationid: "0", employeeid: "0"}]);
+				expect(tasks).to.deep.equal({applicationid: 0, tasks: [{id: "0", applicationid: "0", employeeid: "0"}]});
 			}, () =>{});
 		});
 		it('should return NOT_FOUND if application is not found', () => {

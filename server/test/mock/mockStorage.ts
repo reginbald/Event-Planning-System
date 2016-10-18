@@ -173,6 +173,29 @@ export class MockStorageManager implements StorageManager {
 		return succ(list);
 	}
 
+	getAllEventsWithApplicationTasksForDepartment(id:number, succ:Function, err:Function):void {
+		if (this.dbERROR) {
+			return err("DB_ERROR");
+		}
+		let list = [];
+		for (let e of this.EventList) {
+			e.applications = [];
+			for (let a of this.ApplicationList) {
+				if (+e.id === +a.eventid && +id === +a.departmentid) {
+					a.tasks = [];
+					for (let t of this.TaskList) {
+						if (+a.id === +t.applicationid) {
+							a.tasks.push(t);
+						}
+					}
+					e.applications.push(a);
+				}
+			}
+			list.push(e);
+		}
+		return succ(list);
+	}
+
 	//------------------------FINANCIAL REQUEST------------------------
 	getFinancialRequests(succ:Function, err:Function):void {
 		if (this.dbERROR) {

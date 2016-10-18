@@ -33,7 +33,12 @@ export class TaskProvider {
 			if (application === null) {
 				return err("NOT_FOUND");
 			}
-			this.storageManager.getTasksForApplication(application.id, succ, err);
+			this.storageManager.getTasksForApplication(application.id, (tasks) => {
+				succ({
+						"applicationid": application.id, 
+						"tasks": tasks
+					});
+			}, err);
 		}, err);
 	};
 }

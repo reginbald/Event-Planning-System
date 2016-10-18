@@ -11,6 +11,13 @@ export class EventProvider {
 	getAllEvents = (succ:Function, err:Function) => {
 		this.storageManager.getEvents(succ, err);
 	}
+
+	getAllEventsWithApplicationTasksForDepartment = (departmentId: number, succ:Function, err:Function) => {
+		this.storageManager.getAllEventsWithApplicationTasksForDepartment(departmentId, (events) => {
+			succ(events);
+		}, err);
+	}
+
 	createEvent = (req:any, res:any) => {
 		this.storageManager.createEvent(req.body)
 		.then((results) => {
