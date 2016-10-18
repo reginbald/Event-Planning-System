@@ -43,7 +43,7 @@ export interface StorageManager {
     createTask(details:any):any;
     getTasksForApplication(id:number, succ:Function, err:Function):void;
 
-    getFinancialRequests():any;
+    getFinancialRequests(succ:Function, err:Function):void;
     createFinancialRequest(details:any):any;
     getRecruitmentRequests():any;
     createRecruitmentRequest(details:any):any;
@@ -244,8 +244,10 @@ export class SequelizeStorageManager implements StorageManager {
     }
 
     //------------------------------FINANCIAL REQUEST------------------------------
-    getFinancialRequests():any {
-        return this.FinancialRequest.findAll();
+    getFinancialRequests(succ:Function, err:Function):void {
+        this.FinancialRequest.findAll()
+        .then((requests) => {succ(requests)})
+        .catch((error) => {err(error)});
     }
     createFinancialRequest(details:any):any {
         return this.FinancialRequest.create(details);

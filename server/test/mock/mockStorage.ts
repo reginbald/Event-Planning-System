@@ -174,8 +174,11 @@ export class MockStorageManager implements StorageManager {
 	}
 
 	//------------------------FINANCIAL REQUEST------------------------
-	getFinancialRequests():any {
-		return new MockPromise(this.FinancialRequestList);
+	getFinancialRequests(succ:Function, err:Function):void {
+		if (this.dbERROR) {
+			return err("DB_ERROR");
+		}
+		succ(this.FinancialRequestList);
 	};
 	createFinancialRequest(details:any):any {
 		if (details.error) {

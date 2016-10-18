@@ -141,6 +141,15 @@ export class RouteProvider {
 		});
 	}
 
+	//------------------------------/api/request/financial/------------------------------
+	getAllFinancialRequests = (req:any, res:any) => {
+		this.financialRequestProvider.getAllFinancialRequests((requests) => {
+			return res.send(requests);
+		}, (error) => {
+				return res.status(500).send("ERROR_500_DATABASE");
+		});
+	}
+
 	//------------------------------/api/application/------------------------------
 
 	//GET: /api/application
