@@ -16,7 +16,6 @@ export function createNewEvent(newEvent) {
     .set('Accept', 'application/json')
     .then(response => {
       if(response) {
-        console.log("got THE RESPONSE: ", response);
         dispatch(createnewEventSuccess(response[0]));
       }
       else{
@@ -40,6 +39,32 @@ export function getAllEvents() {
     .then(response => {
       if(response) {
         dispatch(getAllEventsSuccess(response.body));
+      }
+      else{
+        // Do something here if we have time
+      }
+    }).catch(error => {
+      throw(error);
+    });
+  };
+}
+
+export function getEventsAndTasksSuccess(result) {
+  return { type: types.PREPARE_EVENTS_AND_TASKS, result}
+}
+
+/*
+* Returns array of objects on the form
+*[{id:eventid ..., Applications:[{id: taskid}...]}]
+*/
+export function getEventsAndTasks(departmentid) {
+  return dispatch => {
+    return request
+    .get(API_PATH + 'department/' + departmentid + '/event')
+    .set('Accept', 'application/json')
+    .then(response => {
+      if(response) {
+        dispatch(getEventsAndTasksSuccess(response.body));
       }
       else{
         // Do something here if we have time

@@ -6,6 +6,9 @@ export function tasks(state = initialState.tasks, action) {
     case types.LOAD_EMPLOYEE_TASKS_SUCCESS:
       return action.tasks;
 
+    case types.CREATE_NEW_TASK_SUCCESS:
+      return state;
+
     default:
       return state;
   }

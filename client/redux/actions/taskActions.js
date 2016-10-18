@@ -24,3 +24,24 @@ export function getTasksForEmployee(id) {
     });
   };
 }
+export function createTaskSuccess(result) {
+  return {type: types.CREATE_NEW_TASK_SUCCESS, result};
+}
+
+export function createNewTask(data) {
+  return dispatch => {
+    return request
+    .post(API_PATH + 'task')
+    .send(data)
+    .set('Accept', 'application/json')
+    .then(response => {
+      if(response) {
+      }
+      else{
+        // Do something here if we have time
+      }
+    }).catch(error => {
+      throw(error);
+    });
+  };
+}

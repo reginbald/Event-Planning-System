@@ -5,10 +5,16 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
+import RaisedButton from 'material-ui/RaisedButton';
 import TextInput from '../common/TextInput';
+import * as applicationActions from '../../redux/actions/applicationActions';
+import * as taskActions from '../../redux/actions/taskActions';
+import * as eventActions from '../../redux/actions/eventActions';
 import SelectInput from '../common/SelectInput';
 import FlatButton from 'material-ui/FlatButton';
 import Dialog from 'material-ui/Dialog';
+import Divider from 'material-ui/Divider';
+import request from 'superagent';
 
 const PRIORITY = [{id:0, name:'HIGH'}, {id:1, name:'MEDIUM'}, {id:2, name:'LOW'}];
 const PRODUCTION_TASK_TYPES = [{id:0, name:'Decorations'}, {id:1, name:'Photos'}, {id:2, name:'Filming'}, {id:3, name:'Music/Audio'}, {id:4, name:'Graphic Design'}, {id:5, name:'Decorations'}, {id:6, name:'Computer Related'}];
@@ -22,10 +28,6 @@ class EventPage extends Component {
 			taskTypeOptionValue: '',
 			assigneeOptionValue: '',
 			priorityOptionValue: '',
-			newApplication: {
-				departmentid: this.props.departmentid,
-				eventid: ''
-			},
 			newTask: {
 				applicationid: null,
 				employeeid: null,
@@ -34,13 +36,10 @@ class EventPage extends Component {
 				description: '',
 				priority: ''
 			},
-			tasks: [],
-			totalTasks: 0,
 			eventType: '',
 			eventName:'',
 			eventId: ''
 		};
-		console.log('event props: ', props);
 		this.eventSelected = this.eventSelected.bind(this);
 		this.handleClose = this.handleClose.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
@@ -48,6 +47,7 @@ class EventPage extends Component {
 		this.updateAssignee = this.updateAssignee.bind(this);
 		this.updatePriority = this.updatePriority.bind(this);
 		this.updateTaskType = this.updateTaskType.bind(this);
+		this.createNewTask = this.createNewTask.bind(this);
 	}
 
 	handleClose() {
@@ -64,23 +64,79 @@ class EventPage extends Component {
 				description: '',
 				priority: ''
 			})
-		})
+		});
 	}
 
 	eventSelected(id) {
-		this.setState({open: true});
-		console.log('id of event', this.props.events[id].id);
+		console.log('id:', this.props.departmentid);
+		console.log('this.props: ', this.props);
+		if(+this.props.departmentid > 2 || +this.props.departmentid < 1) {
+			console.log(this.props.departmentid > 2 );
+			console.log(this.props.departmentid < 1);
+			return;
+		}
+		console.log('yes i can');
+		const eventEntry = id[0];
+		let evId = this.props.events[eventEntry].id
+		let eventApplicationAndTasks = this.props.eventsAndTasks.filter(x => x.id === evId); //find the corresponding object
+		const data = {
+			departmentid: this.props.departmentid,
+			eventid: evId
+		};
+		// do this if event currently has no application
+		// we can not create a task without an application.
+		if(eventApplicationAndTasks.length === 0) {
+			this.props.actions.createApplication(data);
+			setTimeout(() => { this.props.actions.getEventsAndTasks(data.departmentid)}, 1000)
+		}
+
 		this.setState({
-			eventId: this.props.events[id].id,
-			newTask: Object.assign({}, this.state.newApplication, {
-				eventid: this.props.events[id].id
-			})
+			open: true,
+			eventId: evId,
+			eventType: this.props.events[eventEntry].event_type
 		});
 	}
 
 	handleSubmit() {
-		console.log('submitting');
-		console.log(this.state.newTask);
+		/*
+		* Applications are created when an event is opened.
+		* Therefore we assume for the sake of thiss assignment that we have the assignmentid
+		*/
+
+		// First find the correct applicationid
+		const eventId = this.state.eventId;
+		const eventObject = this.props.eventsAndTasks.filter(x => x.id === eventId); //returns an array[0]
+		if(eventObject.lenght === 0){
+			this.handleClose();
+		}
+
+		const applicationId = eventObject[0].Applications[0].id;
+
+		this.setState({
+			newTask: Object.assign({}, this.state.newTask,{
+				applicationid: applicationId
+			})
+		});
+
+		// These props will be used to create a new task
+		const newestTask = this.state.newTask;
+		newestTask['applicationid'] = applicationId;
+
+		this.props.actions.createNewTask(newestTask);
+		this.setState({
+			taskTypeOptionValue: '',
+			assigneeOptionValue: '',
+			priorityOptionValue: '',
+			newTask: Object.assign({}, this.state.newTask, {
+				applicationid: null,
+				employeeid: null,
+				senderid: this.props.user.id,
+				type: '',
+				description: '',
+				priority: ''
+			})
+		});
+		this.handleClose();
 	}
 
 	updateEventState(event) {
@@ -90,12 +146,11 @@ class EventPage extends Component {
 		return this.setState({newTask, newTask});
 	}
 
-
 	updateAssignee(event,index, value) {
 		this.setState({
 			assigneeOptionValue: value,
 			newTask: Object.assign({}, this.state.newTask, {
-				clientid: value
+				employeeid: value
 			})
 		});
 	}
@@ -108,11 +163,50 @@ class EventPage extends Component {
       })
     });
 	}
+
 	updateTaskType(event, index, value) {
+		let taskTypeString = '';
+		if(this.props.departmentid === 1){
+			taskTypeString = PRODUCTION_TASK_TYPES[value].name;
+		}
+		else{
+			taskTypeString = SERVICE_TASK_TYPES[value].name;
+		}
 		this.setState({
 			taskTypeOptionValue: value,
 			newTask: Object.assign({}, this.state.newTask, {
-				type: value
+				type: taskTypeString
+			})
+		});
+	}
+
+	createNewTask() {
+		/* Check if the event has an applicationid otherwise create the application first
+		* before submitting tasks
+		*/
+		const eventid = this.state.eventId;
+		let eventApplicationAndTasks = this.props.eventsAndTasks.filter(x => x.id === eventid);
+		let appId = eventApplicationAndTasks[0].Applications[0].id;
+		this.setState({
+			newTask: Object.assign({}, this.state.newTask, {
+				applicationid: appId
+			})
+		});
+		let newestTask = this.state.newTask;
+		newestTask['applicationid'] = appId;
+		this.props.actions.createNewTask(newestTask); //add new task to db
+		// clear curr state
+		this.setState({
+			taskTypeOptionValue: '',
+			assigneeOptionValue: '',
+			priorityOptionValue: '',
+			newTask: Object.assign({}, this.state.newTask, {
+				applicationid: null,
+				employeeid: null,
+				senderid: this.props.user.id,
+				type: '',
+				description: '',
+				priority: ''
 			})
 		});
 	}
@@ -144,7 +238,12 @@ class EventPage extends Component {
 								open={this.state.open}
 								onRequestClose={this.handleClose}
 								autoScrollBodyContent={true} >
-								<TextInput name="description" label="Task" onChange={this.updateEventState} placeholder="Description of task" />
+								{this.state.eventType} <Divider />
+								<TextInput
+									name="description"
+									label="Task"
+									onChange={this.updateEventState}
+									placeholder="Description of task" />
 								<SelectInput
 									value={this.state.priorityOptionValue}
 									options={PRIORITY}
@@ -165,6 +264,10 @@ class EventPage extends Component {
 										options={SERVICE_TASK_TYPES}
 										onChange={this.updateTaskType}
 										hintText="Select type" /> }
+								<RaisedButton
+									label="Add new task"
+									primary={true}
+									onClick={this.createNewTask} />
 							</Dialog>
 							<Table onRowSelection={this.eventSelected}>
 								<TableHeader displaySelectAll={false}>
@@ -194,18 +297,19 @@ class EventPage extends Component {
 		);
 	}
 }
+
 function mapStateToProps(state, ownProps) {
-	console.log("mstp ep: ", state);
 	return {
 		events: state.events,
 		departmentid: state.departmentid,
-		departmentEmloyees: state.departmentEmloyees,
-		user: state.user
+		departmentEmloyees: state.departmentEmloyees.filter(x => x.id !== state.user.id),
+		user: state.user,
+		eventsAndTasks: state.eventsAndTasks
 	};
 }
 function mapDispatchToProps(dispatch) {
 	return {
-		//actions: bindActionCreators(budgetRequestActions, dispatch)
+		actions: bindActionCreators(Object.assign({},taskActions, applicationActions,eventActions), dispatch)
 	};
 }
 export default connect(mapStateToProps, mapDispatchToProps)(EventPage);
