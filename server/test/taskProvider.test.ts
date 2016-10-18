@@ -28,11 +28,11 @@ describe('TaskProvider', () => {
 		}
 	});
 
-	describe('get all tasks', () => {
+	describe('getAllTasks function', () => {
 		it('should return all tasks', () => {
-			let req = new MockRequest({}, {});
-			subject.getAllTasks(req, mocResponse);
-			expect(mocResponse.data).to.deep.equal([{id: "0", applicationid: "0", employeeid: "0"}, {id: "1", applicationid: "1", employeeid: "1"}]);
+			subject.getAllTasks((tasks) => {
+				expect(tasks).to.deep.equal(mockStorage.TaskList);
+			}, () => {});
 		});
 	});
 	describe('get tasks for employee id', () => {

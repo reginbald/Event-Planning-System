@@ -256,4 +256,14 @@ export class RouteProvider {
 				return res.status(500).send("ERROR_500_DATABASE");
 		});
 	}
+
+	//------------------------------/api/task/------------------------------
+	//GET: /api/task
+	getAllTasks = (req:any, res:any) => {
+		this.taskProvider.getAllTasks((tasks) => {
+			return res.send(tasks);
+		}, (error) => {
+				return res.status(500).send("ERROR_500_DATABASE");
+		});
+	}
 }

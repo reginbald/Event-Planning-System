@@ -229,8 +229,11 @@ export class MockStorageManager implements StorageManager {
 		succ(null);
   }
 	//------------------------Task------------------------
-	getTasks():any {
-		return new MockPromise(this.TaskList);
+	getTasks(succ:Function, err:Function):void {
+		if (this.dbERROR) {
+			return err("DB_ERROR");
+		}
+		succ(this.TaskList);
 	}
 	getTasksForEmployeeId(id:any):any {
 		let list = [];
