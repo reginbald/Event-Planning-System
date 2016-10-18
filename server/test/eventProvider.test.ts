@@ -17,8 +17,8 @@ describe('EventProvider', () => {
 		mocResponse = new MockResponse();
 		subject = new EventProvider(mockStorage);
 		mockStorage.EventList = [{id: 0, clientid: 0, name: "name1"}, {id: 1, clientid: 0, name: "name2"}];
-		mockStorage.ApplicationList = [{id: 0, eventid: 0, departmentid: 0}];
-		mockStorage.TaskList = [{applicationid: 0, type: "test1" }, {applicationid: 0, type: "test2" }];
+		mockStorage.ApplicationList = [{id: 0, eventid: 0, departmentid: 0}, {id: 1, eventid: 0, departmentid: 1}];
+		mockStorage.TaskList = [{applicationid: 0, type: "test1" }, {applicationid: 0, type: "test2" }, {applicationid: 2, type: "test1" }];
 	});
 
 	describe('getAllEvents function', () => {

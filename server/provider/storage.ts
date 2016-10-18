@@ -258,6 +258,7 @@ export class SequelizeStorageManager implements StorageManager {
             include: [
                 {
                     model: this.Application,
+                    where: {"departmentid": id},
                     include: [
                         {
                             model: this.Task
