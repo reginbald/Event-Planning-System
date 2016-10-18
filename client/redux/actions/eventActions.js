@@ -16,7 +16,6 @@ export function createNewEvent(newEvent) {
     .set('Accept', 'application/json')
     .then(response => {
       if(response) {
-        console.log("got THE RESPONSE: ", response);
         dispatch(createnewEventSuccess(response[0]));
       }
       else{
@@ -39,7 +38,6 @@ export function getAllEvents() {
     .set('Accept', 'application/json')
     .then(response => {
       if(response) {
-        console.log("GOT THE RESPONSE EVENTS: ", response.body);
         dispatch(getAllEventsSuccess(response.body));
       }
       else{
@@ -60,16 +58,12 @@ export function getEventsAndTasksSuccess(result) {
 *[{id:eventid ..., Applications:[{id: taskid}...]}]
 */
 export function getEventsAndTasks(departmentid) {
-  console.log("GET EVENTS AND TATSKS WAS CALLED");
-  console.log('did: ', departmentid);
   return dispatch => {
     return request
     .get(API_PATH + 'department/' + departmentid + '/event')
     .set('Accept', 'application/json')
     .then(response => {
-      console.log('THE API CALL RETURNS SOMETHING', response);
       if(response) {
-        console.log("GOT THE RESPONSE EVENTS AND TASKS: ", response.body);
         dispatch(getEventsAndTasksSuccess(response.body));
       }
       else{

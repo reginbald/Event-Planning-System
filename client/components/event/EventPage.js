@@ -68,6 +68,14 @@ class EventPage extends Component {
 	}
 
 	eventSelected(id) {
+		console.log('id:', this.props.departmentid);
+		console.log('this.props: ', this.props);
+		if(+this.props.departmentid > 2 || +this.props.departmentid < 1) {
+			console.log(this.props.departmentid > 2 );
+			console.log(this.props.departmentid < 1);
+			return;
+		}
+		console.log('yes i can');
 		const eventEntry = id[0];
 		let evId = this.props.events[eventEntry].id
 		let eventApplicationAndTasks = this.props.eventsAndTasks.filter(x => x.id === evId); //find the corresponding object
@@ -115,6 +123,20 @@ class EventPage extends Component {
 		newestTask['applicationid'] = applicationId;
 
 		this.props.actions.createNewTask(newestTask);
+		this.setState({
+			taskTypeOptionValue: '',
+			assigneeOptionValue: '',
+			priorityOptionValue: '',
+			newTask: Object.assign({}, this.state.newTask, {
+				applicationid: null,
+				employeeid: null,
+				senderid: this.props.user.id,
+				type: '',
+				description: '',
+				priority: ''
+			})
+		});
+		this.handleClose();
 	}
 
 	updateEventState(event) {
@@ -280,7 +302,7 @@ function mapStateToProps(state, ownProps) {
 	return {
 		events: state.events,
 		departmentid: state.departmentid,
-		departmentEmloyees: state.departmentEmloyees,
+		departmentEmloyees: state.departmentEmloyees.filter(x => x.id !== state.user.id),
 		user: state.user,
 		eventsAndTasks: state.eventsAndTasks
 	};

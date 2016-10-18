@@ -68,7 +68,7 @@ class ProfilePage extends Component {
         <Grid>
           <Row>
             <Col xs >
-              <Events department={departmentid}/>
+              <Events departmentid={departmentid}/>
             </Col>
             <Col xs >
               <CreateResourceRequest/>
@@ -86,7 +86,7 @@ class ProfilePage extends Component {
         <Grid>
           <Row>
             <Col xs >
-              <Events department={departmentid}/>
+              <Events departmentid={departmentid}/>
             </Col>
             <Col xs >
               <CreateResourceRequest/>
@@ -206,6 +206,7 @@ class ProfilePage extends Component {
         </Col>
           <Col>
             <Clients/>
+            <Events />
           </Col>
         </Row>
       </Grid>
