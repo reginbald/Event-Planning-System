@@ -29,11 +29,11 @@ describe('RecruitmentRequestProvider', () => {
 		};
 	});
 
-	describe('get all recruitment requests', () => {
+	describe('getRecruitmentRequests function', () => {
 		it('should return all recruitment requests', () => {
-			let req = new MockRequest({}, {});
-			subject.getAllRecruitmentRequests(req, mocResponse);
-			expect(mocResponse.data).to.deep.equal([{id: "0", job_title: "job0"}, {id: "1", job_title: "job1"}]);
+			subject.getAllRecruitmentRequests((requests) => {
+				expect(requests).to.deep.equal(mockStorage.RecruitmentRequestList);
+			}, () => {});
 		});
 	});
 	describe('create recruitment request', () => {
