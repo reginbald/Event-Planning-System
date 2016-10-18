@@ -109,6 +109,13 @@ export class RouteProvider {
 	}
 
 	//------------------------------/api/request/event/------------------------------
+	getAllEventRequests = (req:any, res:any) => {
+		this.eventRequestProvider.getAllEventRequests((requests) => {
+			return res.send(requests);
+		}, (error) => {
+				return res.status(500).send("ERROR_500_DATABASE");
+		});
+	}
 
 	//PUT: /api/request/event/:id
 	putEventRequest = (req:any, res:any) => {

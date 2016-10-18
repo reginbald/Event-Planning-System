@@ -8,11 +8,8 @@ export class EventRequestProvider {
 			this.storageManager = storageManager;
 	}
 
-	getAllEventRequests = (req:any, res:any) => {
-		this.storageManager.getEventRequests()
-		.then((results) => {
-			res.send(results);
-		})
+	getAllEventRequests = (succ:Function, err:Function) => {
+		this.storageManager.getEventRequests(succ, err);
 	};
 	createEventRequest = (req:any, res:any) => {
 		this.storageManager.createEventRequest(req.body)

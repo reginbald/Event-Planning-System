@@ -91,8 +91,11 @@ export class MockStorageManager implements StorageManager {
 		succ(newClient);
 	}
 	//------------------------EVENT REQUEST------------------------
-	getEventRequests():any {
-		return new MockPromise(this.EventRequestList);
+	getEventRequests(succ:Function, err:Function):void {
+		if (this.dbERROR) {
+			return err("DB_ERROR");
+		}
+		succ(this.EventRequestList);
 	};
 	getEventRequestById(id:any, succ:Function, err:Function):any {
 		if (this.dbERROR) {

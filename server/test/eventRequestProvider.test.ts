@@ -34,11 +34,11 @@ describe('eventRequestProvider', () => {
 		subject = new EventRequestProvider(mockStorage);
 	});
 
-	describe('get all event reqeusts', () => {
+	describe('getAllEventRequests function', () => {
 		it('should return all event requests', () => {
-			let req = new MockRequest({}, {});
-			subject.getAllEventRequests(req, mocResponse);
-			expect(mocResponse.data).to.deep.equal([{id: "0", name: "name1", status: "status"}, {id:"1", name: "name2", status: "status"}]);
+			subject.getAllEventRequests((requests) => {
+				expect(requests).to.deep.equal(mockStorage.EventRequestList);
+			}, ()=>{});
 		});
 	});
 	describe('create event reqeust', () => {

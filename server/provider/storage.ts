@@ -24,7 +24,7 @@ export interface StorageManager {
     getClients(succ:Function, err:Function):void;
     createClient(newClient:any, succ:Function, err:Function):void;
 
-    getEventRequests():any;
+    getEventRequests(succ:Function, err:Function):void;
     getEventRequestById(id:number, succ:Function, err:Function):any;
     createEventRequest(details:any):any;
     updateEventRequest(id:number, update:any, succ:Function, err:Function):any;
@@ -188,8 +188,10 @@ export class SequelizeStorageManager implements StorageManager {
     }
 
     //------------------------------EVENT REQUEST------------------------------
-    getEventRequests():any {
-        return this.EventRequest.findAll();
+    getEventRequests(succ:Function, err:Function):void {
+        this.EventRequest.findAll()
+        .then((clients) => {succ(clients)})
+        .catch((error)=>{err(error)});
     }
     getEventRequestById(id:number, succ:Function, err:Function):any {
         this.EventRequest.find({ where: { "id": id } })
