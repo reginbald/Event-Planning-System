@@ -119,10 +119,11 @@ class EventPage extends Component {
 		});
 
 		// These props will be used to create a new task
-		const newTask = this.state.newTask;
+		const newestTask = this.state.newTask;
+		newestTask['applicationid'] = applicationId;
 
-		console.log('this will go to the action', data);
-		this.props.actions.createTask(data);
+		console.log('this will go to the action', newestTask);
+		this.props.actions.createNewTask(newestTask);
 	}
 
 	updateEventState(event) {
@@ -185,7 +186,7 @@ class EventPage extends Component {
 		console.log('this is eventid', eventid);
 		console.log('this is the task: ', newestTask);
 		//return;
-		this.props.actions.createNewTask(eventid, newestTask); //add new task to db
+		this.props.actions.createNewTask(newestTask); //add new task to db
 		// clear curr state
 		this.setState({
 			taskTypeOptionValue: '',

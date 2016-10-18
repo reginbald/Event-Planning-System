@@ -41,7 +41,7 @@ export interface StorageManager {
 
     getTasks(succ:Function, err:Function):void;
     getTasksForEmployeeId(id:any):any;
-    createTask(details:any):any;
+    createTask(details:any, succ:Function, err:Function):void;
     getTasksForApplication(id:number, succ:Function, err:Function):void;
 
     getFinancialRequests(succ:Function, err:Function):void;
@@ -302,14 +302,11 @@ export class SequelizeStorageManager implements StorageManager {
         });
     }
     createApplication(newApp:any, succ:Function, err:Function):void {
-        console.log("CREATE APPLICATION: ", newApp);
         this.Application.create(newApp)
         .then((application)=>{
-            console.log("AFTER CREATE: ", application);
             succ(application);
         })
         .catch((error)=>{
-            console.log("CREATE ERROR: ", error);
             err(error);
         });
     }
@@ -332,8 +329,14 @@ export class SequelizeStorageManager implements StorageManager {
     getTasksForEmployeeId(id:any):any {
         return this.Task.findAll({ where: { "employeeid": id } });
     }
-    createTask(details:any):any {
-        return this.Task.create(details);
+    createTask(details:any, succ:Function, err:Function):void {
+        this.Task.create(details)
+        .then((tasks) => {
+            succ(tasks);
+        })
+        .catch((error) => {
+            err(error);
+        });
     }
     getTasksForApplication(id:number, succ:Function, err:Function):void {
         this.Task.findAll({ where: { "applicationid": id } })

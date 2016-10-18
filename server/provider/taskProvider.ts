@@ -1,4 +1,5 @@
 import {StorageManager} from "./storage";
+import {NewTaskViewModel} from "../viewModels/newTaskViewModel";
 
 export class TaskProvider {
 
@@ -19,13 +20,8 @@ export class TaskProvider {
 			res.status(500).send(err.message);
 		});
 	};
-	createTask = (req:any, res:any) => {
-		this.storageManager.createTask(req.body)
-		.then((results) => {
-			res.send(results);
-		}).catch((err) => {
-			res.status(500).send(err.message);
-		});
+	createTask = (newTask:NewTaskViewModel, succ:Function, err:Function) => {
+		this.storageManager.createTask(newTask, succ, err);
 	};
 
 	getAllTasksForEventAndDepartment = (eventId:number, departmentId, succ:Function, err:Function) => {
