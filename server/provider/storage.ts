@@ -302,6 +302,7 @@ export class SequelizeStorageManager implements StorageManager {
         });
     }
     createApplication(newApp:any, succ:Function, err:Function):void {
+        console.log("CREATE APPLICATION: ", newApp);
         this.Application.create(newApp)
         .then((application)=>{
             console.log("AFTER CREATE: ", application);
