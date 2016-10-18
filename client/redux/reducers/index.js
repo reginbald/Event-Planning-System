@@ -8,6 +8,7 @@ import events from './eventReducer';
 import resourceRequests from './resourceRequestReducer';
 import jobApplications from './jobApplicationReducer';
 import { tasks } from './taskReducer';
+import eventsAndTasks from './eventsAndTasksReducer';
 
 const rootReducer = combineReducers({
   user,
@@ -21,7 +22,8 @@ const rootReducer = combineReducers({
   jobApplications,
   departmentid,
   clientEvents,
-  tasks
+  tasks,
+  eventsAndTasks
 });
 
 export default rootReducer;

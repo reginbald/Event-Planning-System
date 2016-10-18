@@ -11,14 +11,15 @@ export default {
     job_title:''
   },
   eventrequests: [],
-  clients:[],
+  clients: [],
   departmentEmloyees: [],
   budgetRequests: [],
   resourceRequests: [],
   events: [],
+  eventsAndTasks: [],
   employees: [],
   jobApplications: [],
   departmentid: null,
   clientEvents: [],
-  tasks:[]
+  tasks: []
 };

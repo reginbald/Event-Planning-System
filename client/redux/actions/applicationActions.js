@@ -1,23 +1,23 @@
 import request from 'superagent';
 import API_PATH from './apiConfig';
 import * as types from './actionTypes';
+import * as eventActions from './eventActions';
 
-export function createApplicationSuccess(application) {
-  return {type: types.CREATE_APPLICATION_SUCCESS, application};
+export function createApplicationSuccess(result) {
+  return {type: types.CREATE_APPLICATION_SUCCESS, result};
 }
 
-export function createTaskForApplicationSuccess(tasks) {
-  return {type: types.CREATE_TASK_SUCCESS, task};
-}
-
-export function createApplicationAndTasksRequest(data) {
+export function createApplication(data) {
   return dispatch => {
     return request
-    .get(API_PATH + 'request/financial')
+    .post(API_PATH + 'application')
+    .send(data)
     .set('Accept', 'application/json')
     .then(response => {
       if(response) {
-        dispatch(loadBudgetRequestSuccess(response.body));
+        console.log('application was created: ', response);
+        dispatch(createApplicationSuccess(response.body));
+        eventActions.getEventsAndTasks();
       }
       else{
         // Do something here if we have time
@@ -26,16 +26,4 @@ export function createApplicationAndTasksRequest(data) {
       throw(error);
     });
   };
-}
-
-/**
-* data contains eventid and departmentid
-* /api/event/:eid/department/:did/tasks
-*/
-export function getTasksForEventAndDepartment(data){
-  const eventid = data.eventid;
-  const departmentid = data.departmentid;
-    return request
-    .get(API_PATH + 'event/' + eventid + '/department/' + departmentid + '/tasks')
-    .set('Accept', 'application/json');
 }

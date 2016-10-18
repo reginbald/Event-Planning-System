@@ -33,7 +33,6 @@ class ProfilePage extends Component {
   */
   renderContent() {
     const { user } = this.props;
-    console.log("render");
 
     switch (user.access) {
       case 0:
@@ -42,7 +41,7 @@ class ProfilePage extends Component {
         return this.seniorCustomerServiceProfile();
       case 2:
         return this.financialManagerProfile();
-      case 3: 
+      case 3:
         return this.administrationManagerProfile();
       case 4:
         if(user.departmentid === 1) {
@@ -51,7 +50,7 @@ class ProfilePage extends Component {
         if(user.departmentid === 2){
           return this.serviceDepartmentManagerProfile();
         }
-      case 5: 
+      case 5:
         return this.teamProfile();
       case 6:
         return this.hrManagerProfile();
@@ -63,6 +62,7 @@ class ProfilePage extends Component {
 
   productionDepartmentManagerProfile() {
     const departmentid = 1;
+    this.props.actions.getEventsAndTasks(departmentid);
     this.props.actions.getEmployeesForDepartment(departmentid);
     return(
         <Grid>
@@ -77,6 +77,24 @@ class ProfilePage extends Component {
         </Grid>
       );
     }
+
+  serviceDepartmentManagerProfile() {
+    const departmentid = 2;
+    this.props.actions.getEventsAndTasks(departmentid);
+    this.props.actions.getEmployeesForDepartment(departmentid);
+    return(
+        <Grid>
+          <Row>
+            <Col xs >
+              <Events department={departmentid}/>
+            </Col>
+            <Col xs >
+              <CreateResourceRequest/>
+            </Col>
+          </Row>
+        </Grid>
+      );
+  }
 
   financialManagerProfile() {
     this.props.actions.getAllBudgetRequests();
@@ -94,12 +112,6 @@ class ProfilePage extends Component {
             <Col xs />
           </Row>
       </Grid>
-    );
-  }
-
-  serviceDepartmentManagerProfile() {
-    return (
-      <h1>Service Department Manager</h1>
     );
   }
 
@@ -128,7 +140,7 @@ class ProfilePage extends Component {
               </Row>
             </Col>
             <Col xs >
-              <EventRequestList 
+              <EventRequestList
                 statusaccept="SENIOR_ACCEPT"
                 statusdenied="SENIOR_DENIED"
                 eventRequests={list}/>
@@ -178,7 +190,7 @@ class ProfilePage extends Component {
       <Grid>
         <Row>
         <Col xs >
-          <EventRequestList 
+          <EventRequestList
           statusaccept="ADMINISTRATION_ACCEPT"
           statusdenied="ADMINISTRATION_DENIED"
           eventRequests={list}/>

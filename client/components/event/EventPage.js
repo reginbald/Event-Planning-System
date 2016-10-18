@@ -7,10 +7,13 @@ import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextInput from '../common/TextInput';
+import * as applicationActions from '../../redux/actions/applicationActions';
+import * as taskActions from '../../redux/actions/taskActions';
 import SelectInput from '../common/SelectInput';
 import FlatButton from 'material-ui/FlatButton';
 import Dialog from 'material-ui/Dialog';
 import Divider from 'material-ui/Divider';
+import request from 'superagent';
 
 const PRIORITY = [{id:0, name:'HIGH'}, {id:1, name:'MEDIUM'}, {id:2, name:'LOW'}];
 const PRODUCTION_TASK_TYPES = [{id:0, name:'Decorations'}, {id:1, name:'Photos'}, {id:2, name:'Filming'}, {id:3, name:'Music/Audio'}, {id:4, name:'Graphic Design'}, {id:5, name:'Decorations'}, {id:6, name:'Computer Related'}];
@@ -19,15 +22,12 @@ const SERVICE_TASK_TYPES = [{id:0, name:'Chefs'}, {id:1, name:'Waitresses/Waiter
 class EventPage extends Component {
 	constructor(props) {
 		super(props);
+		console.log('PROPS FROM EVENT PAGE', props);
 		this.state = {
 			open: false,
 			taskTypeOptionValue: '',
 			assigneeOptionValue: '',
 			priorityOptionValue: '',
-			newApplication: {
-				departmentid: this.props.departmentid,
-				eventid: null
-			},
 			newTask: {
 				applicationid: null,
 				employeeid: null,
@@ -36,13 +36,12 @@ class EventPage extends Component {
 				description: '',
 				priority: ''
 			},
-			tasks: [],
+			//tasks: [],
 			totalTasks: 0,
 			eventType: '',
 			eventName:'',
 			eventId: ''
 		};
-		console.log('event props: ', props);
 		this.eventSelected = this.eventSelected.bind(this);
 		this.handleClose = this.handleClose.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
@@ -71,44 +70,63 @@ class EventPage extends Component {
 	}
 
 	eventSelected(id) {
-		let evId = this.props.events[id].id
+		console.log('array entry: ', id[0]);
+		const eventEntry = id[0];
+		console.log('prop events:', this.props.events);
+		let evId = this.props.events[eventEntry].id
+		console.log('eventID: ', evId);
+		let eventApplicationAndTasks = this.props.eventsAndTasks.filter(x => x.id === evId); //find the corresponding object
+		console.log('eventApplicationAndTasks', eventApplicationAndTasks);
+
 		const data = {
-			eventid: evId,
-			departmentid: this.props.departmentid
+			departmentid: this.props.departmentid,
+			eventid: evId
 		};
 
-		this.props.actions.getTasksForEventAndDepartment(evId, this.props.departmentid)
-		.then((tasks)=> {
-			console.log('received something', tasks);
-		}).catch((err)=>{
-			console.log('received error', err);
-		});
+		// do this if event currently has no application
+		// we can not create a task without an application.
+		if(eventApplicationAndTasks.length === 0) {
+			console.log('this event has no appplication it needs to be created');
+			console.log('this data will be sent', data);
+			this.props.actions.createApplication(data);
+		}
 
 		this.setState({
 			open: true,
 			eventId: evId,
-			eventType: this.props.events[id].event_type,
-			newApplication: Object.assign({}, this.state.newApplication, {
-				eventid: evId
-			})
+			eventType: this.props.events[eventEntry].event_type,
+			totalTasks: eventApplicationAndTasks[0].Applications[0].Tasks.length
 		});
 	}
 
 	handleSubmit() {
+		/*
+		* Applications are created when an event is opened.
+		* Therefore we assume for the sake of thiss assignment that we have the assignmentid
+		*/
 		console.log('submitting');
-		let application = this.state.newApplication;
-		let totalTasks = this.state.tasks;
-		let leftover = this.state.newTask;
-		if(leftover.priority !== '') {
-			totalTasks.push(leftover);
+
+		// First find the correct applicationid
+		const eventId = this.state.eventId;
+		const eventObject = this.props.eventsAndTasks.filter(x => x.id === eventId); //returns an array[0]
+		if(eventObject.lenght === 0){
+			console.log('this event has no application');
+			this.handleClose();
 		}
 
-		const data = {
-			newApplication: application,
-			tasks: totalTasks
-		};
+		const applicationId = eventObject[0].Applications[0].id;
+
+		this.setState({
+			newTask: Object.assign({}, this.state.newTask,{
+				applicationid: applicationId
+			})
+		});
+
+		// These props will be used to create a new task
+		const newTask = this.state.newTask;
 
 		console.log('this will go to the action', data);
+		this.props.actions.createTask(data);
 	}
 
 	updateEventState(event) {
@@ -153,9 +171,13 @@ class EventPage extends Component {
 	}
 
 	newTask() {
-		let eventTasks = this.state.tasks;
+		/* Check if the event has an applicationid otherwise create the application first
+		* before submitting tasks
+		*/
 		let newestTask = this.state.newTask;
-		eventTasks.push(newestTask);
+		const eventid = this.state.eventId;
+		this.props.actions.createNewTask(eventid, newTask); //add new task to db
+		// clear curr state
 		this.setState({
 			tasks: eventTasks,
 			taskTypeOptionValue: '',
@@ -200,7 +222,7 @@ class EventPage extends Component {
 								onRequestClose={this.handleClose}
 								autoScrollBodyContent={true} >
 								{this.state.eventType} <Divider />
-								{"Total tasks for this event: " + this.state.tasks.length}
+							{"Total tasks for this event: " + this.state.totalTasks}
 								<TextInput
 									name="description"
 									label="Task"
@@ -259,18 +281,20 @@ class EventPage extends Component {
 		);
 	}
 }
+
 function mapStateToProps(state, ownProps) {
 	console.log("mstp ep: ", state);
 	return {
 		events: state.events,
 		departmentid: state.departmentid,
 		departmentEmloyees: state.departmentEmloyees,
-		user: state.user
+		user: state.user,
+		eventsAndTasks: state.eventsAndTasks
 	};
 }
 function mapDispatchToProps(dispatch) {
 	return {
-		//actions: bindActionCreators(budgetRequestActions, dispatch)
+		actions: bindActionCreators(Object.assign({},taskActions, applicationActions), dispatch)
 	};
 }
 export default connect(mapStateToProps, mapDispatchToProps)(EventPage);
