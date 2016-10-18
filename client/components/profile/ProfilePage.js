@@ -184,9 +184,6 @@ class ProfilePage extends Component {
             <ResourceRequests/>
           </Col>
         </Row>
-        <Row>
-          <Col><CreateJobApplication/></Col>
-        </Row>
       </Grid>
     );
   }
