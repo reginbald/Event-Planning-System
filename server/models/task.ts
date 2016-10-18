@@ -3,7 +3,6 @@ import * as Sequelize from "sequelize";
 
 export interface TaskAttribute {
     id?:string;
-		applicationid?:string;
 		employeeid?:string;
 		type?:string;
 		description?:string;
@@ -21,7 +20,6 @@ export interface TaskModel extends Sequelize.Model<TaskInstance, TaskAttribute> 
 export class TaskTable implements Sequelize.DefineAttributes {
   [name : string] : string;
   id:any;
-  applicationid:any;
 	employeeid:any;
 	senderid:any;
 	type:any;
@@ -34,15 +32,6 @@ export class TaskTable implements Sequelize.DefineAttributes {
       "allowNull": false,
       "primaryKey": true,
       "autoIncrement": true
-    }
-		this.applicationid = {
-      "type": Sequelize.INTEGER,
-      "allowNull": false,
-			"foreignKey": true,
-			"references": {
-				"model": "application",
-				"key":   "id"
-			}
     }
 		this.employeeid = {
       "type": Sequelize.INTEGER,

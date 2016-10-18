@@ -4,7 +4,6 @@ import * as Sequelize from "sequelize";
 export interface ApplicationAttribute {
     id?:string;
     departmentid?:string;
-		eventid?:string;
 }
 
 export interface ApplicationInstance extends Sequelize.Instance<ApplicationAttribute>, ApplicationAttribute {
@@ -18,7 +17,6 @@ export class ApplicationTable implements Sequelize.DefineAttributes {
   [name : string] : string;
   id:any;
   departmentid:any;
-	eventid:any;
 
   constructor() {
     this.id = {
@@ -33,15 +31,6 @@ export class ApplicationTable implements Sequelize.DefineAttributes {
 			"foreignKey": true,
 			"references": {
 				"model": "department",
-				"key":   "id"
-			}
-    }
-		this.eventid = {
-      "type": Sequelize.INTEGER,
-      "allowNull": false,
-			"foreignKey": true,
-			"references": {
-				"model": "event",
 				"key":   "id"
 			}
     }
