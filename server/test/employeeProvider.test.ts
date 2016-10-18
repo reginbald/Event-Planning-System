@@ -22,17 +22,17 @@ describe('employeeProvider', () => {
 		newEmployee = {name: "name", email: "email@email.com"};
 	});
 
-	describe('get all employees', () => {
+	describe('getAllEmployees function', () => {
 		it('should return empty list', () => {
-			let req = {};
 			mockStorage.EmployeeList = [];
-			subject.getAllEmployees(req, mocResponse);
-			expect(mocResponse.data).to.deep.equal([]);
+			subject.getAllEmployees((employees) => {
+				expect(employees).to.deep.equal(mockStorage.EmployeeList);
+			}, () => {});
 		});
 		it('should return all employees', () => {
-			let req = {};
-			subject.getAllEmployees(req, mocResponse);
-			expect(mocResponse.data).to.deep.equal(mockStorage.EmployeeList);
+			subject.getAllEmployees((employees) => {
+				expect(employees).to.deep.equal(mockStorage.EmployeeList);
+			}, () => {});
 		});
 	});
 	describe('get employees for department id', () => {

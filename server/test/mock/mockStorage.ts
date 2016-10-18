@@ -30,8 +30,11 @@ export class MockStorageManager implements StorageManager {
 			return true;
 	};
 	//------------------------EMPLOYEE------------------------
-	getEmployees():any {
-		return new MockPromise(this.EmployeeList);
+	getEmployees(succ:Function, err:Function):void {
+		if (this.dbERROR) {
+			return err("DB_ERROR");
+		}
+		succ(this.EmployeeList);
 	};
 	getEmployeeById(id:number, succ:Function, err:Function):any {
 		if (this.dbERROR) {

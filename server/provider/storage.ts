@@ -14,7 +14,7 @@ import {JobApplicationModel, JobApplicationInstance, JobApplicationAttribute, Jo
 export interface StorageManager {
     init(force?:boolean):any;
 
-    getEmployees():any;
+    getEmployees(succ:Function, err:Function):void;
     getEmployeeById(id:number, succ:Function, err:Function):any;
     getEmployeesForDepartmentId(id:any):any;
     createEmployee(details:any):any;
@@ -147,8 +147,10 @@ export class SequelizeStorageManager implements StorageManager {
     }
     
     //------------------------------EMPLOYEE------------------------------
-    getEmployees():any {
-        return this.Employee.findAll();
+    getEmployees(succ:Function, err:Function):void {
+        this.Employee.findAll()
+        .then((employees) => {succ(employees)})
+        .catch((error) => {err(error)});
     }
     getEmployeeById(id:number, succ:Function, err:Function):any {
         this.Employee.find({where: {id: id}})

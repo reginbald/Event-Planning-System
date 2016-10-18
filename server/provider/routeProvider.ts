@@ -97,6 +97,17 @@ export class RouteProvider {
 		});
 	}
 
+	//------------------------------/api/client/------------------------------
+
+	//GET: /api/employee
+	getAllEmployees = (req:any, res:any) => {
+		this.employeeProvider.getAllEmployees((employees) => {
+			return res.send(employees);
+		}, (error) => {
+				return res.status(500).send("ERROR_500_DATABASE");
+		});
+	}
+
 	//------------------------------/api/request/event/------------------------------
 
 	//PUT: /api/request/event/:id
