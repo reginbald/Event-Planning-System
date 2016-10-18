@@ -6,26 +6,18 @@ import {TaskProvider} from "../provider/taskProvider";
 import {MockStorageManager} from "./mock/mockStorage";
 import {MockResponse} from "./mock/mockResponse";
 import {MockRequest} from "./mock/mockRequest";
+import {NewTaskViewModel} from "../viewModels/newTaskViewModel";
 
 describe('TaskProvider', () => {
 	var mockStorage: MockStorageManager;
 	var mocResponse: MockResponse;
 	var subject: TaskProvider;
-	var newTask: any;
 
 	beforeEach(function() {
 		mockStorage = new MockStorageManager();
 		mocResponse = new MockResponse();
 		mockStorage.TaskList = [{id: "0", applicationid: "0", employeeid: "0"}, {id: "1", applicationid: "1", employeeid: "1"}];
 		subject = new TaskProvider(mockStorage);
-		newTask = {
-			"applicationid": 2,
-			"employeeid": 0,
-			"senderid": 1,
-			"type": "",
-			"description": "",
-			"priority": ""
-		}
 	});
 
 	describe('getAllTasks function', () => {
@@ -42,11 +34,12 @@ describe('TaskProvider', () => {
 			expect(mocResponse.data).to.deep.equal([{id: "0", applicationid: "0", employeeid: "0"}]);
 		});
 	});
-	describe('create task', () => {
+	describe('createTask function', () => {
 		it('should return the newly created task', () => {
-			let req = new MockRequest(newTask, {});
-			subject.createTask(req, mocResponse);
-			expect(mocResponse.data).to.deep.equal(newTask);
+			let newTask = new NewTaskViewModel(0,0,0,"","","");
+			subject.createTask(newTask, (task) =>{
+				expect(task).to.deep.equal(newTask);
+			}, () =>{});
 		});
 	});
 	describe('getAllTasksForEventAndDepartment function', () => {

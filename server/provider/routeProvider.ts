@@ -13,6 +13,7 @@ import {JobApplicationProvider} from "./jobApplicationProvider";
 import {NewJobApplicationViewModel} from"../viewModels/newJobApplicationViewModel";
 import {NewApplicationViewModel} from"../viewModels/newApplicationViewModel";
 import {NewClientViewModel} from"../viewModels/newClientViewModel";
+import {NewTaskViewModel} from "../viewModels/newTaskViewModel";
 
 export class RouteProvider {
 
@@ -274,6 +275,22 @@ export class RouteProvider {
 	getAllTasks = (req:any, res:any) => {
 		this.taskProvider.getAllTasks((tasks) => {
 			return res.send(tasks);
+		}, (error) => {
+				return res.status(500).send("ERROR_500_DATABASE");
+		});
+	}
+	//POST: /api/task
+	postTask = (req:any, res:any) => {
+		let newTask = new NewTaskViewModel(
+			+req.body.applicationid,
+			+req.body.senderid,
+			+req.body.employeeid,
+			req.body.type,
+			req.body.description,
+			req.body.priority
+		)
+		this.taskProvider.createTask(newTask, (task) => {
+			return res.send(task);
 		}, (error) => {
 				return res.status(500).send("ERROR_500_DATABASE");
 		});
