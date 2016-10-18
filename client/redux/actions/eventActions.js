@@ -7,25 +7,11 @@ export function createnewEventSuccess(event) {
 }
 
 
-export function createNewEvent(data) {
+export function createNewEvent(newEvent) {
   // Extract necessary data from the event request object.
-  const newEvent = {
-    name: data.name, //string
-    clientid: data.clientid, //int
-    eventrequestid: data.id, //int
-    event_type: data.event_type, //string
-    description: "", //string
-    attendees: data.attendees, //int
-    budget: data.budget, //int
-    from: data.from, //date
-    to: data.to, //date
-    decorations: data.decorations,
-    food_drinks: data.food_drinks,
-    filming_photos: data.filming_photos
-  };
   return dispatch => {
     return request
-    .post(API_PATH + 'request/event')
+    .post(API_PATH + 'event')
     .send(newEvent)
     .set('Accept', 'application/json')
     .then(response => {
@@ -49,7 +35,7 @@ export function getAllEventsSuccess(events) {
 export function getAllEvents() {
   return dispatch => {
     return request
-    .get(API_PATH + 'request/event')
+    .get(API_PATH + 'event')
     .set('Accept', 'application/json')
     .then(response => {
       if(response) {

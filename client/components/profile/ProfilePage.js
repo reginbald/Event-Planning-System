@@ -106,7 +106,8 @@ class ProfilePage extends Component {
   seniorCustomerServiceProfile() {
     this.props.actions.getAllEvents();
     const { eventRequests } = this.props;
-    const list = eventRequests.filter(x => x.status === 'PENDING');
+    const pendingList = eventRequests.filter(x => x.status === 'PENDING');
+    const adminList = eventRequests.filter(x => x.status === 'ADMINISTRATION_ACCEPT');
     return(
         <Grid>
           <Row>
@@ -129,9 +130,16 @@ class ProfilePage extends Component {
             </Col>
             <Col xs >
               <EventRequestList 
+                createevent={false}
                 statusaccept="SENIOR_ACCEPT"
                 statusdenied="SENIOR_DENIED"
-                eventRequests={list}/>
+                eventRequests={pendingList}/>
+            </Col>
+            <Col xs>
+              <EventRequestList 
+                createevent={true}
+                statusaccept="EVENT_CREATED"
+                eventRequests={adminList}/>
             </Col>
           </Row>
       </Grid>
@@ -179,6 +187,7 @@ class ProfilePage extends Component {
         <Row>
         <Col xs >
           <EventRequestList 
+          createevent={false}
           statusaccept="ADMINISTRATION_ACCEPT"
           statusdenied="ADMINISTRATION_DENIED"
           eventRequests={list}/>
