@@ -333,7 +333,7 @@ export class SequelizeStorageManager implements StorageManager {
         console.log("CREATE TASK: ", details);
         this.Task.create(details)
         .then((task) => {
-            console.log("CREATE TASK SUCC: ", tasks);
+            console.log("CREATE TASK SUCC: ", task);
             succ(task);
         })
         .catch((error) => {
