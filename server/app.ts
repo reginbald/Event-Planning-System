@@ -60,8 +60,9 @@ export function congifureRoutes(app:express.Application, storageManager:StorageM
 		app.post("/api/login", routeProvider.login);
 
 		app.get("/api/department/:id/employee", employeeProvider.getEmployeesForDepartmentId);
+		app.get("/api/department/:id/event",routeProvider.getAllEventsWithApplicationTasksForDepartment);
 
-		app.get("/api/employee", employeeProvider.getAllEmployees);
+		app.get("/api/employee", routeProvider.getAllEmployees);
 		app.post("/api/employee", employeeProvider.createEmployee);
 		app.get("/api/employee/:id/task", taskProvider.getTasksForEmployeeId);
 
@@ -69,25 +70,25 @@ export function congifureRoutes(app:express.Application, storageManager:StorageM
 		app.post("/api/client", routeProvider.postClient);
 		app.get("/api/client/:id/event", routeProvider.getAllEventsForClientId);
 
-		app.get("/api/request/event", eventRequestProvider.getAllEventRequests);
+		app.get("/api/request/event", routeProvider.getAllEventRequests);
 		app.post("/api/request/event", eventRequestProvider.createEventRequest);
 		app.put("/api/request/event/:id", routeProvider.putEventRequest);
 		app.put("/api/request/event/:id/status", routeProvider.putEventRequestStatus);
 
-		app.get("/api/event", eventProvider.getAllEvents);
+		app.get("/api/event", routeProvider.getAllEvents);
 		app.post("/api/event", eventProvider.createEvent);
 		app.get("/api/event/:eid/department/:did/tasks", routeProvider.getAllTasksForEventAndDepartment);
 
 		app.get("/api/application", routeProvider.getAllApplications);
 		app.post("/api/application", routeProvider.postApplication);
 
-		app.get("/api/task", taskProvider.getAllTasks);
+		app.get("/api/task", routeProvider.getAllTasks);
 		app.post("/api/task", taskProvider.createTask);
 
-		app.get("/api/request/financial", financialRequestProvider.getAllFinancialRequests);
+		app.get("/api/request/financial", routeProvider.getAllFinancialRequests);
 		app.post("/api/request/financial", financialRequestProvider.createFinancialRequest);
 
-		app.get("/api/request/recruitment", recruitmentRequestProvider.getAllRecruitmentRequests);
+		app.get("/api/request/recruitment", routeProvider.getAllRecruitmentRequests);
 		app.post("/api/request/recruitment", recruitmentRequestProvider.createRecruitmentRequest);
 
 		app.get("/api/jobapplication", routeProvider.getAllJobApplications);

@@ -62,6 +62,18 @@ export class RouteProvider {
 		});
 	};
 
+	//------------------------------/api/department/------------------------------
+	//GET: /api/department/:id/event
+	getAllEventsWithApplicationTasksForDepartment = (req:any, res:any) => {
+		console.log("departmentid ", req.params.id);
+		this.eventProvider.getAllEventsWithApplicationTasksForDepartment(+req.params.id, (events) => {
+			return res.send(events);
+		}, (error) => {
+			console.log("ERROR ", error);
+				return res.status(500).send("ERROR_500_DATABASE");
+		});
+	}
+
 	//------------------------------/api/client/------------------------------
 	//GET: /api/client
 	getAllClients = (req:any, res:any) => {
@@ -97,7 +109,26 @@ export class RouteProvider {
 		});
 	}
 
+	//------------------------------/api/employee/------------------------------
+
+	//GET: /api/employee
+	getAllEmployees = (req:any, res:any) => {
+		this.employeeProvider.getAllEmployees((employees) => {
+			return res.send(employees);
+		}, (error) => {
+				return res.status(500).send("ERROR_500_DATABASE");
+		});
+	}
+
 	//------------------------------/api/request/event/------------------------------
+	//GET: /api/request/event
+	getAllEventRequests = (req:any, res:any) => {
+		this.eventRequestProvider.getAllEventRequests((requests) => {
+			return res.send(requests);
+		}, (error) => {
+				return res.status(500).send("ERROR_500_DATABASE");
+		});
+	}
 
 	//PUT: /api/request/event/:id
 	putEventRequest = (req:any, res:any) => {
@@ -118,6 +149,26 @@ export class RouteProvider {
 		}
 		this.eventRequestProvider.updateEventRequestStatus(+req.params.id, req.body.status, (eventrequest) => {
 			return res.send(eventrequest);
+		}, (error) => {
+				return res.status(500).send("ERROR_500_DATABASE");
+		});
+	}
+
+	//------------------------------/api/request/financial/------------------------------
+	//GET: /api/request/financial
+	getAllFinancialRequests = (req:any, res:any) => {
+		this.financialRequestProvider.getAllFinancialRequests((requests) => {
+			return res.send(requests);
+		}, (error) => {
+				return res.status(500).send("ERROR_500_DATABASE");
+		});
+	}
+
+	//------------------------------/api/request/recruitment/------------------------------
+	//GET: /api/request/recruitment
+	getAllRecruitmentRequests = (req:any, res:any) => {
+		this.recruitmentRequestProvider.getAllRecruitmentRequests((requests) => {
+			return res.send(requests);
 		}, (error) => {
 				return res.status(500).send("ERROR_500_DATABASE");
 		});
@@ -196,7 +247,15 @@ export class RouteProvider {
 		});
 	}
 
-	//------------------------------/api/jobapplication/------------------------------
+	//------------------------------/api/event/------------------------------
+	//GET: /api/event
+	getAllEvents = (req:any, res:any) => {
+		this.eventProvider.getAllEvents((events) => {
+			return res.send(events);
+		}, (error) => {
+				return res.status(500).send("ERROR_500_DATABASE");
+		});
+	}
 
 	//GET: /api/event/:eid/department/:did/tasks
 	getAllTasksForEventAndDepartment = (req:any, res:any) => {
@@ -206,6 +265,16 @@ export class RouteProvider {
 				if (error === "NOT_FOUND"){
 					return res.status(404).send("ERROR_404_NOT_FOUND");
 				}
+				return res.status(500).send("ERROR_500_DATABASE");
+		});
+	}
+
+	//------------------------------/api/task/------------------------------
+	//GET: /api/task
+	getAllTasks = (req:any, res:any) => {
+		this.taskProvider.getAllTasks((tasks) => {
+			return res.send(tasks);
+		}, (error) => {
 				return res.status(500).send("ERROR_500_DATABASE");
 		});
 	}

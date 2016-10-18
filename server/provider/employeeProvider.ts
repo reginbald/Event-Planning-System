@@ -8,15 +8,9 @@ export class EmployeeProvider {
         this.storageManager = storageManager;
     }
 
-    getAllEmployees = (req:any, res:any) => {
-      this.storageManager.getEmployees()
-        .then((employees:any) => {
-            res.send(employees);
-        })
-        .catch((err:any) => {
-            res.status(500).send(err.message);
-        });
-    };
+    getAllEmployees = (succ:Function, err:Function) => {
+        this.storageManager.getEmployees(succ, err);
+    }
     
     getEmployeesForDepartmentId = (req:any, res:any) => {
       this.storageManager.getEmployeesForDepartmentId(req.params.id)

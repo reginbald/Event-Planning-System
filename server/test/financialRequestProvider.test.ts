@@ -22,11 +22,12 @@ describe('FinancialRequestProvider', () => {
 		newFinRequest = {id: "4", departmentid: "0", eventid: "0", amount: "200", reason: "reason"};
 	});
 
-	describe('get all financial requests', () => {
+	describe('getAllFinancialRequests function', () => {
 		it('should return all financial requests', () => {
-			let req = new MockRequest({}, {});
-			subject.getAllFinancialRequests(req, mocResponse);
-			expect(mocResponse.data).to.deep.equal([{id: "0", name: "amount0"}, {id: "1", name: "amount1"}]);
+			subject.getAllFinancialRequests((requests) => {
+				expect(requests).to.deep.equal(mockStorage.FinancialRequestList);
+			}, 
+			() => {});
 		});
 	});
 	describe('create financial request', () => {

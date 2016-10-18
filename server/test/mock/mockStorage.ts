@@ -30,8 +30,11 @@ export class MockStorageManager implements StorageManager {
 			return true;
 	};
 	//------------------------EMPLOYEE------------------------
-	getEmployees():any {
-		return new MockPromise(this.EmployeeList);
+	getEmployees(succ:Function, err:Function):void {
+		if (this.dbERROR) {
+			return err("DB_ERROR");
+		}
+		succ(this.EmployeeList);
 	};
 	getEmployeeById(id:number, succ:Function, err:Function):any {
 		if (this.dbERROR) {
@@ -88,8 +91,11 @@ export class MockStorageManager implements StorageManager {
 		succ(newClient);
 	}
 	//------------------------EVENT REQUEST------------------------
-	getEventRequests():any {
-		return new MockPromise(this.EventRequestList);
+	getEventRequests(succ:Function, err:Function):void {
+		if (this.dbERROR) {
+			return err("DB_ERROR");
+		}
+		succ(this.EventRequestList);
 	};
 	getEventRequestById(id:any, succ:Function, err:Function):any {
 		if (this.dbERROR) {
@@ -167,9 +173,35 @@ export class MockStorageManager implements StorageManager {
 		return succ(list);
 	}
 
+	getAllEventsWithApplicationTasksForDepartment(id:number, succ:Function, err:Function):void {
+		if (this.dbERROR) {
+			return err("DB_ERROR");
+		}
+		let list = [];
+		for (let e of this.EventList) {
+			e.applications = [];
+			for (let a of this.ApplicationList) {
+				if (+e.id === +a.eventid && +id === +a.departmentid) {
+					a.tasks = [];
+					for (let t of this.TaskList) {
+						if (+a.id === +t.applicationid) {
+							a.tasks.push(t);
+						}
+					}
+					e.applications.push(a);
+				}
+			}
+			list.push(e);
+		}
+		return succ(list);
+	}
+
 	//------------------------FINANCIAL REQUEST------------------------
-	getFinancialRequests():any {
-		return new MockPromise(this.FinancialRequestList);
+	getFinancialRequests(succ:Function, err:Function):void {
+		if (this.dbERROR) {
+			return err("DB_ERROR");
+		}
+		succ(this.FinancialRequestList);
 	};
 	createFinancialRequest(details:any):any {
 		if (details.error) {
@@ -220,8 +252,11 @@ export class MockStorageManager implements StorageManager {
 		succ(null);
   }
 	//------------------------Task------------------------
-	getTasks():any {
-		return new MockPromise(this.TaskList);
+	getTasks(succ:Function, err:Function):void {
+		if (this.dbERROR) {
+			return err("DB_ERROR");
+		}
+		succ(this.TaskList);
 	}
 	getTasksForEmployeeId(id:any):any {
 		let list = [];

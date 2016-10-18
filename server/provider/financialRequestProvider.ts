@@ -8,11 +8,8 @@ export class FinancialRequestProvider {
 			this.storageManager = storageManager;
 	}
 
-	getAllFinancialRequests = (req:any, res:any) => {
-		this.storageManager.getFinancialRequests()
-		.then((results) => {
-			res.send(results);
-		})
+	getAllFinancialRequests = (succ:Function, err:Function) => {
+		this.storageManager.getFinancialRequests(succ,err);
 	};
 
 	createFinancialRequest = (req:any, res:any) => {

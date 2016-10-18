@@ -8,11 +8,8 @@ export class RecruitmentRequestProvider {
 			this.storageManager = storageManager;
 	}
 
-	getAllRecruitmentRequests = (req:any, res:any) => {
-		this.storageManager.getRecruitmentRequests()
-		.then((results) => {
-			res.send(results);
-		})
+	getAllRecruitmentRequests = (succ:Function, err:Function) => {
+		this.storageManager.getRecruitmentRequests(succ, err);
 	};
 	createRecruitmentRequest = (req:any, res:any) => {
 		this.storageManager.createRecruitmentRequest(req.body)

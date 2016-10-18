@@ -8,12 +8,16 @@ export class EventProvider {
 			this.storageManager = storageManager;
 	}
 
-	getAllEvents = (req:any, res:any) => {
-		this.storageManager.getEvents()
-		.then((results) => {
-			res.send(results);
-		})
-	};
+	getAllEvents = (succ:Function, err:Function) => {
+		this.storageManager.getEvents(succ, err);
+	}
+
+	getAllEventsWithApplicationTasksForDepartment = (departmentId: number, succ:Function, err:Function) => {
+		this.storageManager.getAllEventsWithApplicationTasksForDepartment(departmentId, (events) => {
+			succ(events);
+		}, err);
+	}
+
 	createEvent = (req:any, res:any) => {
 		this.storageManager.createEvent(req.body)
 		.then((results) => {
@@ -22,7 +26,7 @@ export class EventProvider {
 			res.status(500).send(err.message);
 		});
 	};
-	getAllEventsForClientId = (id:number, succ, err) => {
+	getAllEventsForClientId = (id:number, succ:Function, err:Function) => {
 		this.storageManager.getEventsForClientId(id, succ, err);
 	}
 }

@@ -8,11 +8,8 @@ export class TaskProvider {
 			this.storageManager = storageManager;
 	}
 
-	getAllTasks = (req:any, res:any) => {
-		this.storageManager.getTasks()
-		.then((results) => {
-			res.send(results);
-		})
+	getAllTasks = (succ:Function, err:Function) => {
+		this.storageManager.getTasks(succ, err);
 	};
 	getTasksForEmployeeId = (req:any, res:any) => {
 		this.storageManager.getTasksForEmployeeId(req.params.id)
@@ -36,7 +33,12 @@ export class TaskProvider {
 			if (application === null) {
 				return err("NOT_FOUND");
 			}
-			this.storageManager.getTasksForApplication(application.id, succ, err);
+			this.storageManager.getTasksForApplication(application.id, (tasks) => {
+				succ({
+						"applicationid": application.id, 
+						"tasks": tasks
+					});
+			}, err);
 		}, err);
 	};
 }
