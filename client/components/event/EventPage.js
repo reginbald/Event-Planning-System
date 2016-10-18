@@ -23,7 +23,6 @@ const SERVICE_TASK_TYPES = [{id:0, name:'Chefs'}, {id:1, name:'Waitresses/Waiter
 class EventPage extends Component {
 	constructor(props) {
 		super(props);
-		console.log('PROPS FROM EVENT PAGE', props);
 		this.state = {
 			open: false,
 			taskTypeOptionValue: '',
@@ -69,13 +68,9 @@ class EventPage extends Component {
 	}
 
 	eventSelected(id) {
-		console.log('array entry: ', id[0]);
 		const eventEntry = id[0];
-		console.log('prop events:', this.props.events);
 		let evId = this.props.events[eventEntry].id
-		console.log('eventID: ', evId);
 		let eventApplicationAndTasks = this.props.eventsAndTasks.filter(x => x.id === evId); //find the corresponding object
-		console.log('eventApplicationAndTasks', eventApplicationAndTasks);
 		const data = {
 			departmentid: this.props.departmentid,
 			eventid: evId
@@ -92,7 +87,6 @@ class EventPage extends Component {
 			eventId: evId,
 			eventType: this.props.events[eventEntry].event_type
 		});
-		console.log('e');
 	}
 
 	handleSubmit() {
@@ -100,13 +94,11 @@ class EventPage extends Component {
 		* Applications are created when an event is opened.
 		* Therefore we assume for the sake of thiss assignment that we have the assignmentid
 		*/
-		console.log('submitting');
 
 		// First find the correct applicationid
 		const eventId = this.state.eventId;
 		const eventObject = this.props.eventsAndTasks.filter(x => x.id === eventId); //returns an array[0]
 		if(eventObject.lenght === 0){
-			console.log('this event has no application');
 			this.handleClose();
 		}
 
@@ -122,7 +114,6 @@ class EventPage extends Component {
 		const newestTask = this.state.newTask;
 		newestTask['applicationid'] = applicationId;
 
-		console.log('this will go to the action', newestTask);
 		this.props.actions.createNewTask(newestTask);
 	}
 
@@ -173,9 +164,7 @@ class EventPage extends Component {
 		*/
 		const eventid = this.state.eventId;
 		let eventApplicationAndTasks = this.props.eventsAndTasks.filter(x => x.id === eventid);
-		console.log('eventApplicationAndTasks',eventApplicationAndTasks);
 		let appId = eventApplicationAndTasks[0].Applications[0].id;
-		console.log('appId: ', appId);
 		this.setState({
 			newTask: Object.assign({}, this.state.newTask, {
 				applicationid: appId
@@ -183,9 +172,6 @@ class EventPage extends Component {
 		});
 		let newestTask = this.state.newTask;
 		newestTask['applicationid'] = appId;
-		console.log('this is eventid', eventid);
-		console.log('this is the task: ', newestTask);
-		//return;
 		this.props.actions.createNewTask(newestTask); //add new task to db
 		// clear curr state
 		this.setState({
@@ -291,7 +277,6 @@ class EventPage extends Component {
 }
 
 function mapStateToProps(state, ownProps) {
-	console.log("mstp ep: ", state);
 	return {
 		events: state.events,
 		departmentid: state.departmentid,

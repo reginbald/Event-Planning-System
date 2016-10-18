@@ -29,7 +29,6 @@ export function createTaskSuccess(result) {
 }
 
 export function createNewTask(data) {
-  console.log('this goes to create task: ', data);
   return dispatch => {
     return request
     .post(API_PATH + 'task')

@@ -15,9 +15,6 @@ export function createApplication(data) {
     .set('Accept', 'application/json')
     .then(response => {
       if(response) {
-        console.log('application was created: ', response);
-        console.log('sending get events and tasks again with did: ', data.departmentid);
-        //eventActions.getEventsAndTasks(data.departmentid);
       }
       else{
         // Do something here if we have time
