@@ -289,6 +289,7 @@ export class RouteProvider {
 			req.body.description,
 			req.body.priority
 		)
+		console.log("NEW TASK: ", newTask);
 		this.taskProvider.createTask(newTask, (task) => {
 			return res.send(task);
 		}, (error) => {
