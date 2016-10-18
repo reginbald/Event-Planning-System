@@ -330,14 +330,11 @@ export class SequelizeStorageManager implements StorageManager {
         return this.Task.findAll({ where: { "employeeid": id } });
     }
     createTask(details:any, succ:Function, err:Function):void {
-        console.log("CREATE TASK: ", details);
         this.Task.create(details)
         .then((task) => {
-            console.log("CREATE TASK SUCC: ", task);
             succ(task);
         })
         .catch((error) => {
-            console.log("CREATE TASK ERROR: ", error);
             err(error);
         });
     }
