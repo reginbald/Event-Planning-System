@@ -207,7 +207,15 @@ export class RouteProvider {
 		});
 	}
 
-	//------------------------------/api/jobapplication/------------------------------
+	//------------------------------/api/event/------------------------------
+	//GET: /api/event
+	getAllEvents = (req:any, res:any) => {
+		this.eventProvider.getAllEvents((events) => {
+			return res.send(events);
+		}, (error) => {
+				return res.status(500).send("ERROR_500_DATABASE");
+		});
+	}
 
 	//GET: /api/event/:eid/department/:did/tasks
 	getAllTasksForEventAndDepartment = (req:any, res:any) => {
