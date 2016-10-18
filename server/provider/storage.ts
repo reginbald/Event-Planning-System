@@ -331,8 +331,8 @@ export class SequelizeStorageManager implements StorageManager {
     }
     createTask(details:any, succ:Function, err:Function):void {
         this.Task.create(details)
-        .then((tasks) => {
-            succ(tasks);
+        .then((task) => {
+            succ(task);
         })
         .catch((error) => {
             err(error);
