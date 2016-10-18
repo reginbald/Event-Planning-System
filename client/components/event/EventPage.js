@@ -9,6 +9,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import TextInput from '../common/TextInput';
 import * as applicationActions from '../../redux/actions/applicationActions';
 import * as taskActions from '../../redux/actions/taskActions';
+import * as eventActions from '../../redux/actions/eventActions';
 import SelectInput from '../common/SelectInput';
 import FlatButton from 'material-ui/FlatButton';
 import Dialog from 'material-ui/Dialog';
@@ -36,8 +37,6 @@ class EventPage extends Component {
 				description: '',
 				priority: ''
 			},
-			//tasks: [],
-			totalTasks: 0,
 			eventType: '',
 			eventName:'',
 			eventId: ''
@@ -49,7 +48,7 @@ class EventPage extends Component {
 		this.updateAssignee = this.updateAssignee.bind(this);
 		this.updatePriority = this.updatePriority.bind(this);
 		this.updateTaskType = this.updateTaskType.bind(this);
-		this.newTask = this.newTask.bind(this);
+		this.createNewTask = this.createNewTask.bind(this);
 	}
 
 	handleClose() {
@@ -77,26 +76,23 @@ class EventPage extends Component {
 		console.log('eventID: ', evId);
 		let eventApplicationAndTasks = this.props.eventsAndTasks.filter(x => x.id === evId); //find the corresponding object
 		console.log('eventApplicationAndTasks', eventApplicationAndTasks);
-
 		const data = {
 			departmentid: this.props.departmentid,
 			eventid: evId
 		};
-
 		// do this if event currently has no application
 		// we can not create a task without an application.
 		if(eventApplicationAndTasks.length === 0) {
-			console.log('this event has no appplication it needs to be created');
-			console.log('this data will be sent', data);
 			this.props.actions.createApplication(data);
+			setTimeout(() => { this.props.actions.getEventsAndTasks(data.departmentid)}, 1000)
 		}
 
 		this.setState({
 			open: true,
 			eventId: evId,
-			eventType: this.props.events[eventEntry].event_type,
-			totalTasks: eventApplicationAndTasks[0].Applications[0].Tasks.length
+			eventType: this.props.events[eventEntry].event_type
 		});
+		console.log('e');
 	}
 
 	handleSubmit() {
@@ -170,16 +166,28 @@ class EventPage extends Component {
 		});
 	}
 
-	newTask() {
+	createNewTask() {
 		/* Check if the event has an applicationid otherwise create the application first
 		* before submitting tasks
 		*/
-		let newestTask = this.state.newTask;
 		const eventid = this.state.eventId;
-		this.props.actions.createNewTask(eventid, newTask); //add new task to db
+		let eventApplicationAndTasks = this.props.eventsAndTasks.filter(x => x.id === eventid);
+		console.log('eventApplicationAndTasks',eventApplicationAndTasks);
+		let appId = eventApplicationAndTasks[0].Applications[0].id;
+		console.log('appId: ', appId);
+		this.setState({
+			newTask: Object.assign({}, this.state.newTask, {
+				applicationid: appId
+			})
+		});
+		let newestTask = this.state.newTask;
+		newestTask['applicationid'] = appId;
+		console.log('this is eventid', eventid);
+		console.log('this is the task: ', newestTask);
+		//return;
+		this.props.actions.createNewTask(eventid, newestTask); //add new task to db
 		// clear curr state
 		this.setState({
-			tasks: eventTasks,
 			taskTypeOptionValue: '',
 			assigneeOptionValue: '',
 			priorityOptionValue: '',
@@ -222,7 +230,6 @@ class EventPage extends Component {
 								onRequestClose={this.handleClose}
 								autoScrollBodyContent={true} >
 								{this.state.eventType} <Divider />
-							{"Total tasks for this event: " + this.state.totalTasks}
 								<TextInput
 									name="description"
 									label="Task"
@@ -251,7 +258,7 @@ class EventPage extends Component {
 								<RaisedButton
 									label="Add new task"
 									primary={true}
-									onClick={this.newTask} />
+									onClick={this.createNewTask} />
 							</Dialog>
 							<Table onRowSelection={this.eventSelected}>
 								<TableHeader displaySelectAll={false}>
@@ -294,7 +301,7 @@ function mapStateToProps(state, ownProps) {
 }
 function mapDispatchToProps(dispatch) {
 	return {
-		actions: bindActionCreators(Object.assign({},taskActions, applicationActions), dispatch)
+		actions: bindActionCreators(Object.assign({},taskActions, applicationActions,eventActions), dispatch)
 	};
 }
 export default connect(mapStateToProps, mapDispatchToProps)(EventPage);

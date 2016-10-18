@@ -28,7 +28,7 @@ export function createTaskSuccess(result) {
   return {type: types.CREATE_NEW_TASK_SUCCESS, result};
 }
 
-export function createTask(data) {
+export function createNewTask(data) {
   return dispatch => {
     return request
     .post(API_PATH + 'task')
@@ -36,9 +36,9 @@ export function createTask(data) {
     .set('Accept', 'application/json')
     .then(response => {
       if(response) {
-        console.log('application was created: ', response);
-        dispatch(createTaskSuccess(response.body));
-        eventActions.getEventsAndTasks();
+        console.log('--1-1task was created: ', response);
+        //dispatch(createTaskSuccess(response.body));
+        //eventActions.getEventsAndTasks(data.departmentid);
       }
       else{
         // Do something here if we have time

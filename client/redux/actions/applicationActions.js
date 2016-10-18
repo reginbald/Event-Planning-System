@@ -16,8 +16,8 @@ export function createApplication(data) {
     .then(response => {
       if(response) {
         console.log('application was created: ', response);
-        dispatch(createApplicationSuccess(response.body));
-        eventActions.getEventsAndTasks();
+        console.log('sending get events and tasks again with did: ', data.departmentid);
+        //eventActions.getEventsAndTasks(data.departmentid);
       }
       else{
         // Do something here if we have time
