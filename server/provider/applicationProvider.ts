@@ -14,6 +14,7 @@ export class ApplicationProvider {
 	}
 
 	createApplication = (newApp:NewApplicationViewModel, succ:Function, err:Function) =>{
+		console.log("CREATE APPLICATION: ", newApp);
 		this.storageManager.createApplication(newApp, succ, err);
 	}
 }
