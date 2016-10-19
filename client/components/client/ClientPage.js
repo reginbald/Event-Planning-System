@@ -33,7 +33,7 @@ class ClientPage extends Component {
 	clientSelected(id) {
 		this.setState({open: true});
 		this.setState({events: []});
-		this.props.actions.getAllClientEvents(id);
+		this.props.actions.getAllClientEvents(this.props.clients[id].id);
 	}
 
 	render() {
